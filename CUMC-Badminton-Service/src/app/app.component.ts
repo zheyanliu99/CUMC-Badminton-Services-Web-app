@@ -7,4 +7,16 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'CUMC-Badminton-Service';
+  save(){
+    sessionStorage.setItem('userid', '7');
+  }
+  get(){
+    return sessionStorage.getItem('userid');
+  }
+  remove(){
+    sessionStorage.removeItem('userid')
+  }
+  clearAll(){
+    sessionStorage.clear()
+  }
 }
