@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  ms2Url: "www.google.com"
+  ms2Url: "http://127.0.0.1:5011"
 };
 
 /*
