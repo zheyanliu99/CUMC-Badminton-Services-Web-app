@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, RoutesRecognized } from '@angular/router';
-import { RouterModule, Routes } from '@angular/router';
 import { AuthServiceService } from '../auth-service.service';
 
 @Component({
@@ -34,7 +33,7 @@ export class RegisterComponent implements OnInit {
         if(result.success) {
           console.log(result);
           alert(result.message);
-          this.router.navigate(['/login'])
+          this.router.navigate(['/login']);
         } else {
           alert(result.message);
         }

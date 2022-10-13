@@ -19,4 +19,8 @@ export class AuthServiceService {
   register(data: registerInput):Observable<any>{
     return this.http.post(`${environment.ms2Url}/api/user/register`, data);
   }
+
+  logout(){
+    sessionStorage.clear();
+  }
 }

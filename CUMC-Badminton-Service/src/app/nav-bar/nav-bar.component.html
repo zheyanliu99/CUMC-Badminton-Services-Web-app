@@ -1,12 +1,30 @@
+<ng-container
+  *ngIf="isLoggedIn; then loggedIn; else loggedOut">
+</ng-container>
+
+<ng-template #loggedIn>
 <a [routerLink]="['/']">
     <h1>CUMC Badminton Services</h1>
   </a>
   
   <div>
-  <a routerLink="/login" class="button fancy-button">
-    <i class="material-icons">devices</i>Login
-  </a>
-  <a routerLink="/register" class="button fancy-button">
-    <i class="material-icons">person_add</i>register
+  <a routerLink="/login" class="button fancy-button" (click)="onClick()">
+    <i class="material-icons">rowing</i>Logout
   </a>
 </div>
+</ng-template>
+
+<ng-template #loggedOut>
+    <a [routerLink]="['/']">
+        <h1>CUMC Badminton Services</h1>
+      </a>
+      
+      <div>
+      <a routerLink="/login" class="button fancy-button">
+        <i class="material-icons">devices</i>Login
+      </a>
+      <a routerLink="/register" class="button fancy-button">
+        <i class="material-icons">person_add</i>Register
+      </a>
+    </div>
+  </ng-template>
