@@ -1,15 +1,15 @@
 <div fxLayoutAlign="center center" fxFlexFill class="main-div">
     <mat-card fxFlex="55">
         <mat-toolbar color="primary">Login page</mat-toolbar>
-        <form class="example-form" fxLayoutAlign="stretch" fxLayout="column" class="login-form">
+        <form class="example-form" fxLayoutAlign="stretch" fxLayout="column" class="login-form" [formGroup]="formGroup" (ngSubmit)="loginProcess()">
         <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Username</mat-label>
-            <input matInput>
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
         </mat-form-field>
 
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Password</mat-label>
-            <input matInput>
+            <input matInput formControlName="password">
         </mat-form-field>
         <button mat-button type="submit">Login</button>
         <button mat-button type="submit">Sign up</button>
