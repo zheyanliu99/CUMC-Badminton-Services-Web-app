@@ -2,51 +2,22 @@
   *ngIf="isLoggedIn; then loggedIn; else loggedOut">
 </ng-container>
 
-<!-- <ng-template #loggedIn>
-<a [routerLink]="['/']">
-    <h1>CUMC Badminton Services</h1>
-  </a>
-  
-  <div>
-  <a routerLink="/login" class="button fancy-button" (click)="onClick()">
-    <i class="material-icons">rowing</i>Logout
-  </a>
-</div>
-</ng-template>
-
-<ng-template #loggedOut>
-    <a [routerLink]="['/']">
-        <h1>CUMC Badminton Services</h1>
-      </a>
-      
-      <div>
-      <a routerLink="/login" class="button fancy-button">
-        <i class="material-icons">devices</i>Login
-      </a>
-      <a routerLink="/register" class="button fancy-button">
-        <i class="material-icons">person_add</i>Register
-      </a>
-    </div>
-  </ng-template> -->
-
-
   <ng-template #loggedIn>
     <div class="navbar">
       <h1>CUMC Badminton Services</h1>
       <a routerLink="">Home</a>
-      <a href="#news">News</a>
       <div class="dropdown">
-        <button class="dropbtn">Dropdown
+        <button class="dropbtn">Sessions
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-          <a href="#">Link 1</a>
-          <a href="#">Link 2</a>
-          <a href="#">Link 3</a>
+          <a href="#">Book Session</a>
+          <a href="#">Edit Session</a>
         </div>
       </div>
+      <a href="#news">Posts</a>
       <div class="topnav-right">
-        <a routerLink="/login" class="button fancy-button topnav-right" (click)="onClick()">
+        <a routerLink="/login" class="button fancy-button" (click)="onClick()">
           <i class="material-icons">rowing</i>Logout
         </a>
       </div>

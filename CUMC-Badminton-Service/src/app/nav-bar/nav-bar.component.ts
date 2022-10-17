@@ -11,7 +11,8 @@ import { Router, RoutesRecognized } from '@angular/router';
 export class NavBarComponent implements OnInit {
   isLoggedIn: boolean;
 
-  constructor(private authService:AuthServiceService, private router: Router) { }
+  constructor(private authService:AuthServiceService, private router: Router) { 
+  }
 
   ngOnInit(): void {
     console.log(sessionStorage.getItem('userId'))
@@ -21,6 +22,7 @@ export class NavBarComponent implements OnInit {
       this.isLoggedIn = false;
     }
   }
+  
 
   onClick(){
     this.authService.logout();
