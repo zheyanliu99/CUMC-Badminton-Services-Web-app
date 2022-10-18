@@ -1,5 +1,6 @@
 <h1>Available Sessions</h1> 
 
+<p>userID: {{userId}}</p>
  <table class="content-table">
     <thead>
         <tr>
@@ -19,7 +20,7 @@
             <td>{{session.capacity}}</td>
             <td>{{session.enrolled}}</td>
             <td>{{session.notes}}</td>
-            <!-- <td>{{session.is_registered}}</td> -->
+            <td>{{session.is_registered}}</td>
             <td> 
                 <ng-container *ngIf="session.is_registered==0">
                     <button mat-raised-button color="basic" cdkFocusInitial class="col-md-3" type="submit"

@@ -9,23 +9,26 @@ import { Observable } from 'rxjs';
   templateUrl: './sessions.component.html',
   styleUrls: ['./sessions.component.css']
 })
-export class SessionsComponent implements OnInit {
+export class SessionsComponent implements OnInit, OnChanges {
 
-  @Input() sessions: Array<sessionInput>;
-  userId = sessionStorage.getItem('userId');
+  sessions: Array<sessionInput>;
+  userId: string;
 
   constructor(private http:HttpClient) {     
+    this.userId = sessionStorage.getItem('userId')
   }
 
   ngOnInit(): void {
     this.get_available_sessions().subscribe(results => {
       if(results.success){
-        this.sessions = results.data}
+        console.log("update data")
+        this.sessions = results.data
+        console.log(this.sessions)
+        }
       else{
         alert("Results Not Found")
       }
-    });
-    console.log(this.sessions)
+    })
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -46,8 +49,14 @@ export class SessionsComponent implements OnInit {
       else{
         alert("Register failed")
       }
+    this.get_available_sessions().subscribe(results => {
+      if(results.success){
+        this.sessions = results.data}
+      else{
+        alert("Results Not Found")
+      }
+    });
     })
-    location.reload();
 
   }
 
