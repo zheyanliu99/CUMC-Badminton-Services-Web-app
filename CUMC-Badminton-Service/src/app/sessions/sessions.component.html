@@ -1,0 +1,36 @@
+<h1>Available Sessions</h1> 
+
+ <table class="content-table">
+    <thead>
+        <tr>
+        <th>Begintime</th>
+        <th>Endtime</th>
+        <th>Capacity</th>
+        <th>Enrolled</th>
+        <th>Notes</th>
+        <th>Register</th>
+        </tr>
+    </thead>
+    <tbody >
+        <ng-container *ngFor="let session of sessions">
+            <tr>
+            <td>{{session.begintime}}</td>
+            <td>{{session.endtime}}</td>
+            <td>{{session.capacity}}</td>
+            <td>{{session.enrolled}}</td>
+            <td>{{session.notes}}</td>
+            <!-- <td>{{session.is_registered}}</td> -->
+            <td> 
+                <ng-container *ngIf="session.is_registered==0">
+                    <button mat-raised-button color="basic" cdkFocusInitial class="col-md-3" type="submit"
+                    [disabled]=false (click)="register(session.sessionid)">Register</button>
+                </ng-container>
+                <ng-container *ngIf="session.is_registered==1">
+                    <button mat-raised-button color="basic" cdkFocusInitial class="col-md-3" type="submit"
+                        [disabled]=true (click)="register(session.sessionid)">Register</button>
+                </ng-container>
+            </td>
+            </tr>
+        </ng-container>
+    </tbody>
+    </table>
