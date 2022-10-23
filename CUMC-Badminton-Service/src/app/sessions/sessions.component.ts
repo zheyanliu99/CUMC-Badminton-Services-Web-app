@@ -14,7 +14,7 @@ export class SessionsComponent implements OnInit, OnChanges {
   sessions: Array<sessionInput>;
   userId: string;
 
-  constructor(private http:HttpClient) {     
+  constructor(private http:HttpClient) {
     this.userId = sessionStorage.getItem('userId')
   }
 

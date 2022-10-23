@@ -4,12 +4,16 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { IndexComponent } from './index/index.component';
 import { SessionsComponent } from './sessions/sessions.component';
+import { ForumComponent } from './forum/forum.component';
+import { PostDetailsComponent } from './post-details/post-details.component';
 
 const routes: Routes = [
   {path:'', component:IndexComponent},
   {path:'login', component:LoginComponent},
   {path:'register', component:RegisterComponent},
-  {path:'sessions', component:SessionsComponent}
+  {path:'sessions', component:SessionsComponent},
+  {path:'forum', component:ForumComponent},
+  {path:'post/:post_id', component:PostDetailsComponent}
 ];
 
 @NgModule({

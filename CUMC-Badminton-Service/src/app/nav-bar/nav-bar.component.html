@@ -15,7 +15,15 @@
           <a href="#">Edit Session</a>
         </div>
       </div>
-      <a href="#news">Posts</a>
+      <div class="dropdown">
+        <button class="dropbtn">Forums
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a routerLink="/forum">Go to Forum</a>
+          <a href="#">My Posts</a>
+        </div>
+      </div>
       <div class="topnav-right">
         <a routerLink="/login" class="button fancy-button" (click)="onClick()">
           <i class="material-icons">rowing</i>Logout
@@ -39,4 +47,4 @@
     </div>
   </div>
 </ng-template>
-  
+

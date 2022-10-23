@@ -19,6 +19,9 @@ import { RegisterComponent } from './register/register.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { IndexComponent } from './index/index.component';
 import { SessionsComponent } from './sessions/sessions.component';
+import { ForumComponent } from './forum/forum.component';
+import {MatIconModule} from "@angular/material/icon";
+import { PostDetailsComponent } from './post-details/post-details.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,8 @@ import { SessionsComponent } from './sessions/sessions.component';
     NavBarComponent,
     IndexComponent,
     SessionsComponent,
+    ForumComponent,
+    PostDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,9 +45,10 @@ import { SessionsComponent } from './sessions/sessions.component';
     MatCardModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    FormsModule, 
+    FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

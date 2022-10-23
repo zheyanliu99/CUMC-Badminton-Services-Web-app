@@ -1,0 +1,52 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Tutorial</title>
+
+  <!--font library is loaded prior to using mat-icons-->
+
+  <link href=
+          "https://fonts.googleapis.com/icon?family=Material+Icons&display=block"
+        rel="stylesheet">
+
+</head>
+
+<body>
+  <h2>All Posts</h2>
+
+  <div *ngFor="let post of posts">
+    <h3>
+      <a [title]=" 'post '+ post.Post_id + ' details' " [routerLink]="['/post', post.Post_id]">
+        {{ post.Title }}
+      </a>
+
+      <ng-container *ngIf="post.is_thumbed == 1">
+        <mat-icon color = "accent" (click)="thumb_up(post.Post_id)">thumb_up</mat-icon>
+        {{post.thumbs}}
+      </ng-container>
+      <ng-container *ngIf="post.is_thumbed == 0">
+        <mat-icon color = "primary" (click)="thumb_up(post.Post_id)">thumb_up</mat-icon>
+        {{post.thumbs}}
+      </ng-container>
+    </h3>
+
+    <div>
+      {{post.Label}}
+    </div>
+
+    <div class="about">
+      <ng-container *ngIf=" post.Label != 'Administrative' ">
+        by <a href="#">{{ post.Author }}</a>,
+      </ng-container>
+      {{post.Time}}
+      <ng-container *ngIf="post.Location">
+        , <a href="{{post.Map_URL}}">{{ post.Location }}</a>
+      </ng-container>
+    </div>
+    <hr>
+
+  </div>
+
+</body>
+</html>
+

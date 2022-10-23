@@ -1,0 +1,71 @@
+<h2>Post Details</h2>
+
+<article class="post">
+  <header>
+    <div>
+      <h2>
+        <div>{{ post[0].Title }}</div>
+        <ng-container *ngIf="post[0].is_thumbed == 1">
+          <mat-icon color = "accent" (click)="thumb_up_post()">thumb_up</mat-icon>
+          {{post[0].thumbs}}
+        </ng-container>
+        <ng-container *ngIf="post[0].is_thumbed == 0">
+          <mat-icon color = "primary" (click)="thumb_up_post()">thumb_up</mat-icon>
+          {{post[0].thumbs}}
+        </ng-container>
+      </h2>
+
+      <div>
+        {{post[0].Label}}
+      </div>
+
+      <div class="about">
+        <ng-container *ngIf=" post[0].Label != 'Administrative' ">
+          by <a href="#">{{ post[0].Author }}</a>,
+        </ng-container>
+        {{post[0].Time}}
+        <ng-container *ngIf="post[0].Location">
+          , <a href="{{post[0].Map_URL}}">{{ post[0].Location }}</a>
+        </ng-container>
+      </div>
+    </div>
+  </header>
+
+  <br>
+  <p class="body">{{ post[0].Content }}</p>
+</article>
+
+<br>
+<h2>Comments</h2>
+<ng-container *ngIf=" response != null ">
+  <div *ngFor="let res of response">
+      <div>
+      <header>
+        <a href="#">{{ res.Author }}</a>, {{ res.Time }}
+        <ng-container *ngIf="res.is_thumbed == 1">
+          <mat-icon color = "accent" (click)="thumb_up_resp(res.Response_ID)">thumb_up</mat-icon>
+          {{res.thumbs}}
+        </ng-container>
+        <ng-container *ngIf="res.is_thumbed == 0">
+          <mat-icon color = "primary" (click)="thumb_up_resp(res.Response_ID)">thumb_up</mat-icon>
+          {{res.thumbs}}
+        </ng-container>
+      </header>
+      <p class="body">{{ res.Content }}</p>
+      </div>
+    <hr>
+  </div>
+</ng-container>
+
+<form [formGroup]="commentForm" (ngSubmit)="cmtSubmit()">
+  <div>
+  <textarea rows="5" cols="60" name="content" formControlName="content"></textarea>
+  </div>
+  <button class="button" type="submit">Submit Comment</button>
+</form>
+
+
+
+
+
+
