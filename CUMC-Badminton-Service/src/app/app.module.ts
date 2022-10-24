@@ -24,6 +24,7 @@ import { ForumComponent } from './forum/forum.component';
 import {MatIconModule} from "@angular/material/icon";
 import { PostDetailsComponent } from './post-details/post-details.component';
 import { AddPostDialogComponent } from './add-post-dialog/add-post-dialog.component';
+import { SessionsEditComponent } from './sessions-edit/sessions-edit.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { AddPostDialogComponent } from './add-post-dialog/add-post-dialog.compon
     ForumComponent,
     PostDetailsComponent,
     AddPostDialogComponent,
+    SessionsEditComponent,
   ],
   entryComponents: [AddPostDialogComponent],
   imports: [
