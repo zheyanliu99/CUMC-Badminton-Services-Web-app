@@ -13,6 +13,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from "@angular/material/dialog";
 
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -22,6 +23,7 @@ import { SessionsComponent } from './sessions/sessions.component';
 import { ForumComponent } from './forum/forum.component';
 import {MatIconModule} from "@angular/material/icon";
 import { PostDetailsComponent } from './post-details/post-details.component';
+import { AddPostDialogComponent } from './add-post-dialog/add-post-dialog.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { PostDetailsComponent } from './post-details/post-details.component';
     SessionsComponent,
     ForumComponent,
     PostDetailsComponent,
+    AddPostDialogComponent,
   ],
+  entryComponents: [AddPostDialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -48,7 +52,8 @@ import { PostDetailsComponent } from './post-details/post-details.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

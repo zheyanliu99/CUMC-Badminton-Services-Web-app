@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Write a new post:</h2>
+
+<mat-dialog-content [formGroup]="postForm" (ngSubmit)="postSubmit()">
+
+  <div>
+    <label for="title">Title:</label>
+    <input id="title" type="text" formControlName="title">
+  </div>
+  <div>
+    <label for="label">Labels:</label>
+    <select id="label" name="label" formControlName="label">
+      <option value="Administrative">Administrative</option>
+      <option value="Lost and Found">Lost and Found</option>
+      <option value="Call for Partners">Call for Partners</option>
+      <option value="Others">Others</option>
+    </select>
+  </div>
+  <div>
+    <label for="location">Location:</label>
+    <select id="location" name="location" formControlName="location">
+      <option *ngFor="let loc of locations" value="{{loc}}">{{ loc }}</option>
+    </select>
+  </div>
+  <br>
+  <div>
+    <label for="content">Content:</label>
+    <textarea rows="5" cols="60" id="content" name="content" formControlName="content"></textarea>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="mat-raised-button"(click)="close()">Close</button>
+  <button class="mat-raised-button mat-primary"(click)="postSubmit()">Submit</button>
+</mat-dialog-actions>
+

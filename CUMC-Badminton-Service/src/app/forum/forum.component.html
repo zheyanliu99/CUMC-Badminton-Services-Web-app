@@ -1,18 +1,27 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Tutorial</title>
-
   <!--font library is loaded prior to using mat-icons-->
-
   <link href=
           "https://fonts.googleapis.com/icon?family=Material+Icons&display=block"
         rel="stylesheet">
-
 </head>
 
+<div id="container">
+  <ul id="menu">
+    <li><a (click)="ngOnInit()">All Posts</a></li>
+    <li *ngFor="let cat of labels">
+      <a (click)="select_cat(cat)">{{cat}}</a>
+    </li>
+    <li><a href="#">My Posts</a></li>
+  </ul>
+</div>
+
 <body>
-  <h2>All Posts</h2>
+
+  <h1>{{label}}</h1>
+
+  <button mat-raised-button (click)="openDialog()">Write a Post</button>
 
   <div *ngFor="let post of posts">
     <h3>

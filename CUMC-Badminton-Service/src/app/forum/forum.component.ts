@@ -4,6 +4,8 @@ import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import { forumInput } from './forumInput';
 import {MatIconModule} from '@angular/material/icon';
+import {MatDialog} from "@angular/material/dialog";
+import {AddPostDialogComponent} from "../add-post-dialog/add-post-dialog.component";
 
 @Component({
   selector: 'app-forum',
@@ -13,8 +15,11 @@ import {MatIconModule} from '@angular/material/icon';
 export class ForumComponent implements OnInit, OnChanges {
   posts: Array<forumInput>;
   userId: string;
+  labels: Array<string>;
+  label: string;
 
-  constructor(private http:HttpClient) {
+  constructor(private http:HttpClient,
+              public dialog: MatDialog) {
     this.userId = sessionStorage.getItem('userId')
   }
 
@@ -24,6 +29,8 @@ export class ForumComponent implements OnInit, OnChanges {
       if(results.success){
         console.log("update data")
         this.posts = results.data
+        this.labels = results.labels
+        this.label = "All Posts"
         console.log(this.posts)
       }
       else{
@@ -64,6 +71,31 @@ export class ForumComponent implements OnInit, OnChanges {
     return this.http.get<any>(`${environment.ms3Url}/api/forum/click_thumb/post/${post_id}/user_id/${this.userId}`);
   }
 
+  select_cat(cat: string): void{
+    console.log('category require send')
+    this.get_post_cat(cat).subscribe(results => {
+      if (results.post.success) {
+        this.posts = results.post.data
+        this.label = cat
+        console.log(this.posts)
+      } else {
+        alert("Category selecting failed")
+        console.log(results)
+      }
+    })
+  }
+
+  get_post_cat(cat: string): Observable<any>{
+    console.log('cat interact with db')
+    return this.http.get<any>(`${environment.ms3Url}/api/forum/${cat}/user_id/${this.userId}`);
+  }
+
+  openDialog() {
+    let dialogRef = this.dialog.open(AddPostDialogComponent)
+    dialogRef.afterClosed().subscribe(results => {
+      console.log(results)
+    })
+  }
 
 
 }
