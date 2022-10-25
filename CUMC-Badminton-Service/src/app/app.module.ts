@@ -58,7 +58,8 @@ import { SessionsEditComponent } from './sessions-edit/sessions-edit.component';
     ReactiveFormsModule,
     HttpClientModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
