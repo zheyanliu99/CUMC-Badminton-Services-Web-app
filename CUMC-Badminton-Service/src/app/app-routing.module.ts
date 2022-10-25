@@ -8,6 +8,7 @@ import { SessionsEditComponent } from './sessions-edit/sessions-edit.component';
 import { ForumComponent } from './forum/forum.component';
 import { PostDetailsComponent } from './post-details/post-details.component';
 import { MyPostsComponent } from './my-posts/my-posts.component';
+import { profileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {path:'', component:IndexComponent},
@@ -17,7 +18,8 @@ const routes: Routes = [
   {path:'sessions/edit', component:SessionsEditComponent},
   {path:'forum', component:ForumComponent},
   {path:'post/:post_id', component:PostDetailsComponent},
-  {path:'my-posts', component:MyPostsComponent}
+  {path:'my-posts', component:MyPostsComponent},
+  {path:'profile', component:profileComponent},
 ];
 
 @NgModule({
