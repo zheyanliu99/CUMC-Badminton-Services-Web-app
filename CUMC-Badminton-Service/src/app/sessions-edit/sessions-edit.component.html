@@ -1,0 +1,31 @@
+<h1>Waitlist</h1> 
+
+<p>userID: {{userId}}</p>
+ <table class="content-table">
+    <thead>
+        <tr>
+        <th>Begintime</th>
+        <th>Endtime</th>
+        <th>Capacity</th>
+        <th>Enrolled</th>
+        <th>Notes</th>
+        <th>Quit</th>
+        </tr>
+    </thead>
+    <tbody >
+        <ng-container *ngFor="let session of sessions">
+            <tr>
+            <td>{{session.begintime}}</td>
+            <td>{{session.endtime}}</td>
+            <td>{{session.capacity}}</td>
+            <td>{{session.enrolled}}</td>
+            <td>{{session.notes}}</td>
+            <!-- <td>{{session.is_registered}}</td> -->
+            <td> 
+                <button mat-raised-button color="basic" cdkFocusInitial class="col-md-3" type="submit"
+                [disabled]=false (click)="quit(session.sessionid)">Quit</button>
+            </td>
+            </tr>
+        </ng-container>
+    </tbody>
+    </table>

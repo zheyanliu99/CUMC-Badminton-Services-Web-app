@@ -26,6 +26,7 @@ import { PostDetailsComponent } from './post-details/post-details.component';
 import { AddPostDialogComponent } from './add-post-dialog/add-post-dialog.component';
 import { MyPostsComponent } from './my-posts/my-posts.component';
 import {MatListModule} from "@angular/material/list";
+import { SessionsEditComponent } from './sessions-edit/sessions-edit.component';
 
 @NgModule({
   declarations: [
@@ -39,26 +40,26 @@ import {MatListModule} from "@angular/material/list";
     PostDetailsComponent,
     AddPostDialogComponent,
     MyPostsComponent,
+    SessionsEditComponent,
   ],
   entryComponents: [AddPostDialogComponent],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        NgxWebstorageModule.forRoot(),
-        FlexLayoutModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatCardModule,
-        BrowserAnimationsModule,
-        MatToolbarModule,
-        FormsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        MatIconModule,
-        MatDialogModule,
-        MatListModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    NgxWebstorageModule.forRoot(),
+    FlexLayoutModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatIconModule,
+    MatDialogModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
