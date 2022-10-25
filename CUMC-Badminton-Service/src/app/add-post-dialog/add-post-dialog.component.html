@@ -1,4 +1,5 @@
-<h2 mat-dialog-title>Write a new post:</h2>
+<h2 mat-dialog-title *ngIf="method == 'add'">Write a new post:</h2>
+<h2 mat-dialog-title *ngIf="method == 'edit'">Edit your post:</h2>
 
 <mat-dialog-content [formGroup]="postForm" (ngSubmit)="postSubmit()">
 

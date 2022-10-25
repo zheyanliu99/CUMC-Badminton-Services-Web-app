@@ -24,6 +24,8 @@ import { ForumComponent } from './forum/forum.component';
 import {MatIconModule} from "@angular/material/icon";
 import { PostDetailsComponent } from './post-details/post-details.component';
 import { AddPostDialogComponent } from './add-post-dialog/add-post-dialog.component';
+import { MyPostsComponent } from './my-posts/my-posts.component';
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [
@@ -36,25 +38,27 @@ import { AddPostDialogComponent } from './add-post-dialog/add-post-dialog.compon
     ForumComponent,
     PostDetailsComponent,
     AddPostDialogComponent,
+    MyPostsComponent,
   ],
   entryComponents: [AddPostDialogComponent],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    NgxWebstorageModule.forRoot(),
-    FlexLayoutModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatCardModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatIconModule,
-    MatDialogModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        NgxWebstorageModule.forRoot(),
+        FlexLayoutModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatCardModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        MatIconModule,
+        MatDialogModule,
+        MatListModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -1,22 +1,20 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit, OnChanges, SimpleChanges} from '@angular/core';
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import { forumInput } from './forumInput';
-import {MatIconModule} from '@angular/material/icon';
+import { MatListModule} from "@angular/material/list";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {AddPostDialogComponent} from "../add-post-dialog/add-post-dialog.component";
+import {forumInput} from "../forum/forumInput";
 
 @Component({
-  selector: 'app-forum',
-  templateUrl: './forum.component.html',
-  styleUrls: ['./forum.component.css']
+  selector: 'app-my-posts',
+  templateUrl: './my-posts.component.html',
+  styleUrls: ['./my-posts.component.css']
 })
-export class ForumComponent implements OnInit, OnChanges {
+export class MyPostsComponent implements OnInit {
   posts: Array<forumInput>;
   userId: string;
-  labels: Array<string>;
-  label: string;
 
   constructor(private http:HttpClient,
               public dialog: MatDialog) {
@@ -24,8 +22,6 @@ export class ForumComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    console.log("init")
-    this.label = "All Posts"
     this.load_page()
   }
 
@@ -34,35 +30,30 @@ export class ForumComponent implements OnInit, OnChanges {
   }
 
   load_page(): void{
-    if (this.label == "All Posts") {
-      this.get_allposts().subscribe(results => {
-        if(results.success){
+      this.get_myposts().subscribe(results => {
+        if(results.post.success){
           console.log("update data")
-          this.posts = results.data
-          this.labels = results.labels
+          this.posts = results.post.data
           console.log(this.posts)
         }
         else{
+          console.log(results)
           alert("Results Not Found")
         }
       })
     }
-    else{
-      this.select_cat(this.label)
-    }
-}
 
-  get_allposts():Observable<any>{
+  get_myposts():Observable<any>{
     console.log('renew')
-    return this.http.get<any>(`${environment.ms3Url}/api/forum/user_id/${this.userId}`);
+    return this.http.get<any>(`${environment.ms3Url}/api/forum/myposts/user_id/${this.userId}`);
   }
 
   thumb_up(post_id:number): void {
     console.log('thumb_up status changed')
     this.change_thumb_post(post_id).subscribe(results => {
       if (!results.success) {
-      //   alert(results.message)
-      // } else {
+        //   alert(results.message)
+        // } else {
         alert("thumb up failed")
         console.log(results)
       }
@@ -73,25 +64,6 @@ export class ForumComponent implements OnInit, OnChanges {
   change_thumb_post(post_id: number): Observable<any>{
     console.log('thumb update')
     return this.http.get<any>(`${environment.ms3Url}/api/forum/click_thumb/post/${post_id}/user_id/${this.userId}`);
-  }
-
-  select_cat(cat: string): void{
-    console.log('category require send')
-    this.get_post_cat(cat).subscribe(results => {
-      if (results.post.success) {
-        this.posts = results.post.data
-        this.label = cat
-        console.log(this.posts)
-      } else {
-        alert("Category selecting failed")
-        console.log(results)
-      }
-    })
-  }
-
-  get_post_cat(cat: string): Observable<any>{
-    console.log('cat interact with db')
-    return this.http.get<any>(`${environment.ms3Url}/api/forum/${cat}/user_id/${this.userId}`);
   }
 
   openDialog() {
@@ -106,5 +78,20 @@ export class ForumComponent implements OnInit, OnChanges {
     })
   }
 
+  onDelete(post_id: number): void{
+    console.log('delete activated')
+    this.delete_post(post_id).subscribe(results => {
+      if (!results.success) {
+        alert("delete failed")
+        console.log(results)
+      }
+      this.load_page()
+    })
+  }
+
+  delete_post(post_id: number): Observable<any>{
+    console.log('delete interact with DB')
+    return this.http.get<any>(`${environment.ms3Url}/api/forum/click_thumb/post/${post_id}/`);
+  }
 
 }

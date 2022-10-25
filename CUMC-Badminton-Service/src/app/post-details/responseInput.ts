@@ -4,6 +4,6 @@ export class responseInput {
     Author: string;
     Time: string;
     Content: string;
-    thumbs: number;
+    Thumbs: number;
     is_thumbed: number;
   }

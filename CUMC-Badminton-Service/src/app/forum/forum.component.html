@@ -13,7 +13,7 @@
     <li *ngFor="let cat of labels">
       <a (click)="select_cat(cat)">{{cat}}</a>
     </li>
-    <li><a href="#">My Posts</a></li>
+    <li><a routerLink="/my-posts">My Posts</a></li>
   </ul>
 </div>
 
@@ -25,17 +25,17 @@
 
   <div *ngFor="let post of posts">
     <h3>
-      <a [title]=" 'post '+ post.Post_id + ' details' " [routerLink]="['/post', post.Post_id]">
+      <a [title]=" 'post '+ post.Post_ID + ' details' " [routerLink]="['/post', post.Post_ID]">
         {{ post.Title }}
       </a>
 
       <ng-container *ngIf="post.is_thumbed == 1">
-        <mat-icon color = "accent" (click)="thumb_up(post.Post_id)">thumb_up</mat-icon>
-        {{post.thumbs}}
+        <mat-icon color = "accent" (click)="thumb_up(post.Post_ID)">thumb_up</mat-icon>
+        {{post.Thumbs}}
       </ng-container>
       <ng-container *ngIf="post.is_thumbed == 0">
-        <mat-icon color = "primary" (click)="thumb_up(post.Post_id)">thumb_up</mat-icon>
-        {{post.thumbs}}
+        <mat-icon color = "primary" (click)="thumb_up(post.Post_ID)">thumb_up</mat-icon>
+        {{post.Thumbs}}
       </ng-container>
     </h3>
 

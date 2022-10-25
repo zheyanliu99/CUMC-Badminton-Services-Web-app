@@ -1,4 +1,8 @@
-<h2>Post Details</h2>
+<h2>
+  Post Details
+  <button (click)="openDialog()" *ngIf="post[0].Author == userId">Edit</button>
+</h2>
+
 
 <article class="post">
   <header>
@@ -7,11 +11,11 @@
         <div>{{ post[0].Title }}</div>
         <ng-container *ngIf="post[0].is_thumbed == 1">
           <mat-icon color = "accent" (click)="thumb_up_post()">thumb_up</mat-icon>
-          {{post[0].thumbs}}
+          {{post[0].Thumbs}}
         </ng-container>
         <ng-container *ngIf="post[0].is_thumbed == 0">
           <mat-icon color = "primary" (click)="thumb_up_post()">thumb_up</mat-icon>
-          {{post[0].thumbs}}
+          {{post[0].Thumbs}}
         </ng-container>
       </h2>
 
@@ -44,11 +48,11 @@
         <a href="#">{{ res.Author }}</a>, {{ res.Time }}
         <ng-container *ngIf="res.is_thumbed == 1">
           <mat-icon color = "accent" (click)="thumb_up_resp(res.Response_ID)">thumb_up</mat-icon>
-          {{res.thumbs}}
+          {{res.Thumbs}}
         </ng-container>
         <ng-container *ngIf="res.is_thumbed == 0">
           <mat-icon color = "primary" (click)="thumb_up_resp(res.Response_ID)">thumb_up</mat-icon>
-          {{res.thumbs}}
+          {{res.Thumbs}}
         </ng-container>
       </header>
       <p class="body">{{ res.Content }}</p>

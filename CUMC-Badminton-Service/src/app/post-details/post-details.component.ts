@@ -5,7 +5,9 @@ import {HttpClient} from "@angular/common/http";
 import { ActivatedRoute } from '@angular/router';
 import {postInput} from "../post-details/postInput";
 import {responseInput} from "../post-details/responseInput";
-import { FormBuilder } from '@angular/forms';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {AddPostDialogComponent} from "../add-post-dialog/add-post-dialog.component";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-post-details',
@@ -21,7 +23,8 @@ export class PostDetailsComponent implements OnInit, OnChanges {
 
   constructor(private http:HttpClient,
               private route: ActivatedRoute,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              public dialog: MatDialog) {
     this.userId = sessionStorage.getItem('userId')
 
     const routeParams = this.route.snapshot.paramMap;
@@ -97,16 +100,34 @@ export class PostDetailsComponent implements OnInit, OnChanges {
   }
 
   commentForm = this.formBuilder.group({
-    content: ''
+    content: new FormControl(``, [Validators.required, Validators.maxLength(300)])
   });
 
   cmtSubmit(): Observable<any> {
-    console.log('comment added')
-    const input = {"user_id": this.userId, "post_id": this.post_id, "comment": this.commentForm.value.content}
-    console.log(input)
-    this.commentForm.reset();
+    if(this.commentForm.valid){
+      console.log('comment added')
+      const input = {"user_id": this.userId, "post_id": this.post_id, "comment": this.commentForm.value.content}
+      console.log(input)
+      this.commentForm.reset();
+    }
+    else{
+      alert('Empty content cannot be submitted')
+    }
     return null
     //return this.http.post<any>(`${environment.ms3Url}/api/forum/newresponse/user_id/${this.userId}`, input)
+  }
+
+  openDialog() {
+    let dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      method: 'edit',
+      old: this.post
+    }
+
+    let dialogRef = this.dialog.open(AddPostDialogComponent, dialogConfig)
+    dialogRef.afterClosed().subscribe(results => {
+      console.log(results)
+    })
   }
 
 }

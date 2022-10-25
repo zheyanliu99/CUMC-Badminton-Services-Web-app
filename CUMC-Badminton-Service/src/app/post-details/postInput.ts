@@ -8,6 +8,6 @@ export class postInput {
     Content: string;
     Location: string;
     Map_URL: string;
-    thumbs: number;
+    Thumbs: number;
     is_thumbed: number;
   }

@@ -1,0 +1,43 @@
+<h1>My Posts</h1>
+
+<button mat-raised-button (click)="openDialog()">Write a Post</button>
+
+<div *ngIf="posts == null">
+  <br>
+  You don't have any post yet, click the button to write your first post!
+</div>
+
+<mat-list *ngIf="posts != null">
+  <mat-list-item *ngFor="let post of posts">
+    <h3>
+      <a [title]=" 'post '+ post.Post_ID + ' details' " [routerLink]="['/post', post.Post_ID]">
+        {{ post.Title }}
+      </a>
+
+      <ng-container *ngIf="post.is_thumbed == 1">
+        <mat-icon color = "accent" (click)="thumb_up(post.Post_ID)">thumb_up</mat-icon>
+        {{post.Thumbs}}
+      </ng-container>
+      <ng-container *ngIf="post.is_thumbed == 0">
+        <mat-icon color = "primary" (click)="thumb_up(post.Post_ID)">thumb_up</mat-icon>
+        {{post.Thumbs}}
+      </ng-container>
+    </h3>
+
+    <div>
+      {{post.Label}}
+    </div>
+
+    <div class="about">
+      {{post.Time}}
+      <ng-container *ngIf="post.Location">
+        , <a href="{{post.Map_URL}}">{{ post.Location }}</a>
+      </ng-container>
+    </div>
+    <hr>
+    <div>
+      <button (click)="onDelete(post.Post_ID)">Delete</button>
+    </div>
+  </mat-list-item>
+
+</mat-list>

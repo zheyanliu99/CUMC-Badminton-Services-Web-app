@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   ms2Url: "http://127.0.0.1:5011",
-  ms3Url: "http://10.124.164.103:5012"
+  ms3Url: "http://10.124.164.208:5012/"
 };
 
 /*

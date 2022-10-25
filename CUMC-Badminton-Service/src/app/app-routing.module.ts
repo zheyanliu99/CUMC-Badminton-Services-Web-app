@@ -6,6 +6,7 @@ import { IndexComponent } from './index/index.component';
 import { SessionsComponent } from './sessions/sessions.component';
 import { ForumComponent } from './forum/forum.component';
 import { PostDetailsComponent } from './post-details/post-details.component';
+import { MyPostsComponent } from './my-posts/my-posts.component';
 
 const routes: Routes = [
   {path:'', component:IndexComponent},
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path:'register', component:RegisterComponent},
   {path:'sessions', component:SessionsComponent},
   {path:'forum', component:ForumComponent},
-  {path:'post/:post_id', component:PostDetailsComponent}
+  {path:'post/:post_id', component:PostDetailsComponent},
+  {path:'my-posts', component:MyPostsComponent}
 ];
 
 @NgModule({
