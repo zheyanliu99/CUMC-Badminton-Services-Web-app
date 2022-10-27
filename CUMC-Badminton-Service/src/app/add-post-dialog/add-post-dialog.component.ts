@@ -27,6 +27,7 @@ export class AddPostDialogComponent implements OnInit {
     this.method = data.method
     if (this.method == "edit"){
       this.oldPost = data.old
+
     }
   }
 
@@ -42,29 +43,41 @@ export class AddPostDialogComponent implements OnInit {
     }
     else if (this.method == "add"){
       this.postForm = this.formBuilder.group({
-        user_id: this.userId,
         title: new FormControl(``, [Validators.required, Validators.maxLength(30)]),
         label: new FormControl(``, [Validators.required]),
         location: ``,
         content: new FormControl(``, [Validators.required, Validators.maxLength(300)]),
       });
     }
-    this.locations = ["loc1", "loc2", "loc3"]
+    this.locations = ["1", "2", "3"]
   }
 
-  postSubmit(): Observable<any> {
-    if(this.postForm.valid){
-      if (this.method == "add"){
-        console.log('post added')
-        const input = this.postForm.value
-        this.dialogRef.close(input)
-        // return this.http.post<any>(`${environment.ms3Url}/api/forum/newpost/user_id/${this.userId}`, input)
+  postSubmit(): void{
+    if(this.postForm.valid) {
+      console.log('Start updating post')
+      const input = this.postForm.value
+
+      if (this.method == "add") {
+        this.add_new_post(input).subscribe(results => {
+          if (results.success) {
+            console.log("post added")
+            this.dialogRef.close(results)
+          } else {
+            alert("Adding post failed")
+            console.log(results)
+          }
+        })
       }
       else if (this.method == "edit"){
-        console.log('post edited')
-        const input = this.postForm.value
-        this.dialogRef.close(input)
-        // return this.http.post<any>(`${environment.ms3Url}/api/forum/post/edit/user_id/${this.userId}`, input)
+        this.edit_post(input).subscribe(results => {
+          if (results.success) {
+            console.log("post edited")
+            this.dialogRef.close(input)
+          } else {
+            alert("Editing post failed")
+            console.log(results)
+          }
+        })
       }
       else{
         alert('Unknown Method')
@@ -73,7 +86,17 @@ export class AddPostDialogComponent implements OnInit {
     else{
       alert("Post requirement not met")
     }
-    return null
+  }
+
+  add_new_post(input: object): Observable<any> {
+    console.log("post adding with DB")
+    return this.http.post<any>(`${environment.ms3Url}/api/forum/newpost/user_id/${this.userId}`, input)
+  }
+
+  edit_post(input: object): Observable<any> {
+    console.log("post editing with DB")
+    // return Object({"success": true})
+    return this.http.post<any>(`${environment.ms3Url}/api/forum/post/${this.oldPost[0].Post_ID}/edit/user_id/${this.userId}`, input)
   }
 
   close() {

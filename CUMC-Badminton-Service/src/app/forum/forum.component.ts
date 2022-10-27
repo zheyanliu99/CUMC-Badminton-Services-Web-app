@@ -72,7 +72,7 @@ export class ForumComponent implements OnInit, OnChanges {
 
   change_thumb_post(post_id: number): Observable<any>{
     console.log('thumb update')
-    return this.http.get<any>(`${environment.ms3Url}/api/forum/click_thumb/post/${post_id}/user_id/${this.userId}`);
+    return this.http.get<any>(`${environment.ms3Url}/api/forum/post/${post_id}/thumb/user_id/${this.userId}`);
   }
 
   select_cat(cat: string): void{
@@ -91,7 +91,7 @@ export class ForumComponent implements OnInit, OnChanges {
 
   get_post_cat(cat: string): Observable<any>{
     console.log('cat interact with db')
-    return this.http.get<any>(`${environment.ms3Url}/api/forum/${cat}/user_id/${this.userId}`);
+    return this.http.get<any>(`${environment.ms3Url}/api/forum/cat/${cat}/user_id/${this.userId}`);
   }
 
   openDialog() {

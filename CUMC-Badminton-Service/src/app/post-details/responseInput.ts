@@ -1,9 +1,9 @@
 export class responseInput {
     Response_ID: number;
     Post_ID: string;
-    Author: string;
+    User_ID: string;
     Time: string;
     Content: string;
     Thumbs: number;
-    is_thumbed: number;
+    is_Thumbed: number;
   }

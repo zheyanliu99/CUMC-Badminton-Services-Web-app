@@ -29,11 +29,11 @@
         {{ post.Title }}
       </a>
 
-      <ng-container *ngIf="post.is_thumbed == 1">
+      <ng-container *ngIf="post.is_Thumbed == 1">
         <mat-icon color = "accent" (click)="thumb_up(post.Post_ID)">thumb_up</mat-icon>
         {{post.Thumbs}}
       </ng-container>
-      <ng-container *ngIf="post.is_thumbed == 0">
+      <ng-container *ngIf="post.is_Thumbed == 0">
         <mat-icon color = "primary" (click)="thumb_up(post.Post_ID)">thumb_up</mat-icon>
         {{post.Thumbs}}
       </ng-container>
@@ -45,7 +45,7 @@
 
     <div class="about">
       <ng-container *ngIf=" post.Label != 'Administrative' ">
-        by <a href="#">{{ post.Author }}</a>,
+        by <a href="#">{{ post.User_ID }}</a>,
       </ng-container>
       {{post.Time}}
       <ng-container *ngIf="post.Location">

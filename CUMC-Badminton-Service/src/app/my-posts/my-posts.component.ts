@@ -63,7 +63,7 @@ export class MyPostsComponent implements OnInit {
 
   change_thumb_post(post_id: number): Observable<any>{
     console.log('thumb update')
-    return this.http.get<any>(`${environment.ms3Url}/api/forum/click_thumb/post/${post_id}/user_id/${this.userId}`);
+    return this.http.get<any>(`${environment.ms3Url}/api/forum/post/${post_id}/thumb/user_id/${this.userId}`);
   }
 
   openDialog() {
@@ -75,23 +75,31 @@ export class MyPostsComponent implements OnInit {
     let dialogRef = this.dialog.open(AddPostDialogComponent, dialogConfig)
     dialogRef.afterClosed().subscribe(results => {
       console.log(results)
+      if (results) {
+        alert("post added successfully")
+      }
+      this.load_page()
     })
   }
 
   onDelete(post_id: number): void{
     console.log('delete activated')
     this.delete_post(post_id).subscribe(results => {
-      if (!results.success) {
-        alert("delete failed")
+      if (results.success) {
+        alert("Post deleted successfully")
+        this.load_page()
+      }
+      else {
+        alert("Delete failed")
         console.log(results)
       }
-      this.load_page()
     })
   }
 
   delete_post(post_id: number): Observable<any>{
     console.log('delete interact with DB')
-    return this.http.get<any>(`${environment.ms3Url}/api/forum/click_thumb/post/${post_id}/`);
+    return this.http.get<any>(`${environment.ms3Url}/api/forum/post/delete/${post_id}/`);
   }
+
 
 }

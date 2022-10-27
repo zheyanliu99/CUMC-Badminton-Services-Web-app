@@ -1,6 +1,6 @@
 <h2>
   Post Details
-  <button (click)="openDialog()" *ngIf="post[0].Author == userId">Edit</button>
+  <button (click)="editDialog()" *ngIf="post[0].User_ID == userId">Edit</button>
 </h2>
 
 
@@ -9,11 +9,11 @@
     <div>
       <h2>
         <div>{{ post[0].Title }}</div>
-        <ng-container *ngIf="post[0].is_thumbed == 1">
+        <ng-container *ngIf="post[0].is_Thumbed == 1">
           <mat-icon color = "accent" (click)="thumb_up_post()">thumb_up</mat-icon>
           {{post[0].Thumbs}}
         </ng-container>
-        <ng-container *ngIf="post[0].is_thumbed == 0">
+        <ng-container *ngIf="post[0].is_Thumbed == 0">
           <mat-icon color = "primary" (click)="thumb_up_post()">thumb_up</mat-icon>
           {{post[0].Thumbs}}
         </ng-container>
@@ -25,7 +25,7 @@
 
       <div class="about">
         <ng-container *ngIf=" post[0].Label != 'Administrative' ">
-          by <a href="#">{{ post[0].Author }}</a>,
+          by <a href="#">{{ post[0].User_ID }}</a>,
         </ng-container>
         {{post[0].Time}}
         <ng-container *ngIf="post[0].Location">
@@ -45,17 +45,28 @@
   <div *ngFor="let res of response">
       <div>
       <header>
-        <a href="#">{{ res.Author }}</a>, {{ res.Time }}
-        <ng-container *ngIf="res.is_thumbed == 1">
+        <a href="#">{{ res.User_ID }}</a>, {{ res.Time }}
+        <ng-container *ngIf="res.is_Thumbed == 1">
           <mat-icon color = "accent" (click)="thumb_up_resp(res.Response_ID)">thumb_up</mat-icon>
           {{res.Thumbs}}
         </ng-container>
-        <ng-container *ngIf="res.is_thumbed == 0">
+        <ng-container *ngIf="res.is_Thumbed == 0">
           <mat-icon color = "primary" (click)="thumb_up_resp(res.Response_ID)">thumb_up</mat-icon>
           {{res.Thumbs}}
         </ng-container>
+        <button class="mat-raised-button mat-primary" (click)="showEdit(res.Response_ID, res.Content)" *ngIf="res.User_ID == userId && res.Response_ID != edit_id">Edit</button>
+        <button class="mat-raised-button" (click)="cancelEdit()" *ngIf="res.Response_ID == edit_id">Cancel</button>
+        <button (click)="onDelete(res.Response_ID)" *ngIf="res.User_ID == userId">Delete</button>
       </header>
-      <p class="body">{{ res.Content }}</p>
+        <p class="body" *ngIf="edit_id != res.Response_ID">
+          {{ res.Content }}
+        </p>
+        <form [formGroup]="editForm" (ngSubmit)="cmtEdit(edit_id)" *ngIf="edit_id == res.Response_ID">
+          <label for="content">Content:</label>
+          <textarea [(ngModel)]="content" rows="5" cols="60" id="content" formControlName="content">{{content}}</textarea>
+          <br>
+          <button class="mat-raised-button mat-primary" (click)="cmtEdit(edit_id)">Update</button>
+        </form>
       </div>
     <hr>
   </div>

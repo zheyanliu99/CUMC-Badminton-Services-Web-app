@@ -1,7 +1,7 @@
 export class postInput {
     Post_ID: number;
     Title: string;
-    Author: string;
+    User_ID: string;
     Time: string;
     Location_ID: number;
     Label: string;
@@ -9,5 +9,5 @@ export class postInput {
     Location: string;
     Map_URL: string;
     Thumbs: number;
-    is_thumbed: number;
+    is_Thumbed: number;
   }
