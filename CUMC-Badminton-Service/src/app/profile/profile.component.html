@@ -18,8 +18,8 @@
     <th>Sex</th>
     <th>Email</th>
     <th>Credits</th>
-    <th>Day</th>
-    <th>Month</th>
+    <th>month</th>
+    <th>day</th>
     <th>Year</th>
     <th>Preference</th>
   </tr>
@@ -31,8 +31,8 @@
       <td>{{profile.sex}}</td>
       <td>{{profile.email}}</td>
       <td>{{profile.credits}}</td>
-      <td>{{profile.day}}</td>
       <td>{{profile.month}}</td>
+      <td>{{profile.day}}</td>
       <td>{{profile.year}}</td>
       <td>{{profile.preference}}</td>
     </tr>
@@ -41,6 +41,7 @@
 </table>
 
 
-<button mat-raised-button (click)="openDialog()">Edit my profile</button>
+<button mat-raised-button (click)="editDialog()" *ngIf="profile2[0].userid.toString() == userId">Edit my profile</button>
+
 
 
