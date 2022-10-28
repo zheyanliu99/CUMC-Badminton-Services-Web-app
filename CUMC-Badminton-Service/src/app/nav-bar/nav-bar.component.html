@@ -24,8 +24,13 @@
           <a routerLink="/my-posts">My Posts</a>
         </div>
       </div>
-      <div class="right">
-        <a routerLink="/profile">My Profile</a>
+      <div class="dropdown">
+        <button class="dropbtn">Profile
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a routerLink="/profile">My Profile</a>
+        </div>
       </div>
       <div class="topnav-right">
         <a routerLink="/login" class="button fancy-button" (click)="onClick()">

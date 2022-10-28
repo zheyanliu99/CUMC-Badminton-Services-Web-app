@@ -1,0 +1,29 @@
+<h1 mat-dialog-title *ngIf="method == 'edit'">Edit my profile:</h1>
+
+
+<mat-dialog-content [formGroup]="newprofileForm" (ngSubmit)="postSubmit()">
+
+  <div>
+    <label for="username">username:</label>
+    <input id="username" type="text" formControlName="username">
+  </div>
+  <div>
+    <label for="sex">sex:</label>
+    <select id="sex" name="sex" formControlName="sex">
+      <option value="Female">Female</option>
+      <option value="Male">Male</option>
+    </select>
+  </div>
+  <br>
+  <div>
+    <label for="preference">preference:</label>
+    <textarea rows="5" cols="60" id="preference" name="preference" formControlName="preference"></textarea>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="mat-raised-button"(click)="close()">Close</button>
+  <button class="mat-raised-button mat-primary"(click)="postSubmit()">Submit</button>
+</mat-dialog-actions>
+

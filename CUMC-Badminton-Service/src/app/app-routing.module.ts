@@ -9,6 +9,7 @@ import { ForumComponent } from './forum/forum.component';
 import { PostDetailsComponent } from './post-details/post-details.component';
 import { MyPostsComponent } from './my-posts/my-posts.component';
 import { profileComponent } from './profile/profile.component';
+import { AddprofileDialogComponent } from './profile-edit/profile-edit.component';
 
 const routes: Routes = [
   {path:'', component:IndexComponent},
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path:'post/:post_id', component:PostDetailsComponent},
   {path:'my-posts', component:MyPostsComponent},
   {path:'profile', component:profileComponent},
+  {path:'profile-edit', component:AddprofileDialogComponent},
 ];
 
 @NgModule({

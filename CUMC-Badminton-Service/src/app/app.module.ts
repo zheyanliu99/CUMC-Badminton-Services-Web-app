@@ -28,6 +28,7 @@ import { MyPostsComponent } from './my-posts/my-posts.component';
 import {MatListModule} from "@angular/material/list";
 import { SessionsEditComponent } from './sessions-edit/sessions-edit.component';
 import { profileComponent } from "./profile/profile.component";
+import { AddprofileDialogComponent } from './profile-edit/profile-edit.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { profileComponent } from "./profile/profile.component";
     MyPostsComponent,
     SessionsEditComponent,
     profileComponent,
+    AddprofileDialogComponent,
   ],
   entryComponents: [AddPostDialogComponent],
   imports: [
