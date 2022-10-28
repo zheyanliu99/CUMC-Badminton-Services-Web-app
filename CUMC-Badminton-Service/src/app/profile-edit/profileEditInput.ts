@@ -7,4 +7,5 @@ export class profileEditInput {
     username: string;
     year: number;
     userId: string;
+    credit: number;
   }

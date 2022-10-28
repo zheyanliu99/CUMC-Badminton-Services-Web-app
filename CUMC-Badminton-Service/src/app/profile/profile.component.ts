@@ -40,40 +40,32 @@ export class profileComponent implements OnInit {
     return this.http.get<any>(`${environment.ms1Url}/api/userprofile/${this.userId}`);
   }
 
-  quit(userId:string): void{
-    console.log('quit')
-    this.delete_from_profile(userId).subscribe(results => {
-      if(results.success){
-        alert(results.data)}
-      else{
-        alert(results.data)
+  load_page() {
+    this.get_allprofile().subscribe(results => {
+      console.log(results)
+      if (results.success) {
+        console.log("update profile")
+        this.profile2 = results.data
+        console.log(this.profile2)
+      } else {
+        alert("profile Not Found")
       }
-      this.get_allprofile().subscribe(results => {
-        console.log(results.data)
-        if(results.success){
-          console.log("update data")
-          this.profile2 = results.data
-          console.log(this.profile2)
-        }
-        else{
-          alert("Results Not Found")
-        }
-      })
     })
   }
-  delete_from_profile(userId:string):Observable<any>{
-    return this.http.get<any>(`${environment.ms2Url}/api/userprofile/${userId}/quit/${this.userId}`)
-  }
 
-  openDialog() {
+
+  editDialog() {
     let dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      method: 'edit'
+      method: 'edit',
+      old: this.profile2
     }
 
     let dialogRef = this.dialog.open(AddprofileDialogComponent, dialogConfig)
     dialogRef.afterClosed().subscribe(results => {
       console.log(results)
+      alert("Succeed!")
+      this.load_page()
     })
   }
 

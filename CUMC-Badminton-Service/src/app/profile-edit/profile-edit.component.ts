@@ -1,5 +1,5 @@
 import {Component, OnInit, Inject} from '@angular/core';
-import {Observable} from "rxjs";
+import {max, Observable} from "rxjs";
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {environment} from 'src/environments/environment';
 import { profileEditInput } from './profileEditInput';
@@ -32,9 +32,11 @@ export class AddprofileDialogComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.method == "edit"){
+      // @ts-ignore
       this.newprofileForm = this.formBuilder.group({
         user_id: this.userId,
         username: new FormControl(this.profile2[0].username, [Validators.required, Validators.maxLength(30)]),
+        email: new FormControl(this.profile2[0].email, [Validators.required, Validators.email]),
         sex: new FormControl(this.profile2[0].sex, [Validators.required]),
         preference: new FormControl(this.profile2[0].preference, [Validators.required]),
       });
@@ -69,7 +71,9 @@ export class AddprofileDialogComponent implements OnInit {
   edit_post(input: object): Observable<any> {
     console.log("post editing with DB")
     // return Object({"success": true})
+    console.log(input)
     return this.http.post<any>(`${environment.ms1Url}/api/userprofile/edit/${this.userId}`, input)
+
   }
 
   close() {
