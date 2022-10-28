@@ -130,7 +130,7 @@ export class PostDetailsComponent implements OnInit, OnChanges {
 
   add_comment(input: object): Observable<any>{
     console.log("adding comment with DB")
-    return this.http.post<any>(`${environment.ms3Url}api/forum/post/${this.post_id}/newresponse/user_id/${this.userId}`, input)
+    return this.http.post<any>(`${environment.ms3Url}/api/forum/post/${this.post_id}/newresponse/user_id/${this.userId}`, input)
   }
 
   editDialog() {
@@ -202,7 +202,7 @@ export class PostDetailsComponent implements OnInit, OnChanges {
 
   edit_comment(input: object, resp_id: number): Observable<any>{
     console.log("editing comment with DB")
-    return this.http.post<any>(`${environment.ms3Url}api/forum/resp/${resp_id}/edit/user_id/${this.userId}`, input)
+    return this.http.post<any>(`${environment.ms3Url}/api/forum/resp/${resp_id}/edit/user_id/${this.userId}`, input)
   }
 
 }

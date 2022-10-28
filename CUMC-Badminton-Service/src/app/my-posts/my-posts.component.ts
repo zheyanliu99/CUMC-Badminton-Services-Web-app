@@ -38,7 +38,8 @@ export class MyPostsComponent implements OnInit {
         }
         else{
           console.log(results)
-          alert("Results Not Found")
+          this.posts = undefined
+          // alert("Results Not Found")
         }
       })
     }

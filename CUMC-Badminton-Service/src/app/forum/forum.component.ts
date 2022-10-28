@@ -103,6 +103,7 @@ export class ForumComponent implements OnInit, OnChanges {
     let dialogRef = this.dialog.open(AddPostDialogComponent, dialogConfig)
     dialogRef.afterClosed().subscribe(results => {
       console.log(results)
+      this.load_page()
     })
   }
 
