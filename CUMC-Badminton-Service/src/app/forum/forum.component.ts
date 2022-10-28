@@ -91,7 +91,8 @@ export class ForumComponent implements OnInit, OnChanges {
 
   get_post_cat(cat: string): Observable<any>{
     console.log('cat interact with db')
-    return this.http.get<any>(`${environment.ms3Url}/api/forum/cat/${cat}/user_id/${this.userId}`);
+    const label_dict = {'Administrative': '1', 'Lost and Found': '2', 'Call for Partners': '3', 'Others': '4'}
+    return this.http.get<any>(`${environment.ms3Url}/api/forum/cat/${label_dict[cat]}/user_id/${this.userId}`);
   }
 
   openDialog() {

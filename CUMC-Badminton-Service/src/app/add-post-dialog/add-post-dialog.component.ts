@@ -18,6 +18,7 @@ export class AddPostDialogComponent implements OnInit {
   postForm: FormGroup;
   method: string;
   oldPost: Array<postInput>;
+  label_dict: object;
 
   constructor(private http:HttpClient,
               private formBuilder: FormBuilder,
@@ -32,12 +33,16 @@ export class AddPostDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.locations = ["1", "2", "3"]
+    this.label_dict = {'Administrative': '1', 'Lost and Found': '2', 'Call for Partners': '3', 'Others': '4'}
+
     if (this.method == "edit"){
+      console.log(this.label_dict[this.oldPost[0].Label])
       this.postForm = this.formBuilder.group({
         user_id: this.userId,
         title: new FormControl(this.oldPost[0].Title, [Validators.required, Validators.maxLength(30)]),
-        label: new FormControl(this.oldPost[0].Label, [Validators.required]),
-        location: this.oldPost[0].Location,
+        label: new FormControl(this.label_dict[this.oldPost[0].Label], [Validators.required]),
+        location: this.oldPost[0].Location_ID,
         content: new FormControl(this.oldPost[0].Content, [Validators.required, Validators.maxLength(300)]),
       });
     }
@@ -49,7 +54,6 @@ export class AddPostDialogComponent implements OnInit {
         content: new FormControl(``, [Validators.required, Validators.maxLength(300)]),
       });
     }
-    this.locations = ["1", "2", "3"]
   }
 
   postSubmit(): void{

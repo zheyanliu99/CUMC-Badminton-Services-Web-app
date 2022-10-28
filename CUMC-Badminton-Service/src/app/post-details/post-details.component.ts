@@ -143,7 +143,9 @@ export class PostDetailsComponent implements OnInit, OnChanges {
     let dialogRef = this.dialog.open(AddPostDialogComponent, dialogConfig)
     dialogRef.afterClosed().subscribe(results => {
       console.log(results)
-      alert("Succeed!")
+      if (results != undefined){
+        alert("Succeed!")
+      }
       this.load_page()
     })
   }
@@ -184,7 +186,7 @@ export class PostDetailsComponent implements OnInit, OnChanges {
       const input = {"content": this.editForm.value.content}
       console.log(input)
       this.edit_comment(input, resp_id).subscribe(results => {
-        if (results.response.success) {
+        if (results.success) {
           console.log("comment edited")
           this.edit_id = undefined
           this.content = undefined
