@@ -40,6 +40,7 @@ export class profileComponent implements OnInit {
     return this.http.get<any>(`${environment.ms1Url}/api/userprofile/${this.userId}`);
   }
 
+
   load_page() {
     this.get_allprofile().subscribe(results => {
       console.log(results)

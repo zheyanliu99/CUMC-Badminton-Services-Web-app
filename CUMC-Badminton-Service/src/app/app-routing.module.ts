@@ -10,6 +10,8 @@ import { PostDetailsComponent } from './post-details/post-details.component';
 import { MyPostsComponent } from './my-posts/my-posts.component';
 import { profileComponent } from './profile/profile.component';
 import { AddprofileDialogComponent } from './profile-edit/profile-edit.component';
+import { partnerComponent } from './partner/partner.component';
+import { AddpartnerDialogComponent } from './partner-add/partner-add.component';
 
 const routes: Routes = [
   {path:'', component:IndexComponent},
@@ -22,6 +24,8 @@ const routes: Routes = [
   {path:'my-posts', component:MyPostsComponent},
   {path:'profile', component:profileComponent},
   {path:'profile-edit', component:AddprofileDialogComponent},
+  {path:'partner', component:partnerComponent},
+  {path:'partner-add', component:AddpartnerDialogComponent},
 ];
 
 @NgModule({

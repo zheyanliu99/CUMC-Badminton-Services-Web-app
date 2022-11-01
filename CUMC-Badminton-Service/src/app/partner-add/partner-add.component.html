@@ -1,0 +1,17 @@
+<h1 mat-dialog-title *ngIf="method == 'edit'">Edit my partner:</h1>
+
+
+<mat-dialog-content [formGroup]="newpartnerForm" (ngSubmit)="postSubmit()">
+  <div>
+    <label for="userid_to">userid_to:</label>
+    <input id="userid_to" type="text" formControlName="userid_to">
+  </div>
+
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="mat-raised-button"(click)="close()">Close</button>
+  <button class="mat-raised-button mat-primary"(click)="postSubmit()">Submit</button>
+</mat-dialog-actions>
+
