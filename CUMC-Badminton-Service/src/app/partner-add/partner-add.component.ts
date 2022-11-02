@@ -13,11 +13,12 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 })
 export class AddpartnerDialogComponent implements OnInit {
 
-  partner: Array<partnerAddInput>;
+  newpartner: Array<partnerAddInput>;
   userId: string;
   method: string;
   newpartnerForm: FormGroup;
   status: boolean;
+  userid: number;
 
   constructor(private http:HttpClient,
               private formBuilder: FormBuilder,
@@ -26,8 +27,9 @@ export class AddpartnerDialogComponent implements OnInit {
     this.userId = sessionStorage.getItem('userId')
     this.method = data.method
     if (this.method == "add"){
-      this.partner = data.old
-      this.status = data.old
+      this.newpartner = data.old
+      this.status = data.addpartnerstatus
+      console.log('Start updating partner')
 
     }
   }
@@ -37,8 +39,7 @@ export class AddpartnerDialogComponent implements OnInit {
       // @ts-ignore
       // @ts-ignore
       this.newpartnerForm = this.formBuilder.group({
-        user_id: this.userId,
-        userid_to: new FormControl(this.partner[0].userid_to, [Validators.required]),
+        userid_to: new FormControl(``, [Validators.required]),
       });
     }
   }
@@ -49,7 +50,7 @@ export class AddpartnerDialogComponent implements OnInit {
       const input = this.newpartnerForm.value
 
       if(this.status == true){
-        alert('Can not add partner')
+        alert('already had a partner, Can not add partner')
         console.log("partner can not added")
       }
       else{
@@ -75,12 +76,21 @@ export class AddpartnerDialogComponent implements OnInit {
     }
   }
 
+
+
   add_partner(input: object): Observable<any> {
-    console.log("post adding with DB")
+    console.log("adding with DB")
     // return Object({"success": true})
     console.log(input)
     return this.http.post<any>(`${environment.ms1Url}api/user/${this.userId}/add_partner`, input)
 
+  }
+
+  delete_partner(userid_to:number):Observable<any>{
+    console.log("start deleting")
+    // @ts-ignore
+    return this.http.get<any>(`${environment.ms1Url}/api/user/${this.userId}/delete_partner/${userid_to}`)
+    console.log("delete with DB")
   }
 
   close() {

@@ -11,24 +11,37 @@
 
 <p>userID: {{userId}}</p>
 
+<div *ngIf="partner == null">
+  <br>
+  You don't have any partner yet
+  <br>
+  <ng-container *ngIf="partner == null">
+    <button mat-raised-button color="basic" cdkFocusInitial class="col-md-3" type="submit"
+            [disabled]=false (click)="AddpartnerDialog()">add partner</button>
+  </ng-container>
+</div>
+
+<body *ngIf="partner != null">
+<div *ngFor="let part of partner">
 <table class="content-table">
   <thead>
   <tr>
     <th>My PartnerID:</th>
-
   </tr>
   </thead>
   <tbody >
-  <ng-container *ngFor="let partner of partner">
+  <ng-container *ngFor="let part of partner">
     <tr>
-      <td>{{partner.userid_to}}</td>
-
+      <td>{{part.userid_to}}</td>
     </tr>
   </ng-container>
   </tbody>
 </table>
-
-<button mat-raised-button (click)="addpartnerDialog()" *ngIf="partner[0].userid_to.toString() != userId.toString()">add partner</button>
-
-
+</div>
+<td>
+  <ng-container *ngFor="let part of partner">
+    <button (click)="onDelete(part.userid_to)" *ngIf="part.userid_to.toString() != userId.toString()">Delete</button>
+  </ng-container>
+</td>
+</body>
 
