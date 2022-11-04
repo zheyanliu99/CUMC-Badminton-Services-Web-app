@@ -1,6 +1,14 @@
 <h1>Available Sessions</h1> 
 
 <p>userID: {{userId}}</p>
+
+<form [formGroup]="formGroup">
+<mat-radio-group aria-label="Select an option" formControlName="register_type">
+    <mat-radio-button value="0" name="register_type" [checked]='true'>Register for myself</mat-radio-button>
+    <br>
+    <mat-radio-button value="1" name="register_type">Register as partners</mat-radio-button>
+  </mat-radio-group>
+
  <table class="content-table">
     <thead>
         <tr>
@@ -35,3 +43,4 @@
         </ng-container>
     </tbody>
     </table>
+</form>

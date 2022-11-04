@@ -1,4 +1,5 @@
 import { Component, OnInit, Input , OnChanges, SimpleChanges} from '@angular/core';
+import { FormControl, FormGroup} from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { sessionInput } from './sessionInput';
 import { HttpClient } from '@angular/common/http';
@@ -11,14 +12,20 @@ import { Observable } from 'rxjs';
 })
 export class SessionsComponent implements OnInit, OnChanges {
 
+  formGroup!: FormGroup; 
   sessions: Array<sessionInput>;
   userId: string;
+  register_type: number;
 
   constructor(private http:HttpClient) {
-    this.userId = sessionStorage.getItem('userId')
+    this.userId = sessionStorage.getItem('userId');
   }
 
   ngOnInit(): void {
+    this.formGroup = new FormGroup({
+      register_type: new FormControl()
+   }); 
+
     this.get_available_sessions().subscribe(results => {
       if(results.success){
         console.log("update data")
@@ -42,12 +49,13 @@ export class SessionsComponent implements OnInit, OnChanges {
   }
 
   register(sessionid:number): void{
-    console.log('add')
+    this.register_type = this.formGroup.value['register_type'] ?  this.formGroup.value['register_type'] : 0
+    console.log(this.register_type)
     this.add_to_waitlist(sessionid).subscribe(results => {
       if(results.success){
         alert(results.message)}
       else{
-        alert("Register failed")
+        alert(results.message)
       }
     this.get_available_sessions().subscribe(results => {
       if(results.success){
@@ -61,7 +69,7 @@ export class SessionsComponent implements OnInit, OnChanges {
   }
 
   add_to_waitlist(sessionid:number):Observable<any>{
-    return this.http.get<any>(`${environment.ms2Url}/api/session/${sessionid}/enroll/${this.userId}`)
+    return this.http.post<any>(`${environment.ms2Url}/api/session/${sessionid}/enroll/${this.userId}`, this.register_type)
   }
 
 }
