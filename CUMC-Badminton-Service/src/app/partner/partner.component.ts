@@ -18,6 +18,7 @@ export class partnerComponent implements OnInit {
   partner: Array<partnerInput>;
   status: boolean;
   message: string;
+  userid_from: string;
 
   constructor(private http:HttpClient,
               public dialog: MatDialog) {
@@ -31,27 +32,29 @@ export class partnerComponent implements OnInit {
         console.log("data showing")
         this.partner = results.data
         this.status = results.success
-        console.log(this.userId, this.partner)
+        this.userid_from = this.userId
+        console.log(this.userId, this.partner, this.userid_from)
       }
       else{
-        alert("Results Not Found")
+        if(results.success == false){
+          alert("Results Not Found")
+        }
       }
     })
   }
 
   get_allpartner():Observable<any>{
     // @ts-ignore
-    console.log("results")
     return this.http.get<any>(`${environment.ms1Url}/api/user/${this.userId}/partner`)
   }
 
   load_page() {
     this.get_allpartner().subscribe(results => {
-      console.log("results")
-      if(results.success){
+      if(results.success == true){
         console.log("data showing")
         this.partner = results.data
         this.status = results.success
+        this.userid_from = this.userId
         console.log(this.userId, this.partner)
       }
       else{
@@ -65,7 +68,8 @@ export class partnerComponent implements OnInit {
     dialogConfig.data = {
       method: 'add',
       old: this.partner,
-      addpartnerstatus: this.status
+      addpartnerstatus: this.status,
+      userid_from: this.userId
     }
 
     let dialogRef = this.dialog.open(AddpartnerDialogComponent, dialogConfig)

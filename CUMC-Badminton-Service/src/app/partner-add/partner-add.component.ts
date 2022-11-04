@@ -19,6 +19,7 @@ export class AddpartnerDialogComponent implements OnInit {
   newpartnerForm: FormGroup;
   status: boolean;
   userid: number;
+  userid_from: number;
 
   constructor(private http:HttpClient,
               private formBuilder: FormBuilder,
@@ -29,6 +30,7 @@ export class AddpartnerDialogComponent implements OnInit {
     if (this.method == "add"){
       this.newpartner = data.old
       this.status = data.addpartnerstatus
+      this.userid_from = data.userid_from
       console.log('Start updating partner')
 
     }
@@ -82,7 +84,8 @@ export class AddpartnerDialogComponent implements OnInit {
     console.log("adding with DB")
     // return Object({"success": true})
     console.log(input)
-    return this.http.post<any>(`${environment.ms1Url}api/user/${this.userId}/add_partner`, input)
+    console.log(`${environment.ms1Url}api/user/${this.userId}/add_partner`)
+    return this.http.post<any>(`${environment.ms1Url}/api/user/${this.userId}/add_partner`, input)
 
   }
 

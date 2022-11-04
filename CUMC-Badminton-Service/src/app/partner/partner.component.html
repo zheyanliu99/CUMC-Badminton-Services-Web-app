@@ -33,6 +33,8 @@
   <ng-container *ngFor="let part of partner">
     <tr>
       <td>{{part.userid_to}}</td>
+      <button class="mat-raised-button" (click)="ngOnInit()">part.userid_to</button>
+      <a href={{ url_for('userprofile.followers', user_id=user_id) }}>Details</a>
     </tr>
   </ng-container>
   </tbody>

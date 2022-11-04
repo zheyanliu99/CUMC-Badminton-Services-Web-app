@@ -55,6 +55,7 @@ export class profileComponent implements OnInit {
   }
 
 
+
   editDialog() {
     let dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
