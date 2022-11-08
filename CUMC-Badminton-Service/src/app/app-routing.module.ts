@@ -12,6 +12,8 @@ import { profileComponent } from './profile/profile.component';
 import { AddprofileDialogComponent } from './profile-edit/profile-edit.component';
 import { partnerComponent } from './partner/partner.component';
 import { AddpartnerDialogComponent } from './partner-add/partner-add.component';
+import { chatComponent } from './chat/chat.component';
+import { searchchatDialogComponent } from './chat-search-dialog/chat-search-dialog.component';
 
 const routes: Routes = [
   {path:'', component:IndexComponent},
@@ -26,6 +28,8 @@ const routes: Routes = [
   {path:'profile-edit', component:AddprofileDialogComponent},
   {path:'partner', component:partnerComponent},
   {path:'partner-add', component:AddpartnerDialogComponent},
+  {path:'chat', component:chatComponent},
+  {path:'chat-search-dialog', component:searchchatDialogComponent},
 ];
 
 @NgModule({

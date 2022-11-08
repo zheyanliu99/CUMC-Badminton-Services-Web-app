@@ -1,0 +1,15 @@
+<h1 mat-dialog-title *ngIf="method == 'add'">search chat history:</h1>
+
+<mat-dialog-content [formGroup]="newchatForm" (ngSubmit)="postSubmit()">
+  <div>
+    <label for="userid_to">userid_to:</label>
+    <input id="userid_to" type="number" formControlName="userid_to">
+  </div>
+</mat-dialog-content>
+
+
+      <mat-dialog-actions>
+        <button class="mat-raised-button"(click)="close()">Close</button>
+        <button class="mat-raised-button mat-primary"(click)="postSubmit()">Submit</button>
+      </mat-dialog-actions>
+

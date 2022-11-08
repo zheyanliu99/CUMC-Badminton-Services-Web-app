@@ -32,6 +32,8 @@ import { profileComponent } from "./profile/profile.component";
 import { AddprofileDialogComponent } from './profile-edit/profile-edit.component';
 import { partnerComponent } from './partner/partner.component';
 import { AddpartnerDialogComponent } from './partner-add/partner-add.component';
+import { chatComponent } from './chat/chat.component';
+import { searchchatDialogComponent } from './chat-search-dialog/chat-search-dialog.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,9 @@ import { AddpartnerDialogComponent } from './partner-add/partner-add.component';
     AddprofileDialogComponent,
     partnerComponent,
     AddpartnerDialogComponent,
+    chatComponent,
+    searchchatDialogComponent,
+
   ],
   entryComponents: [AddPostDialogComponent],
   imports: [

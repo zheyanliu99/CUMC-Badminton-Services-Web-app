@@ -1,0 +1,51 @@
+
+<h1>My chat history</h1>
+
+<head>
+  <meta charset="utf-8">
+  <!--font library is loaded prior to using mat-icons-->
+  <link href=
+          "https://fonts.googleapis.com/icon?family=Material+Icons&display=block"
+        rel="stylesheet">
+</head>
+
+<p>userID: {{userId}}</p>
+
+<button class="mat-raised-button mat-primary" (click)="searchchatDialog()">search chat history</button>
+
+<div *ngIf="chats == null">
+  <br>
+  You don't have any chat history
+</div>
+
+
+<div *ngIf="chats != null">
+
+  <table class="content-table">
+    <thead>
+    <tr>
+      <th>Chat_ID:</th>
+      <th>userid_from</th>
+      <th>userid_to</th>
+      <th>Content</th>
+      <th>Time</th>
+    </tr>
+    </thead>
+    <tbody >
+    <ng-container *ngFor="let chat of chats">
+      <tr>
+        <td>{{chat.Chat_ID}}</td>
+        <td>{{chat.userid_from}}</td>
+        <td>{{chat.userid_to}}</td>
+        <td>{{chat.Content}}</td>
+        <td>{{chat.Time}}</td>
+      </tr>
+    </ng-container>
+
+  </table>
+</div>
+
+
+
+
+
