@@ -9,7 +9,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 @Component({
   selector: 'app-chat-search-dialog',
   templateUrl: './chat-search-dialog.component.html',
-  styleUrls: ['./chat-search-dialog-add.component.css']
+  styleUrls: ['./chat-search-dialog.component.css']
 })
 export class searchchatDialogComponent implements OnInit {
 
@@ -34,31 +34,30 @@ export class searchchatDialogComponent implements OnInit {
     }
   }
 
+
   ngOnInit(): void {
     if (this.method == "add"){
-      // @ts-ignore
-      // @ts-ignore
       this.newchatForm = this.formBuilder.group({
         userid_to: new FormControl(``, [Validators.required]),
+        content: new FormControl(``, [Validators.required, Validators.maxLength(300)]),
       });
     }
   }
 
   postSubmit(): void{
     if(this.newchatForm.valid) {
-      console.log('Start show chat')
+      console.log('Start chat')
       const input = this.newchatForm.value
+      console.log(input)
 
       if (this.method == "add"){
-          this.get_allchat(input).subscribe(results => {
+          this.sendchat(input).subscribe(results => {
             if (results.success) {
-              console.log('save chat result')
-              this.chats = results.data
-              console.log(this.chats, this.userId)
+              console.log('send chat successfully')
               this.dialogRef.close(input)
 
             } else {
-              alert("adding chat-search-dialog failed")
+              alert("sending chat failed")
             }
           })
       }
@@ -67,7 +66,7 @@ export class searchchatDialogComponent implements OnInit {
       }
     }
     else{
-      alert("chat-search-dialog requirement not met")
+      alert("chat requirement not met")
     }
   }
 
@@ -75,11 +74,10 @@ export class searchchatDialogComponent implements OnInit {
 
 
 
-  get_allchat(input: object): Observable<any> {
+  sendchat(input: object): Observable<any> {
     console.log("search with DB")
     console.log(input)
-    return this.http.post<any>(`${environment.ms1Url}/api/user/${this.userId}/chatting/history`, input)
-
+    return this.http.post<any>(`${environment.ms1Url}/api/user/${this.userId}/chatting/sending`, input)
   }
 
   close() {

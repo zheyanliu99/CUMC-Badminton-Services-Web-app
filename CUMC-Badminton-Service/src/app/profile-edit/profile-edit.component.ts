@@ -74,7 +74,7 @@ export class AddprofileDialogComponent implements OnInit {
     console.log("post editing with DB")
     // return Object({"success": true})
     console.log(input)
-    return this.http.post<any>(`${environment.ms1Url}/api/userprofile/edit/${this.userId}`, input)
+    return this.http.post<any>(`${environment.ms2Url}/api/userprofile/edit/${this.userId}`, input)
 
   }
 

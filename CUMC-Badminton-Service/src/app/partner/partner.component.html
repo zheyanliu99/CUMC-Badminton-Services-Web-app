@@ -33,6 +33,8 @@
   <ng-container *ngFor="let part of partner">
     <tr>
       <td>{{part.userid_to}}</td>
+    <tr>
+      <td>{{part.userid_from}}</td>
     </tr>
   </ng-container>
   </tbody>
@@ -40,7 +42,12 @@
 </div>
 <td>
   <ng-container *ngFor="let part of partner">
-    <button (click)="onDelete(part.userid_to)" *ngIf="part.userid_to.toString() != userId.toString()">Delete</button>
+    <ng-container *ngIf="part.userid_from == null">
+    <button (click)="onDelete(part.userid_to)" >Delete</button>
+    </ng-container>
+    <ng-container *ngIf="part.userid_to == null">
+    <button (click)="onDelete1(part.userid_from)" >Delete</button>
+    </ng-container>
   </ng-container>
 </td>
 </body>

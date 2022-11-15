@@ -18,7 +18,7 @@ export class partnerComponent implements OnInit {
   partner: Array<partnerInput>;
   status: boolean;
   message: string;
-  userid_from: string;
+  userid_from: number;
 
   constructor(private http:HttpClient,
               public dialog: MatDialog) {
@@ -31,9 +31,7 @@ export class partnerComponent implements OnInit {
       if(results.success){
         console.log("data showing")
         this.partner = results.data
-        this.status = results.success
-        this.userid_from = this.userId
-        console.log(this.userId, this.partner, this.userid_from)
+        console.log(this.partner)
       }
       else{
         if(results.success == false){
@@ -54,10 +52,8 @@ export class partnerComponent implements OnInit {
         console.log("data showing")
         this.partner = results.data
         this.status = results.success
-        this.userid_from = this.userId
         console.log(this.userId, this.partner)
-      }
-      else{
+      }else{
         alert("Results Not Found")
       }
     })
@@ -95,6 +91,23 @@ export class partnerComponent implements OnInit {
     console.log("start deleting")
     // @ts-ignore
     return this.http.get<any>(`${environment.ms1Url}/api/user/${this.userId}/delete_partner/${userid_to}`)
+  }
+
+  onDelete1(userid_from:number): void{
+    console.log('delete response activated')
+    this.delete_partner1(userid_from).subscribe(results => {
+      if (!results.success) {
+        alert("delete response failed")
+        console.log(results)
+      }
+      this.load_page()
+    })
+  }
+
+  delete_partner1(userid_from:number):Observable<any>{
+    console.log("start deleting")
+    // @ts-ignore
+    return this.http.get<any>(`${environment.ms1Url}/api/user/${this.userId}/delete_partner/${userid_from}`)
   }
 
 

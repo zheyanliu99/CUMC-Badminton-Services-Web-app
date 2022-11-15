@@ -11,7 +11,16 @@
 
 <p>userID: {{userId}}</p>
 
-<button class="mat-raised-button mat-primary" (click)="searchchatDialog()">search chat history</button>
+<mat-dialog-content [formGroup]="newchatForm" (ngSubmit)="postSubmit()">
+  <div>
+    <label for="userid_to">userid_to:</label>
+    <input id="userid_to" type="number" formControlName="userid_to">
+  </div>
+
+  <mat-dialog-actions>
+    <button class="mat-raised-button mat-primary"(click)="postSubmit()">Find chat history</button>
+  </mat-dialog-actions>
+
 
 <div *ngIf="chats == null">
   <br>
@@ -45,6 +54,7 @@
   </table>
 </div>
 
+  <button class="mat-raised-button mat-primary"(click)="AddchatDialog()">send chat to friend</button>
 
 
 
