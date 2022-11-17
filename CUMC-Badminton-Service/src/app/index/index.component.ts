@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { currentUser } from './currentUser';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-index',
@@ -6,10 +10,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./index.component.css']
 })
 export class IndexComponent implements OnInit {
+  userId = sessionStorage.getItem('userId');
+  currentUser: Array<currentUser>;
 
-  constructor() { }
+  constructor(private http:HttpClient) { }
 
   ngOnInit(): void {
+    console.log('find most recent')
+    this.most_recent_login().subscribe(results => {
+      this.currentUser = results;
+      sessionStorage.setItem('userId', this.currentUser['userid']);
+      sessionStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+    })
+    
+    console.log(sessionStorage.getItem('userId'));
+    console.log(sessionStorage.getItem('currentUser'));
+  }
+
+  most_recent_login():Observable<any>{
+    return this.http.get<any>(`${environment.ms2Url}/api/login/mostrecent`);
   }
 
 }
+

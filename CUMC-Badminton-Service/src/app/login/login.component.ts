@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthServiceService } from '../auth-service.service';
 import { Router, RoutesRecognized } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { currentUser } from './currentUser';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +15,10 @@ import { Router, RoutesRecognized } from '@angular/router';
 export class LoginComponent implements OnInit {
   formGroup!: FormGroup; 
   userId = sessionStorage.getItem('userId');
-  constructor(private authService:AuthServiceService, private router: Router) { }
+  request_uri: string;
+  currentUser: Array<currentUser>;
+  
+  constructor(private authService:AuthServiceService, private router: Router, private http:HttpClient) { }
 
   initForm(){
     this.formGroup = new FormGroup({
@@ -23,27 +30,32 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
   }
+  
+  loginWithGoogle(){
+    console.log('begin login with Google');
+    this.login().subscribe(results => {
+      this.request_uri = results.request_uri;
+      window.location.href=this.request_uri;
+    })
 
-  loginProcess(){
-    console.log(this.formGroup.value)
-    if(this.formGroup.valid){
-      this.authService.login(this.formGroup.value).subscribe(result=>{
-        if(result.success) {
-          console.log(result);
-          alert(result.message);
-          sessionStorage.setItem('userId', result.userId);
-          this.router.navigate([''])  
-            .then(() => {
-            window.location.reload();
-          });;
-          // location.reload();
-          // this.router.navigate(['']);
-        } else {
-          alert(result.message);
-        }
-      })
-    }
+    console.log('find most recent')
+    this.most_recent_login().subscribe(results => {
+      this.currentUser = results
+    })
+    console.log(this.currentUser)
+    console.log(this.request_uri)
+    // window.location.href=this.request_uri;
   }
+
+  login():Observable<any>{
+    return this.http.get<string>(`${environment.ms2Url}/api/login`);
+  }
+
+  most_recent_login():Observable<any>{
+    return this.http.get<any>(`${environment.ms2Url}/api/login/mostrecent`);
+  }
+
+
 
 
 }
