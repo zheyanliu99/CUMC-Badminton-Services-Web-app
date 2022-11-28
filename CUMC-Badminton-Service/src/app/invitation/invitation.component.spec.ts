@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddpartnerDialogComponent } from './partner-add.component';
+import { sendinviteDialogComponent } from './invitation.component';
 
-describe('profileComponent', () => {
-  let component: AddpartnerDialogComponent;
-  let fixture: ComponentFixture<AddpartnerDialogComponent>;
+describe('invitationComponent', () => {
+  let component: sendinviteDialogComponent;
+  let fixture: ComponentFixture<sendinviteDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddpartnerDialogComponent ]
+      declarations: [ sendinviteDialogComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AddpartnerDialogComponent);
+    fixture = TestBed.createComponent(sendinviteDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

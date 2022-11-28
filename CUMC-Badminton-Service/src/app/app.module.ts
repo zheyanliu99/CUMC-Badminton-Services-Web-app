@@ -34,6 +34,7 @@ import { partnerComponent } from './partner/partner.component';
 import { AddpartnerDialogComponent } from './partner-add/partner-add.component';
 import { chatComponent } from './chat/chat.component';
 import { searchchatDialogComponent } from './chat-search-dialog/chat-search-dialog.component';
+import { sendinviteDialogComponent } from './invitation/invitation.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { searchchatDialogComponent } from './chat-search-dialog/chat-search-dial
     AddpartnerDialogComponent,
     chatComponent,
     searchchatDialogComponent,
+    sendinviteDialogComponent,
 
   ],
   entryComponents: [AddPostDialogComponent],

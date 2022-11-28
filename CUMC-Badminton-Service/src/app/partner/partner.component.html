@@ -21,6 +21,48 @@
   </ng-container>
 </div>
 
+
+<h1>View invitations</h1>
+
+
+<ng-container *ngIf="partner == null">
+  <button mat-raised-button color="basic" cdkFocusInitial class="col-md-3" type="submit"
+          [disabled]=false (click)="sendinviteDialog()">send invite</button>
+</ng-container>
+
+<div *ngIf="invitation == null">
+  <br>
+  No Invitation to you
+</div>
+
+
+<div *ngIf="invitation != null">
+
+  <table class="content-table">
+    <thead>
+    <tr>
+      <th>Invitation_ID:</th>
+      <th>userid_from:</th>
+      <th>userid_to:</th>
+      <th>Content:</th>
+      <th>response:</th>
+    </tr>
+    </thead>
+    <tbody >
+    <ng-container *ngFor="let invite of invitation">
+      <tr>
+        <td>{{invite.Invitation_ID}}</td>
+        <td>{{invite.userid_from}}</td>
+        <td>{{invite.userid_to}}</td>
+        <td>{{invite.Content}}</td>
+        <td>{{invite.response}}</td>
+
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+</div>
+
 <body *ngIf="partner != null">
 <div *ngFor="let part of partner">
 <table class="content-table">
@@ -72,7 +114,7 @@
 
   <div *ngIf="otherprofile == null">
     <br>
-    You don't search anyone's profile history
+    Your search is empty
   </div>
 
 

@@ -1,8 +1,9 @@
-export class partnerInput {
-    userid_to: number;
-    userid: number;
-    message: string;
+export class invitationInput {
+    Invitation_ID: number;
     userid_from: number;
+    userid_to: number;
+    Content: string;
+    response: number;
 
 
   }

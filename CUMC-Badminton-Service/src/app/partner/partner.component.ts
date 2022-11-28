@@ -2,9 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
 import {environment} from 'src/environments/environment';
 import { partnerInput } from './partnerInput';
+import { invitationInput } from './invitationInput';
 import {HttpClient} from "@angular/common/http";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {AddpartnerDialogComponent} from "../partner-add/partner-add.component";
+import {sendinviteDialogComponent} from "../invitation/invitation.component";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {otherprofileInput} from "./otherprofileInput";
 
@@ -17,6 +19,7 @@ export class partnerComponent implements OnInit {
 
   userId: string;
   partner: Array<partnerInput>;
+  invitation: Array<invitationInput>;
   status: boolean;
   message: string;
   userid_from: number;
@@ -32,6 +35,18 @@ export class partnerComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("init")
+    this.get_invitation().subscribe(results => {
+      if(results.success){
+        console.log("show invitation")
+        this.invitation = results.data
+        console.log(this.invitation)
+      }
+      else{
+        if(results.success == false){
+          alert("Results Not Found")
+        }
+      }
+    })
     this.get_allpartner().subscribe(results => {
       if(results.success){
         console.log("data showing")
@@ -54,6 +69,11 @@ export class partnerComponent implements OnInit {
   get_allpartner():Observable<any>{
     // @ts-ignore
     return this.http.get<any>(`${environment.ms1Url}/api/user/${this.userId}/partner`)
+  }
+
+  get_invitation():Observable<any>{
+    // @ts-ignore
+    return this.http.get<any>(`${environment.ms1Url}/api/user/${this.userId}/partner/invitation`)
   }
 
   load_page() {
@@ -79,6 +99,20 @@ export class partnerComponent implements OnInit {
     }
 
     let dialogRef = this.dialog.open(AddpartnerDialogComponent, dialogConfig)
+    dialogRef.afterClosed().subscribe(results => {
+      console.log(results)
+      alert("Succeed!")
+      this.load_page()
+    })
+  }
+
+  sendinviteDialog() {
+    let dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      method: 'add',
+    }
+
+    let dialogRef = this.dialog.open(sendinviteDialogComponent, dialogConfig)
     dialogRef.afterClosed().subscribe(results => {
       console.log(results)
       alert("Succeed!")

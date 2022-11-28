@@ -1,6 +1,4 @@
-export class partnerAddInput {
+export class invitation {
     userid_to: number;
-    userid: number;
-    message: string;
-    userid_from: number;
+    content: string;
   }
