@@ -15,10 +15,6 @@
   <br>
   You don't have any partner yet
   <br>
-  <ng-container *ngIf="partner == null">
-    <button mat-raised-button color="basic" cdkFocusInitial class="col-md-3" type="submit"
-            [disabled]=false (click)="AddpartnerDialog()">add partner</button>
-  </ng-container>
 </div>
 
 
@@ -46,6 +42,8 @@
       <th>userid_to:</th>
       <th>Content:</th>
       <th>response:</th>
+      <th>add partner:</th>
+
     </tr>
     </thead>
     <tbody >
@@ -56,6 +54,12 @@
         <td>{{invite.userid_to}}</td>
         <td>{{invite.Content}}</td>
         <td>{{invite.response}}</td>
+        <td>
+        <ng-container *ngIf="partner == null">
+          <button mat-raised-button color="basic" cdkFocusInitial class="col-md-3" type="submit"
+                  [disabled]=false (click)="Addpartner({userid_to: invite.userid_from})">add partner</button>
+        </ng-container>
+        </td>
 
       </tr>
     </ng-container>
@@ -63,7 +67,7 @@
   </table>
 </div>
 
-<body *ngIf="partner != null">
+
 <div *ngFor="let part of partner">
 <table class="content-table">
   <thead>
@@ -92,7 +96,7 @@
     </ng-container>
   </ng-container>
 </td>
-</body>
+
 
 <br>
 <h1>Search Profile</h1>

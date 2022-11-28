@@ -40,30 +40,26 @@ export class partnerComponent implements OnInit {
         console.log("show invitation")
         this.invitation = results.data
         console.log(this.invitation)
-      }
-      else{
-        if(results.success == false){
-          alert("Results Not Found")
         }
+      else{
+        alert("Results Not Found")
       }
     })
     this.get_allpartner().subscribe(results => {
-      if(results.success){
+      if(results.data){
+        console.log(results)
         console.log("data showing")
         this.partner = results.data
         console.log(this.partner)
-      }
-      else{
-        if(results.success == false){
-          alert("Results Not Found")
         }
+      else{
+        alert("Results Not Found")
       }
     })
     this.profilesearchform = new FormGroup({
       email: new FormControl(),
       number: new FormControl(),
     });
-
   }
 
   get_allpartner():Observable<any>{
@@ -78,16 +74,18 @@ export class partnerComponent implements OnInit {
 
   load_page() {
     this.get_allpartner().subscribe(results => {
-      if(results.success == true){
+      if(results.success){
         console.log("data showing")
         this.partner = results.data
         this.status = results.success
         console.log(this.userId, this.partner)
-      }else{
+        }
+      else {
         alert("Results Not Found")
       }
     })
   }
+
 
   AddpartnerDialog() {
     let dialogConfig = new MatDialogConfig();
@@ -104,6 +102,28 @@ export class partnerComponent implements OnInit {
       alert("Succeed!")
       this.load_page()
     })
+  }
+
+  Addpartner(input) {
+    if (input){
+      this.add_partner(input).subscribe(results => {
+        if (results.success) {
+          console.log("partner added")
+          this.load_page()
+        } else {
+          alert("Adding partner failed, she/He already had a partner")
+          console.log(results)
+        }
+      })
+    }
+  }
+
+  add_partner(input: object): Observable<any> {
+    console.log("adding with DB")
+    // return Object({"success": true})
+    console.log(input)
+    return this.http.post<any>(`${environment.ms1Url}/api/user/${this.userId}/add_partner`, input)
+
   }
 
   sendinviteDialog() {
@@ -127,7 +147,7 @@ export class partnerComponent implements OnInit {
         alert("delete response failed")
         console.log(results)
       }
-      this.load_page()
+      location.reload()
     })
   }
 
@@ -144,7 +164,7 @@ export class partnerComponent implements OnInit {
         alert("delete response failed")
         console.log(results)
       }
-      this.load_page()
+      location.reload()
     })
   }
 
@@ -184,9 +204,4 @@ export class partnerComponent implements OnInit {
     // @ts-ignore
     return this.http.post<any>(`${environment.ms1Url}/api/user/${this.userId}/search_pro`, input)
   }
-
-
-
-
-
 }

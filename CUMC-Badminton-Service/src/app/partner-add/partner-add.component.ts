@@ -80,11 +80,12 @@ export class AddpartnerDialogComponent implements OnInit {
 
 
 
+
+
   add_partner(input: object): Observable<any> {
     console.log("adding with DB")
     // return Object({"success": true})
     console.log(input)
-    console.log(`${environment.ms1Url}api/user/${this.userId}/add_partner`)
     return this.http.post<any>(`${environment.ms1Url}/api/user/${this.userId}/add_partner`, input)
 
   }
