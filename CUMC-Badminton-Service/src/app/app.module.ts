@@ -39,6 +39,7 @@ import {MatSelectModule} from "@angular/material/select";
 import { ArticleListComponent } from './shared/posts/article-list/article-list.component';
 import { ArticlePreviewComponent } from './shared/posts/article-preview/article-preview.component';
 import { ArticleMetaComponent } from './shared/posts/article-meta/article-meta.component';
+import { sendinviteDialogComponent } from './invitation/invitation.component';
 
 @NgModule({
   declarations: [
@@ -59,9 +60,6 @@ import { ArticleMetaComponent } from './shared/posts/article-meta/article-meta.c
     AddpartnerDialogComponent,
     chatComponent,
     searchchatDialogComponent,
-    ArticleListComponent,
-    ArticlePreviewComponent,
-    ArticleMetaComponent,
 
   ],
   entryComponents: [AddPostDialogComponent],

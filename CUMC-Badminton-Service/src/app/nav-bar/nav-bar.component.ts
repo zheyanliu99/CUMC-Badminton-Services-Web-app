@@ -26,7 +26,7 @@ export class NavBarComponent implements OnInit {
 
   onClick(){
     this.authService.logout();
-    this.router.navigate(['']).then(() => {
+    this.router.navigate(['/login']).then(() => {
       window.location.reload();
     })
   }
