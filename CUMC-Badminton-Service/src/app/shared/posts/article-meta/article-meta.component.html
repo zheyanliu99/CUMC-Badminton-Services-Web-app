@@ -1,0 +1,14 @@
+<div class="article-meta">
+  <a href="#">
+    <img src="/assets/badminton.png" />
+  </a>
+
+  <div class="info">
+    <a class="author" href="#">{{ post.User_ID }}</a>
+    <span class="date">
+      {{ post.Time | date: 'longDate' }}
+    </span>
+  </div>
+
+  <ng-content></ng-content>
+</div>

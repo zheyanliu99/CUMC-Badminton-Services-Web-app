@@ -135,6 +135,8 @@ export class PostDetailsComponent implements OnInit, OnChanges {
 
   editDialog() {
     let dialogConfig = new MatDialogConfig();
+    dialogConfig.width = "600px";
+    dialogConfig.height = "480px";
     dialogConfig.data = {
       method: 'edit',
       old: this.post

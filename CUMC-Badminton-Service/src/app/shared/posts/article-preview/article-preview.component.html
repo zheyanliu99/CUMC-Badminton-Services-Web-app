@@ -1,0 +1,26 @@
+<div class="article-preview">
+  <app-article-meta [post]="post">
+    <button class="btn btn-sm pull-xs-right"
+            [ngClass]="{'btn-outline-primary': post.is_Thumbed==0,
+            'btn-primary': post.is_Thumbed==1 }"
+            (click)="thumb_up(post.Post_ID)">
+      <i class="ion-heart"></i> <ng-content></ng-content>
+      {{post.Thumbs}}
+    </button>
+  </app-article-meta>
+
+  <a [routerLink]="['/post', post.Post_ID]" class="preview-link">
+    <h2>{{ post.Title }}</h2>
+    <span *ngIf="post.Location != null">
+      <a href="{{post.Map_URL}}">
+      <mat-icon> location_on</mat-icon>
+        {{ post.Location }}
+      </a>
+    </span>
+    <ul class="tag-list">
+      <li class="tag-default tag-pill tag-outline">
+        {{ post.Label }}
+      </li>
+    </ul>
+  </a>
+</div>

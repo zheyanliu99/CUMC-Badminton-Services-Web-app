@@ -34,6 +34,11 @@ import { partnerComponent } from './partner/partner.component';
 import { AddpartnerDialogComponent } from './partner-add/partner-add.component';
 import { chatComponent } from './chat/chat.component';
 import { searchchatDialogComponent } from './chat-search-dialog/chat-search-dialog.component';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatSelectModule} from "@angular/material/select";
+import { ArticleListComponent } from './shared/posts/article-list/article-list.component';
+import { ArticlePreviewComponent } from './shared/posts/article-preview/article-preview.component';
+import { ArticleMetaComponent } from './shared/posts/article-meta/article-meta.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +59,9 @@ import { searchchatDialogComponent } from './chat-search-dialog/chat-search-dial
     AddpartnerDialogComponent,
     chatComponent,
     searchchatDialogComponent,
+    ArticleListComponent,
+    ArticlePreviewComponent,
+    ArticleMetaComponent,
 
   ],
   entryComponents: [AddPostDialogComponent],
@@ -74,7 +82,9 @@ import { searchchatDialogComponent } from './chat-search-dialog/chat-search-dial
     HttpClientModule,
     MatIconModule,
     MatDialogModule,
-    MatListModule
+    MatListModule,
+    MatAutocompleteModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
