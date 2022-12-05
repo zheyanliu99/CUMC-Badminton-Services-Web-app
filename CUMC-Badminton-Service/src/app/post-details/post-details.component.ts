@@ -2,7 +2,7 @@ import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import { ActivatedRoute } from '@angular/router';
+import {Router, ActivatedRoute } from '@angular/router';
 import {postInput} from "../post-details/postInput";
 import {responseInput} from "../post-details/responseInput";
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
@@ -22,8 +22,11 @@ export class PostDetailsComponent implements OnInit, OnChanges {
   post_id: number;
   edit_id: number;
   content: string;
+  canModify: boolean;
+  isSubmitting = false;
 
   constructor(private http:HttpClient,
+              private router: Router,
               private route: ActivatedRoute,
               private formBuilder: FormBuilder,
               public dialog: MatDialog) {
@@ -47,6 +50,7 @@ export class PostDetailsComponent implements OnInit, OnChanges {
       if (results.post.success) {
         console.log("update post")
         this.post = results.post.post_data
+        this.canModify = this.post[0].User_ID == this.userId
         console.log(this.post)
 
         if (results.response.success) {
@@ -111,11 +115,13 @@ export class PostDetailsComponent implements OnInit, OnChanges {
     if(this.commentForm.valid){
       console.log('comment submitted')
       const input = {"content": this.commentForm.value.content}
-      console.log(input)
+      this.isSubmitting = true;
+
       this.add_comment(input).subscribe(results => {
+        this.isSubmitting = false;
         if (results.success) {
           console.log("comment added")
-          // this.commentForm.reset();
+          this.commentForm.reset();
           this.load_page()
         } else {
           alert("Adding post failed")
@@ -152,7 +158,7 @@ export class PostDetailsComponent implements OnInit, OnChanges {
     })
   }
 
-  onDelete(resp_id: number): void{
+  onDeleteResp(resp_id: number): void{
     console.log('delete response activated')
     this.delete_resp(resp_id).subscribe(results => {
       if (!results.success) {
@@ -171,6 +177,7 @@ export class PostDetailsComponent implements OnInit, OnChanges {
   showEdit(resp_id: number, content: string): void{
     this.edit_id = resp_id
     this.content = content
+    this.editForm["content"] = content
   }
 
   cancelEdit(): void{
@@ -184,10 +191,12 @@ export class PostDetailsComponent implements OnInit, OnChanges {
 
   cmtEdit(resp_id: number): void {
     if(this.editForm.valid){
+      this.isSubmitting = true;
       console.log('comment submitted')
       const input = {"content": this.editForm.value.content}
       console.log(input)
       this.edit_comment(input, resp_id).subscribe(results => {
+        this.isSubmitting = false;
         if (results.success) {
           console.log("comment edited")
           this.edit_id = undefined
@@ -207,6 +216,25 @@ export class PostDetailsComponent implements OnInit, OnChanges {
   edit_comment(input: object, resp_id: number): Observable<any>{
     console.log("editing comment with DB")
     return this.http.post<any>(`${environment.ms3Url}/api/forum/resp/${resp_id}/edit/user_id/${this.userId}`, input)
+  }
+
+  onDeletePost(post_id: number): void{
+    console.log('delete activated')
+    this.delete_post(post_id).subscribe(results => {
+      if (results.success) {
+        alert("Post deleted successfully")
+        this.router.navigateByUrl('/my-posts');
+      }
+      else {
+        alert("Delete failed")
+        console.log(results)
+      }
+    })
+  }
+
+  delete_post(post_id: number): Observable<any>{
+    console.log('delete interact with DB')
+    return this.http.get<any>(`${environment.ms3Url}/api/forum/post/delete/${post_id}/`);
   }
 
 }

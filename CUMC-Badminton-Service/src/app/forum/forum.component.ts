@@ -146,7 +146,7 @@ export class ForumComponent implements OnInit, OnChanges {
   openDialog() {
     let dialogConfig = new MatDialogConfig();
     dialogConfig.width = "600px";
-    dialogConfig.height = "480px";
+    dialogConfig.height = "550px";
     dialogConfig.data = {
       method: 'add'
     }

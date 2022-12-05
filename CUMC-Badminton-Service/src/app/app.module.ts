@@ -60,7 +60,10 @@ import { sendinviteDialogComponent } from './invitation/invitation.component';
     AddpartnerDialogComponent,
     chatComponent,
     searchchatDialogComponent,
-
+    ArticleListComponent,
+    ArticlePreviewComponent,
+    ArticleMetaComponent,
+    sendinviteDialogComponent
   ],
   entryComponents: [AddPostDialogComponent],
   imports: [

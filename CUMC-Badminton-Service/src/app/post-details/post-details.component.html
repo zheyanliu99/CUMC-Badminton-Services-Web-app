@@ -1,83 +1,244 @@
-<h2>
-  Post Details
-  <button (click)="editDialog()" *ngIf="post[0].User_ID == userId">Edit</button>
-</h2>
+<div class="article-page">
 
+  <div class="banner">
+    <div class="container">
+      <h1>{{ post[0].Title }}</h1>
 
-<article class="post">
-  <header>
-    <div>
-      <h2>
-        <div>{{ post[0].Title }}</div>
-        <ng-container *ngIf="post[0].is_Thumbed == 1">
-          <mat-icon color = "accent" (click)="thumb_up_post()">thumb_up</mat-icon>
-          {{post[0].Thumbs}}
-        </ng-container>
-        <ng-container *ngIf="post[0].is_Thumbed == 0">
-          <mat-icon color = "primary" (click)="thumb_up_post()">thumb_up</mat-icon>
-          {{post[0].Thumbs}}
-        </ng-container>
-      </h2>
+      <div class="row">
+        <app-article-meta [post]="post[0]">
 
-      <div>
-        {{post[0].Label}}
+          <span [hidden]="!canModify">
+          <a class="btn btn-sm btn-outline-secondary"
+             (click)="editDialog()">
+            <i class="ion-edit"></i> Edit
+          </a>
+
+          <button class="btn btn-sm btn-outline-danger"
+                  (click)="onDeletePost(post_id)">
+            <i class="ion-trash-a"></i> Delete
+          </button>
+        </span>
+
+        </app-article-meta>
       </div>
 
-      <div class="about">
-        <ng-container *ngIf=" post[0].Label != 'Administrative' ">
-          by <a href="#">{{ post[0].User_ID }}</a>,
-        </ng-container>
-        {{post[0].Time}}
-        <ng-container *ngIf="post[0].Location">
-          , <a href="{{post[0].Map_URL}}">{{ post[0].Location }}</a>
-        </ng-container>
+    </div>
+  </div>
+
+  <div class="container page">
+
+    <div class="row article-content">
+      <div class="col-md-12">
+
+          <span *ngIf="post[0].Location != null">
+          <a href="{{post[0].Map_URL}}">
+          <mat-icon> location_on</mat-icon>
+            {{ post[0].Location }}
+          </a>
+        </span>
+          <span>
+          <button class="btn btn-sm pull-xs-right"
+                  [ngClass]="{'btn-outline-primary': post[0].is_Thumbed==0,
+            'btn-primary': post[0].is_Thumbed==1 }"
+                  (click)="thumb_up_post()">
+          <i class="ion-heart"></i> <ng-content></ng-content>
+            {{post[0].Thumbs}}
+        </button>
+        </span>
+        <br>
+
+        <div class="container">
+          <ul class="tag-list">
+            <li class="tag-default tag-pill tag-outline">
+              {{ post[0].Label }}
+            </li>
+          </ul>
+        </div>
+
+        <p>{{post[0].Content}}</p>
+
       </div>
     </div>
-  </header>
 
-  <br>
-  <p class="body">{{ post[0].Content }}</p>
-</article>
-
-<br>
-<h2>Comments</h2>
-<ng-container *ngIf=" response != null ">
-  <div *ngFor="let res of response">
-      <div>
-      <header>
-        <a href="#">{{ res.User_ID }}</a>, {{ res.Time }}
-        <ng-container *ngIf="res.is_Thumbed == 1">
-          <mat-icon color = "accent" (click)="thumb_up_resp(res.Response_ID)">thumb_up</mat-icon>
-          {{res.Thumbs}}
-        </ng-container>
-        <ng-container *ngIf="res.is_Thumbed == 0">
-          <mat-icon color = "primary" (click)="thumb_up_resp(res.Response_ID)">thumb_up</mat-icon>
-          {{res.Thumbs}}
-        </ng-container>
-        <button class="mat-raised-button mat-primary" (click)="showEdit(res.Response_ID, res.Content)" *ngIf="res.User_ID == userId && res.Response_ID != edit_id">Edit</button>
-        <button class="mat-raised-button" (click)="cancelEdit()" *ngIf="res.Response_ID == edit_id">Cancel</button>
-        <button (click)="onDelete(res.Response_ID)" *ngIf="res.User_ID == userId">Delete</button>
-      </header>
-        <p class="body" *ngIf="edit_id != res.Response_ID">
-          {{ res.Content }}
-        </p>
-        <form [formGroup]="editForm" (ngSubmit)="cmtEdit(edit_id)" *ngIf="edit_id == res.Response_ID">
-          <label for="content">Content:</label>
-          <textarea [(ngModel)]="content" rows="5" cols="60" id="content" formControlName="content">{{content}}</textarea>
-          <br>
-          <button class="mat-raised-button mat-primary" (click)="cmtEdit(edit_id)">Update</button>
-        </form>
-      </div>
     <hr>
-  </div>
-</ng-container>
 
-<form [formGroup]="commentForm" (ngSubmit)="cmtSubmit()">
-  <div>
-  <textarea rows="5" cols="60" name="content" formControlName="content"></textarea>
+    <div class="row">
+      <div class="col-xs-12 col-md-8 offset-md-2">
+
+        <div>
+          <form class="card comment-form" [formGroup]="commentForm" (ngSubmit)="cmtSubmit()">
+            <fieldset [disabled]="isSubmitting">
+              <div class="card-block">
+                <textarea class="form-control"
+                          placeholder="Write a comment..."
+                          rows="3"
+                          formControlName="content"
+                ></textarea>
+              </div>
+              <div class="card-footer">
+<!--                <img [src]="currentUser.image" class="comment-author-img" />-->
+                <button class="btn btn-sm btn-primary" type="submit">
+                  Post Comment
+                </button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+        <!--List comments of the post-->
+        <div class="card" *ngFor="let res of response">
+<!--          comment edit card-->
+          <form class="card comment-form" [formGroup]="editForm" (ngSubmit)="cmtEdit(edit_id)" *ngIf="edit_id == res.Response_ID">
+            <fieldset [disabled]="isSubmitting">
+              <div class="card-block">
+                <textarea class="form-control"
+                          [(ngModel)]="content"
+                          placeholder="Write a comment..."
+                          rows="3"
+                          formControlName="content"
+                >{{content}}</textarea>
+              </div>
+              <div class="card-footer">
+                <!--                <img [src]="currentUser.image" class="comment-author-img" />-->
+                <button class="btn btn-sm btn-primary" type="submit">
+                  Update
+                </button>
+                <button class="btn btn-sm btn-outline-secondary" (click)="cancelEdit()">
+                  Cancel
+                </button>
+              </div>
+            </fieldset>
+          </form>
+
+          <div *ngIf="edit_id != res.Response_ID">
+            <div class="card-block">
+              <p class="card-text">
+                {{ res.Content }}
+              </p>
+              <span>
+              <button class="btn btn-sm pull-xs-right"
+                      [ngClass]="{'btn-outline-primary': res.is_Thumbed==0,
+                'btn-primary': res.is_Thumbed==1 }"
+                      (click)="thumb_up_resp(res.Response_ID)">
+                <i class="ion-heart"></i> <ng-content></ng-content>
+                {{res.Thumbs}}
+              </button>
+            </span>
+            </div>
+            <div class="card-footer">
+              <a class="comment-author" href="#">
+                <img src="/assets/badminton.png" class="comment-author-img" />
+              </a>
+              &nbsp;
+              <a class="comment-author" href="#">
+                {{ res.User_ID }}
+              </a>
+              <span class="date-posted">
+                {{ res.Time | date: 'longDate' }}
+              </span>
+              <span class="mod-options" [hidden]="res.User_ID != userId">
+                <i class="ion-edit" (click)="showEdit(res.Response_ID, res.Content)"></i>
+                <i class="ion-trash-a" (click)="onDeleteResp(res.Response_ID)"></i>
+              </span>
+          </div>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+
   </div>
-  <button class="button" type="submit">Submit Comment</button>
-</form>
+</div>
+
+
+
+
+
+
+
+
+<!--<h2>-->
+<!--  Post Details-->
+<!--  <button (click)="editDialog()" *ngIf="post[0].User_ID == userId">Edit</button>-->
+<!--</h2>-->
+
+
+<!--<article class="post">-->
+<!--  <header>-->
+<!--    <div>-->
+<!--      <h2>-->
+<!--        <div>{{ post[0].Title }}</div>-->
+<!--        <ng-container *ngIf="post[0].is_Thumbed == 1">-->
+<!--          <mat-icon color = "accent" (click)="thumb_up_post()">thumb_up</mat-icon>-->
+<!--          {{post[0].Thumbs}}-->
+<!--        </ng-container>-->
+<!--        <ng-container *ngIf="post[0].is_Thumbed == 0">-->
+<!--          <mat-icon color = "primary" (click)="thumb_up_post()">thumb_up</mat-icon>-->
+<!--          {{post[0].Thumbs}}-->
+<!--        </ng-container>-->
+<!--      </h2>-->
+
+<!--      <div>-->
+<!--        {{post[0].Label}}-->
+<!--      </div>-->
+
+<!--      <div class="about">-->
+<!--        <ng-container *ngIf=" post[0].Label != 'Administrative' ">-->
+<!--          by <a href="#">{{ post[0].User_ID }}</a>,-->
+<!--        </ng-container>-->
+<!--        {{post[0].Time}}-->
+<!--        <ng-container *ngIf="post[0].Location">-->
+<!--          , <a href="{{post[0].Map_URL}}">{{ post[0].Location }}</a>-->
+<!--        </ng-container>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </header>-->
+
+<!--  <br>-->
+<!--  <p class="body">{{ post[0].Content }}</p>-->
+<!--</article>-->
+
+<!--<br>-->
+<!--<h2>Comments</h2>-->
+<!--<ng-container *ngIf=" response != null ">-->
+<!--  <div *ngFor="let res of response">-->
+<!--      <div>-->
+<!--      <header>-->
+<!--        <a href="#">{{ res.User_ID }}</a>, {{ res.Time }}-->
+<!--        <ng-container *ngIf="res.is_Thumbed == 1">-->
+<!--          <mat-icon color = "accent" (click)="thumb_up_resp(res.Response_ID)">thumb_up</mat-icon>-->
+<!--          {{res.Thumbs}}-->
+<!--        </ng-container>-->
+<!--        <ng-container *ngIf="res.is_Thumbed == 0">-->
+<!--          <mat-icon color = "primary" (click)="thumb_up_resp(res.Response_ID)">thumb_up</mat-icon>-->
+<!--          {{res.Thumbs}}-->
+<!--        </ng-container>-->
+<!--        <button class="mat-raised-button mat-primary" (click)="showEdit(res.Response_ID, res.Content)" *ngIf="res.User_ID == userId && res.Response_ID != edit_id">Edit</button>-->
+<!--        <button class="mat-raised-button" (click)="cancelEdit()" *ngIf="res.Response_ID == edit_id">Cancel</button>-->
+<!--        <button (click)="onDelete(res.Response_ID)" *ngIf="res.User_ID == userId">Delete</button>-->
+<!--      </header>-->
+<!--        <p class="body" *ngIf="edit_id != res.Response_ID">-->
+<!--          {{ res.Content }}-->
+<!--        </p>-->
+<!--        <form [formGroup]="editForm" (ngSubmit)="cmtEdit(edit_id)" *ngIf="edit_id == res.Response_ID">-->
+<!--          <label for="content">Content:</label>-->
+<!--          <textarea [(ngModel)]="content" rows="5" cols="60" id="content" formControlName="content">{{content}}</textarea>-->
+<!--          <br>-->
+<!--          <button class="mat-raised-button mat-primary" (click)="cmtEdit(edit_id)">Update</button>-->
+<!--        </form>-->
+<!--      </div>-->
+<!--    <hr>-->
+<!--  </div>-->
+<!--</ng-container>-->
+
+<!--<form [formGroup]="commentForm" (ngSubmit)="cmtSubmit()">-->
+<!--  <div>-->
+<!--  <textarea rows="5" cols="60" name="content" formControlName="content"></textarea>-->
+<!--  </div>-->
+<!--  <button class="button" type="submit">Submit Comment</button>-->
+<!--</form>-->
 
 
 

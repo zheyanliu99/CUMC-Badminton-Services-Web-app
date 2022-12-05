@@ -1,140 +1,123 @@
-<!--
-<h2 mat-dialog-title *ngIf="method == 'add'">Write a new post:</h2>
-<h2 mat-dialog-title *ngIf="method == 'edit'">Edit your post:</h2>
+<!--<form id="post" [formGroup]="postForm" novalidate (ngSubmit)="postSubmit()">-->
+<!--  <mat-card class="shipping-card m-4">-->
+<!--    <mat-card-header>-->
+<!--      <mat-card-title style="color: indigo !important;">Write a new post:</mat-card-title>-->
+<!--    </mat-card-header>-->
 
-<mat-dialog-content [formGroup]="postForm" (ngSubmit)="postSubmit()">
+<!--    <mat-card-content>-->
+<!--      <div class="row">-->
+<!--        <div class="col">-->
+<!--          <mat-form-field class="full-width">-->
+<!--            <mat-label>Title</mat-label>-->
+<!--            <input matInput id="title" formControlName="title" placeholder="Title" type="text" tabindex="1" required autofocus>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="row">-->
+<!--        <div class="col">-->
+<!--          <mat-form-field class="full-width">-->
+<!--            <mat-label>Category</mat-label>-->
+<!--            <mat-select id="label" name="label" formControlName="label" placeholder="Category" tabindex="2" required>-->
+<!--              <mat-option value="" disabled selected hidden>&#45;&#45;Category&#45;&#45;</mat-option>-->
+<!--              <mat-option value="1">Administrative</mat-option>-->
+<!--              <mat-option value="2">Lost and Found</mat-option>-->
+<!--              <mat-option value="3">Call for Partners</mat-option>-->
+<!--              <mat-option value="4">Others</mat-option>-->
+<!--            </mat-select>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="row">-->
+<!--        <div class="col">-->
+<!--          <mat-form-field class="full-width">-->
+<!--            <mat-label>Location</mat-label>-->
+<!--            <input matInput placeholder="Location" formControlName="location" #inputAutoComplete-->
+<!--                   (change)="onAddressTextChange()" (keyup)="onKeyUp($event)"-->
+<!--                   [matAutocomplete]='auto'/>-->
+<!--            <mat-autocomplete #auto="matAutocomplete" (optionSelected)='getAddressSelected($event.option.value)'>-->
+<!--              <mat-option *ngFor="let option of addressOptions" [value]="option.text">-->
+<!--                {{option.text}}-->
+<!--              </mat-option>-->
+<!--            </mat-autocomplete>-->
+<!--            <mat-error *ngIf="postForm.controls['location'].hasError('required')">-->
+<!--              Location is <strong>required</strong>-->
+<!--            </mat-error>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="row">-->
+<!--        <div class="col">-->
+<!--          <mat-form-field class="full-width">-->
+<!--            <mat-label>Content</mat-label>-->
+<!--            <textarea matInput formControlName="content" placeholder="Type your post here...." tabindex="4" required></textarea>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </mat-card-content>-->
 
+<!--    <mat-card-actions>-->
+<!--      <button mat-raised-button type="button" color="primary" (click)="postSubmit()">Submit</button>-->
+<!--      <button mat-raised-button (click)="close()">Close</button>-->
+<!--    </mat-card-actions>-->
+<!--  </mat-card>-->
+<!--</form>-->
 
-  <div>
-    <label for="title">Title:</label>
-    <input id="title" type="text" formControlName="title">
+<div class="editor-page">
+  <div class="container page">
+    <div class="row">
+      <div class="col-md offset-md col-xs">
+
+        <form [formGroup]="postForm" (ngSubmit)="postSubmit()">
+
+            <fieldset class="form-group">
+              <input class="form-control form-control-lg"
+                     formControlName="title"
+                     placeholder="Title"
+                     type="text" tabindex="1" required autofocus>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <select class="form-control custom-select-lg" id="label" name="label" formControlName="label" placeholder="Category" tabindex="2" required>
+                <option value="" disabled selected hidden>--Category--</option>
+                <option value="1">Administrative</option>
+                <option value="2">Lost and Found</option>
+                <option value="3">Call for Partners</option>
+                <option value="4">Others</option>
+              </select>
+            </fieldset>
+
+          <fieldset class="form-group">
+            <input class="form-control form-control-lg"
+                   placeholder="Location"
+                   formControlName="location" #inputAutoComplete
+                               (change)="onAddressTextChange()" (keyup)="onKeyUp($event)"
+                               [matAutocomplete]='auto'/>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)='getAddressSelected($event.option.value)'>
+                          <mat-option *ngFor="let option of addressOptions" [value]="option.text">
+                            {{option.text}}
+                          </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="postForm.controls['location'].hasError('required')">
+                          Location is <strong>required</strong>
+                        </mat-error>
+          </fieldset>
+
+            <fieldset class="form-group">
+              <textarea class="form-control"
+                        formControlName="content"
+                        rows="8"
+                        placeholder="Write your content here...">
+              </textarea>
+            </fieldset>
+
+          <fieldset class="form-group">
+            <button class="btn btn-lg pull-xs-right btn-primary" type="button" (click)="postSubmit()">
+              Submit Post
+            </button>
+          </fieldset>
+        </form>
+
+      </div>
+    </div>
   </div>
-  <div>
-    <label for="label">Labels:</label>
-    <select id="label" name="label" formControlName="label">
-      <option value="1">Administrative</option>
-      <option value="2">Lost and Found</option>
-      <option value="3">Call for Partners</option>
-      <option value="4">Others</option>
-    </select>
-  </div>
-  <div>
-    <label for="location">Location:</label>
-    <select id="location" name="location" formControlName="location">
-      <option *ngFor="let loc of locations" value="{{loc}}">{{ loc }}</option>
-    </select>
-  </div>
-  <br>
-  <div>
-    <label for="content">Content:</label>
-    <textarea rows="5" cols="60" id="content" name="content" formControlName="content"></textarea>
-  </div>
-
-</mat-dialog-content>
-
-<mat-dialog-actions>
-  <button class="mat-raised-button"(click)="close()">Close</button>
-  <button class="mat-raised-button mat-primary"(click)="postSubmit()">Submit</button>
-</mat-dialog-actions>
-
--------------------------------------------------------------------
-
-<div class="container">
-  <form id="contact" [formGroup]="postForm" (ngSubmit)="postSubmit()">
-    <h3 mat-dialog-title *ngIf="method == 'add'">Write a new post:</h3>
-    <br>
-    <h3 mat-dialog-title *ngIf="method == 'edit'">Edit your post:</h3>
-
-    <fieldset>
-      <input id="title" formControlName="title" placeholder="Title" type="text" tabindex="1" required autofocus>
-    </fieldset>
-    <fieldset>
-      <select id="label" name="label" formControlName="label" placeholder="Category" tabindex="2" required>
-        <option value="" disabled selected hidden>--Category--</option>
-        <option value="1">Administrative</option>
-        <option value="2">Lost and Found</option>
-        <option value="3">Call for Partners</option>
-        <option value="4">Others</option>
-      </select>
-    </fieldset>
-    <fieldset>
-      <input id="location" type="text" formControlName="location" placeholder="Location" tabindex="3" required>
-    </fieldset>
-    <fieldset>
-      <textarea formControlName="content" placeholder="Type your post here...." tabindex="4" required></textarea>
-    </fieldset>
-    <fieldset>
-      <button type="close" class="mat-raised-button" (click)="close()">Close</button>
-    </fieldset>
-    <fieldset>
-      <button type="submit" class="mat-raised-button mat-primary" (click)="postSubmit()">Submit</button>
-    </fieldset>
-  </form>
 </div>
-
--->
-
-<form id="post" [formGroup]="postForm" novalidate (ngSubmit)="postSubmit()">
-  <mat-card class="shipping-card m-4">
-    <mat-card-header>
-      <mat-card-title style="color: indigo !important;">Write a new post:</mat-card-title>
-    </mat-card-header>
-
-    <mat-card-content>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Title</mat-label>
-            <input matInput id="title" formControlName="title" placeholder="Title" type="text" tabindex="1" required autofocus>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Category</mat-label>
-            <mat-select id="label" name="label" formControlName="label" placeholder="Category" tabindex="2" required>
-              <mat-option value="" disabled selected hidden>--Category--</mat-option>
-              <mat-option value="1">Administrative</mat-option>
-              <mat-option value="2">Lost and Found</mat-option>
-              <mat-option value="3">Call for Partners</mat-option>
-              <mat-option value="4">Others</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Location</mat-label>
-            <input matInput placeholder="Location" formControlName="location" #inputAutoComplete
-                   (change)="onAddressTextChange()" (keyup)="onKeyUp($event)"
-                   [matAutocomplete]='auto'/>
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)='getAddressSelected($event.option.value)'>
-              <mat-option *ngFor="let option of addressOptions" [value]="option.text">
-                {{option.text}}
-              </mat-option>
-            </mat-autocomplete>
-            <mat-error *ngIf="postForm.controls['location'].hasError('required')">
-              Location is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Content</mat-label>
-            <textarea matInput formControlName="content" placeholder="Type your post here...." tabindex="4" required></textarea>
-          </mat-form-field>
-        </div>
-      </div>
-    </mat-card-content>
-
-    <mat-card-actions>
-      <button mat-raised-button type="button" color="primary" (click)="postSubmit()">Submit</button>
-      <button mat-raised-button (click)="close()">Close</button>
-    </mat-card-actions>
-  </mat-card>
-</form>
-

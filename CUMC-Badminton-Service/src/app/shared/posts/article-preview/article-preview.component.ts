@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { forumInput } from '../../../forum/forumInput';
+import { postInput } from '../../../post-details/postInput';
 import {Observable} from "rxjs";
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
@@ -18,7 +18,7 @@ export class ArticlePreviewComponent {
     this.userId = sessionStorage.getItem('userId')
   }
 
-  @Input() post: forumInput;
+  @Input() post: postInput;
 
   thumb_up(post_id:number): void {
     console.log('thumb_up status changed')

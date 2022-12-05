@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { forumInput } from '../../../forum/forumInput';
+import { postInput } from '../../../post-details/postInput';
 import { ArticleListConfig } from './article-list-config.model';
 import {Observable} from "rxjs";
 import {environment} from "../../../../environments/environment";
@@ -14,7 +14,7 @@ import {MatDialog} from "@angular/material/dialog";
 })
 
 export class ArticleListComponent {
-  posts: Array<forumInput> = [];
+  posts: Array<postInput> = [];
   userId: string;
   labels: Array<string>;
   query: ArticleListConfig;
@@ -53,6 +53,7 @@ export class ArticleListComponent {
     }
 
     this.runQuery(this.query.label).subscribe(results => {
+      console.log('res',results)
       this.loading = false;
       if (results.post){
         results = results.post
