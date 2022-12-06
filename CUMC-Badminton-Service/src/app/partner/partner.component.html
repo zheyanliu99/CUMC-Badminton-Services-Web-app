@@ -43,6 +43,7 @@
       <th>Content:</th>
       <th>response:</th>
       <th>add partner:</th>
+      <th>reject partner:</th>
 
     </tr>
     </thead>
@@ -59,6 +60,12 @@
           <button mat-raised-button color="basic" cdkFocusInitial class="col-md-3" type="submit"
                   [disabled]=false (click)="Addpartner({userid_to: invite.userid_from})">add partner</button>
         </ng-container>
+        </td>
+        <td>
+          <ng-container *ngIf="invitation != null">
+            <button mat-raised-button color="basic" cdkFocusInitial class="col-md-3" type="submit"
+                    [disabled]=false (click)="rejectpartner({userid_from: invite.userid_from.toString()})">reject partner</button>
+          </ng-container>
         </td>
 
       </tr>
@@ -155,3 +162,4 @@
       </tbody>
     </table>
   </div>
+</mat-dialog-content>
