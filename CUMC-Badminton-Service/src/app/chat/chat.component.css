@@ -1,4 +1,47 @@
 
+.chat-container {
+  width: 600px;
+  background-color: white;
+}
+.chat-item-container {
+  background-color: white;
+}
+.chat-item-container.chat-item-right {
+  background-color: white;
+}
+.chat-item-container.chat-item-right .chat-item {
+  margin-left: auto;
+}
+.chat-item {
+  background-color: white;
+  max-width: 250px;
+  text-align: left;
+}
+
+
+#box{
+  width: 600px;
+  height: 600px;
+  padding:20px;
+  border:solid 1px black;
+
+}
+#box .cont{
+  width: 300px;
+  height: 430px;
+}
+#txt{
+  width: 600px;
+  height: 50px;
+}
+#box #btn{
+  line-height: 50px;
+}
+
+#box .scroll {
+  height:550px;
+  overflow:scroll;
+}
 .about {
   color: slategray;
   font-style: italic;
@@ -146,3 +189,4 @@ body {
   border-bottom: dotted 1px rgba(255,255,255,.15);
   background: rgba(0,223,252,.02);
 }
+

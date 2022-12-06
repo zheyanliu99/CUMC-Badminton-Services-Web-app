@@ -19,6 +19,7 @@ export class chatComponent implements OnInit {
   user_id: number;
   userid_to: number;
   newchatForm: FormGroup;
+  chatForm: FormGroup;
   method: "add";
 
 
@@ -32,6 +33,11 @@ export class chatComponent implements OnInit {
       this.newchatForm = new FormGroup({
         userid_to: new FormControl()
       });
+      this.chatForm = new FormGroup({
+        userid_to: new FormControl(``, [Validators.required]),
+        content: new FormControl(``, [Validators.required, Validators.maxLength(300)]),
+      });
+
 
   }
 
@@ -95,6 +101,36 @@ export class chatComponent implements OnInit {
       console.log(results)
       alert("Succeed!")
     })
+  }
+
+  sendchat(input: object): Observable<any> {
+    console.log("search with DB")
+    console.log(input)
+    return this.http.post<any>(`${environment.ms1Url}/api/user/${this.userId}/chatting/sending`, input)
+  }
+
+  sendingchat(): void{
+    if(this.chatForm.valid) {
+      console.log('Start sending chat')
+      const input = this.chatForm.value
+      console.log(input)
+      if (input) {
+        this.sendchat(input).subscribe(results => {
+          if (results.success) {
+            console.log('send successfully')
+            this.load_page(input)
+          }
+          else {
+            alert("unsuccessfully")
+          }
+        })
+      }else{
+        alert('Unknown Method')
+      }
+    }
+    else{
+      alert("something wrong")
+    }
   }
 
 

@@ -20,7 +20,7 @@
   <mat-dialog-actions>
     <button class="mat-raised-button mat-primary"(click)="postSubmit()">Find chat history</button>
   </mat-dialog-actions>
-
+</mat-dialog-content>
 
 <div *ngIf="chats == null">
   <br>
@@ -30,32 +30,46 @@
 
 <div *ngIf="chats != null">
 
-  <table class="content-table">
-    <thead>
-    <tr>
-      <th>Chat_ID:</th>
-      <th>userid_from</th>
-      <th>userid_to</th>
-      <th>Content</th>
-      <th>Time</th>
-    </tr>
-    </thead>
-    <tbody >
-    <ng-container *ngFor="let chat of chats">
-      <tr>
-        <td>{{chat.Chat_ID}}</td>
-        <td>{{chat.userid_from}}</td>
-        <td>{{chat.userid_to}}</td>
-        <td>{{chat.Content}}</td>
-        <td>{{chat.Time}}</td>
-      </tr>
-    </ng-container>
-
-  </table>
 </div>
+  <body>
+  <div id="box">
+    <div class="scroll">
 
-  <button class="mat-raised-button mat-primary"(click)="AddchatDialog()">send chat to friend</button>
+      <div class="chat-container">
+        <ng-container *ngFor="let chat of chats">
+          <div class="chat-divider">Message from {{chat.userid_to}} to {{chat.userid_from}}</div>
+          <div class="chat-item-container chat-item-left">
+            <div class="chat-item"> <p>{{chat.Content}}</p><p>{{chat.Time}}</p></div>
+          </div>
+          <div class="chat-divider">Message from {{chat.userid_from}} to {{chat.userid_to}}</div>
+          <div class="chat-item-container chat-item-right">
+            <div class="chat-item"><p>{{chat.Content}}</p><p>{{chat.Time}}</p></div>
+          </div>
+        </ng-container>
+      </div>
+
+    </div>
+  </div>
+
+  <br>
+
+  <mat-dialog-content [formGroup]="chatForm" (ngSubmit)="sendingchat()">
+    <div>
+      <label for="userid_to">Send chat to(id number):</label>
+      <input id="userid_to" type="number" formControlName="userid_to">
+    </div>
+    <br>
+    <div>
+      <label for="content">Chat:</label>
+      <textarea id="content" type="string" formControlName="content"></textarea>
+    </div>
 
 
+    <mat-dialog-actions>
+      <button class="mat-raised-button mat-primary"(click)="sendingchat()">Send</button>
+    </mat-dialog-actions>
 
+  </mat-dialog-content>
+
+  </body>
 

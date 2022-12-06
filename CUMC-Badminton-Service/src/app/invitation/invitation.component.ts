@@ -54,10 +54,10 @@ export class sendinviteDialogComponent implements OnInit {
         if (this.method == "add") {
           this.send_invitation(input).subscribe(results => {
             if (results.success) {
-              console.log("partner added")
+              console.log("invititon added")
               this.dialogRef.close(input)
             } else {
-              alert("adding partner failed")
+              alert("sending invitation failed,because he/she already had a partner")
               console.log(results)
             }
           })
