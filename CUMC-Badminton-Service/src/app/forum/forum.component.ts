@@ -18,14 +18,19 @@ export class ForumComponent implements OnInit, OnChanges {
   posts: Array<forumInput>;
   userId: string;
   labels: Array<string> = [];
+  // sort_tags: Array<string> = ["popular","relevant"]
 
   label: string;
+  sort: string;
   listConfig: ArticleListConfig = {
     label: 'All Posts',
-    filters: {}
+    mypost: false,
+    limit: 3,
+    page: 1,
+    sort: "all"
   };
 
-  @Input() inLabel: string;
+  @Input() mypost: boolean;
 
   constructor(private http:HttpClient,
               public dialog: MatDialog
@@ -36,11 +41,11 @@ export class ForumComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     console.log("init")
-    if (this.inLabel) {
-      this.label = this.inLabel
-    } else {
-      this.label = "All Posts"
+    if (this.mypost) {
+      this.listConfig.mypost = this.mypost
     }
+    this.label = "All Posts"
+    this.sort = "all"
     // this.route.queryParams.subscribe(params => {
     //   if (params['label']) {
     //     this.setListTo(params['label'])
@@ -59,7 +64,7 @@ export class ForumComponent implements OnInit, OnChanges {
         alert("Labels Not Found")
       }
     })
-    this.setListTo(this.label);
+    this.setLabelTo(this.label);
     // this.load_page()
   }
 
@@ -67,10 +72,15 @@ export class ForumComponent implements OnInit, OnChanges {
     console.log(changes)
   }
 
-  setListTo(label: string = '', filters: Object = {}) {
+  setLabelTo(label: string = '') {
     // set the list object
     this.label = label
-    this.listConfig = {label: label, filters: filters};
+    this.listConfig.label = label
+  }
+
+  setSortTo(method: string = 'all') {
+    this.sort = method
+    this.listConfig.sort = method
   }
 
   // add a simpler api path
@@ -154,7 +164,7 @@ export class ForumComponent implements OnInit, OnChanges {
     let dialogRef = this.dialog.open(AddPostDialogComponent, dialogConfig)
     dialogRef.afterClosed().subscribe(results => {
       console.log(results)
-      this.setListTo(this.label);
+      this.setLabelTo(this.label);
     })
   }
 

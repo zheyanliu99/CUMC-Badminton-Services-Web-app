@@ -1,10 +1,8 @@
 export interface ArticleListConfig {
   label: string;
-
-  filters: {
-    author?: string,
-    Is_Thumbed?: string,
-    limit?: number,
-    offset?: number
-  };
+  mypost: boolean,
+  limit: number,
+  // offset?: number,
+  page: number,
+  sort: string
 }

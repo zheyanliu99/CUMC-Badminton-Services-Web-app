@@ -2,9 +2,12 @@
 <div class="home-page">
 
   <div class="banner">
-    <div class="container">
+    <div class="container" [hidden]="mypost">
       <h1 class="logo-font">Forum</h1>
       <p>A place to share your love with <i>Badminton</i>.</p>
+    </div>
+    <div class="container" [hidden]="!mypost">
+      <h2 class="logo-font">My Posts</h2>
     </div>
   </div>
 
@@ -17,23 +20,23 @@
             <li class="nav-item">
               <a class="nav-link"
                  [ngClass]="{'active': label === 'All Posts'}"
-                 (click)="setListTo('All Posts')">All Posts</a>
+                 (click)="setLabelTo('All Posts')">All Posts</a>
             </li>
             <li class="nav-item" *ngFor="let cat of labels">
               <a class="nav-link"
                  [ngClass]="{'active': label === cat}"
-                 (click)="setListTo(cat)">
+                 (click)="setLabelTo(cat)">
                 {{cat}}
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" [ngClass]="{'active': label === 'My Posts'}"
-                 (click)="setListTo('My Posts')">My Posts</a>
-            </li>
+<!--            <li class="nav-item">-->
+<!--              <a class="nav-link" [ngClass]="{'active': label === 'My Posts'}"-->
+<!--                 (click)="setLabelTo('My Posts')">My Posts</a>-->
+<!--            </li>-->
           </ul>
         </div>
 
-        <app-article-list [limit]="10" [config]="listConfig"></app-article-list>
+        <app-article-list [limit]="3" [config]="listConfig"></app-article-list>
       </div>
 
       <div class="col-md-3">
@@ -43,20 +46,25 @@
         <br>
 
         <div class="sidebar">
-          <p>Popular Tags</p>
+          <p>Sort By</p>
 
           <div class="tag-list">
-            <a *ngFor="let tag of labels"
-               (click)="setListTo(tag)"
-               class="tag-default tag-pill">
-              {{ tag }}
+            <a (click)="setSortTo()"
+               class="tag-default tag-pill"
+               [ngClass]="{'tag-primary': sort === 'all'}">
+              Most Recent
+            </a>
+            <a (click)="setSortTo('popular')"
+               class="tag-default tag-pill"
+               [ngClass]="{'tag-primary': sort === 'popular'}">
+              Overall Popularity
+            </a>
+            <a (click)="setSortTo('relevant')"
+               class="tag-default tag-pill"
+               [ngClass]="{'tag-primary': sort === 'relevant'}">
+              3 Week Popularity
             </a>
           </div>
-
-          <div [hidden]="labels.length > 0">
-            No tags are here... yet.
-          </div>
-
 
         </div>
       </div>

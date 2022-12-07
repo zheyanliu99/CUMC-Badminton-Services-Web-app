@@ -32,7 +32,8 @@ export class ArticleListComponent {
   set config(config: ArticleListConfig) {
     if (config) {
       this.query = config;
-      this.currentPage = 1;
+      // this.currentPage = 1
+      this.currentPage = this.query.page
       this.load_page();
     }
   }
@@ -48,8 +49,9 @@ export class ArticleListComponent {
 
     // Create limit and offset filter (if necessary)
     if (this.limit) {
-      this.query.filters.limit = this.limit;
-      this.query.filters.offset =  (this.limit * (this.currentPage - 1));
+      this.query.limit = this.limit;
+      // this.query.offset =  (this.limit * (this.currentPage - 1));
+      this.query.page = this.currentPage
     }
 
     this.runQuery(this.query.label).subscribe(results => {
@@ -62,6 +64,7 @@ export class ArticleListComponent {
         console.log("update data")
         this.posts = results.data
         this.labels = results.labels
+        this.totalPages = Array.from(new Array(Math.ceil(results.articlesCount / this.limit)), (val, index) => index + 1);
         console.log("posts", this.posts)
       }
       else{
@@ -71,6 +74,7 @@ export class ArticleListComponent {
   }
 
   runQuery(cat: string): Observable<any>{
+    // !! need to be updated
     if (cat == "All Posts") {
       console.log('all posts interact with db')
       return this.http.get<any>(`${environment.ms3Url}/api/forum/user_id/${this.userId}`);
