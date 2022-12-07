@@ -23,6 +23,7 @@ export class partnerComponent implements OnInit {
   status: boolean;
   message: string;
   userid_from: number;
+  userid_to: number;
   profilesearchform: FormGroup;
   email: string;
   number: number;
@@ -174,6 +175,14 @@ export class partnerComponent implements OnInit {
     return this.http.get<any>(`${environment.ms1Url}/api/user/${this.userId}/delete_partner/${userid_from}`)
   }
 
+  rejection_invition(input: object):Observable<any>{
+    console.log("start rejection")
+    // @ts-ignore
+    console.log(input)
+    return this.http.post<any>(`${environment.ms1Url}/api/user/${this.userId}/reject_partner`,input)
+  }
+
+
   profilesearchSubmit(): void{
     if(this.profilesearchform.valid) {
       console.log('Start search profile')
@@ -204,4 +213,16 @@ export class partnerComponent implements OnInit {
     // @ts-ignore
     return this.http.post<any>(`${environment.ms1Url}/api/user/${this.userId}/search_pro`, input)
   }
+
+  rejectpartner(input:object): void{
+    console.log('delete invition')
+    this.rejection_invition(input).subscribe(results => {
+      if (!results.success) {
+        alert("delete successfully")
+        console.log(results)
+      }
+      location.reload()
+    })
+  }
+
 }
