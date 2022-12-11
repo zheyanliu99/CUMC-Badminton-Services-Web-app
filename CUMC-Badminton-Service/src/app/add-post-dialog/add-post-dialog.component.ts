@@ -3,10 +3,10 @@ import {Observable} from "rxjs";
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef} from "@angular/material/legacy-dialog";
 import {postInput} from "../post-details/postInput";
 import * as SmartyStreetsSDK from 'smartystreets-javascript-sdk';
-import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent, MatLegacyAutocompleteTrigger as MatAutocompleteTrigger } from '@angular/material/legacy-autocomplete';
 import { UsStreetVerificationHelper } from './Util/UsStreetVerificationHelper';
 
 

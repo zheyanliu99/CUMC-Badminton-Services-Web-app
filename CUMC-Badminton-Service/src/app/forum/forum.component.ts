@@ -4,7 +4,7 @@ import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import { forumInput } from './forumInput';
 import {MatIconModule} from '@angular/material/icon';
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig} from "@angular/material/legacy-dialog";
 import {AddPostDialogComponent} from "../add-post-dialog/add-post-dialog.component";
 import { ArticleListConfig } from '../shared/posts/article-list/article-list-config.model';
 import { Router, ActivatedRoute } from '@angular/router';

@@ -4,7 +4,7 @@ import {environment} from 'src/environments/environment';
 import { partnerInput } from './partnerInput';
 import { invitationInput } from './invitationInput';
 import {HttpClient} from "@angular/common/http";
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig} from "@angular/material/legacy-dialog";
 import {AddpartnerDialogComponent} from "../partner-add/partner-add.component";
 import {sendinviteDialogComponent} from "../invitation/invitation.component";
 import {FormControl, FormGroup, Validators} from "@angular/forms";

@@ -3,7 +3,7 @@ import {Observable} from "rxjs";
 import {environment} from 'src/environments/environment';
 import { profileInput } from './profileInput';
 import {HttpClient} from "@angular/common/http";
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig} from "@angular/material/legacy-dialog";
 import {AddprofileDialogComponent} from "../profile-edit/profile-edit.component";
 
 @Component({

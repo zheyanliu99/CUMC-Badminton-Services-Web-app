@@ -7,7 +7,7 @@ import {postInput} from "../post-details/postInput";
 import {responseInput} from "../post-details/responseInput";
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {AddPostDialogComponent} from "../add-post-dialog/add-post-dialog.component";
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig} from "@angular/material/legacy-dialog";
 
 @Component({
   selector: 'app-post-details',

@@ -2,8 +2,8 @@ import {Component, OnInit, OnChanges, SimpleChanges} from '@angular/core';
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import { MatListModule} from "@angular/material/list";
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import { MatLegacyListModule as MatListModule} from "@angular/material/legacy-list";
+import {MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig} from "@angular/material/legacy-dialog";
 import {AddPostDialogComponent} from "../add-post-dialog/add-post-dialog.component";
 import {forumInput} from "../forum/forumInput";
 

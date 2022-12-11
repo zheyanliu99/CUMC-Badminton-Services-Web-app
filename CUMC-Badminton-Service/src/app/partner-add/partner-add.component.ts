@@ -4,7 +4,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {environment} from 'src/environments/environment';
 import { partnerAddInput } from './partnerAddInput';
 import {HttpClient} from "@angular/common/http";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef} from "@angular/material/legacy-dialog";
 
 @Component({
   selector: 'app-partner-add',

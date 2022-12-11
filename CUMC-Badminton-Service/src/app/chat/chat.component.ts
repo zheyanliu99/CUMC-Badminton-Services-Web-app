@@ -3,7 +3,7 @@ import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import { chatInput } from './chatInput';
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig} from "@angular/material/legacy-dialog";
 import {searchchatDialogComponent} from "../chat-search-dialog/chat-search-dialog.component";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AddpartnerDialogComponent} from "../partner-add/partner-add.component";
