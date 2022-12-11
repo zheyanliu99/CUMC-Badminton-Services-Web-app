@@ -40,6 +40,8 @@ import { ArticleListComponent } from './shared/posts/article-list/article-list.c
 import { ArticlePreviewComponent } from './shared/posts/article-preview/article-preview.component';
 import { ArticleMetaComponent } from './shared/posts/article-meta/article-meta.component';
 import { sendinviteDialogComponent } from './invitation/invitation.component';
+import {GoogleLoginProvider, SocialLoginModule} from 'angularx-social-login';
+import {AuthGuardService} from './auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -85,9 +87,22 @@ import { sendinviteDialogComponent } from './invitation/invitation.component';
     MatDialogModule,
     MatListModule,
     MatAutocompleteModule,
-    MatSelectModule
+    MatSelectModule,
+    SocialLoginModule
   ],
-  providers: [],
+  providers: [{
+    provide: 'SocialAuthServiceConfig',
+    useValue: {
+      autoLogin: true,
+      providers: [
+        {
+          id: GoogleLoginProvider.PROVIDER_ID,
+          provider: new GoogleLoginProvider('148517665605-jspahbqleats6lvlag9kasc2c11b5g7o.apps.googleusercontent.com')
+        }
+      ]
+    }
+  },
+    AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
