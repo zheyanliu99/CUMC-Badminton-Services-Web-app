@@ -16,12 +16,11 @@ export class IndexComponent implements OnInit {
   constructor(private http:HttpClient) { }
 
   ngOnInit(): void {
-    console.log('find most recent')
-    this.most_recent_login().subscribe(results => {
-      this.currentUser = results;
-      sessionStorage.setItem('userId', this.currentUser['userid']);
-      sessionStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-    })
+    // this.most_recent_login().subscribe(results => {
+    //   this.currentUser = results;
+    //   sessionStorage.setItem('userId', this.currentUser['userid']);
+    //   sessionStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+    // })
     
     console.log(sessionStorage.getItem('userId'));
     console.log(sessionStorage.getItem('currentUser'));
