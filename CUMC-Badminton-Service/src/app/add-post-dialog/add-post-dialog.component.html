@@ -62,6 +62,9 @@
 <!--  </mat-card>-->
 <!--</form>-->
 
+
+
+
 <div class="editor-page">
   <div class="container page">
     <div class="row">
@@ -77,30 +80,53 @@
             </fieldset>
 
             <fieldset class="form-group">
-              <select class="form-control custom-select-lg" id="label" name="label" formControlName="label" placeholder="Category" tabindex="2" required>
+              <select class="form-control custom-select-lg"
+                      id="label" name="label" formControlName="label" placeholder="Category" tabindex="2" required>
                 <option value="" disabled selected hidden>--Category--</option>
-                <option value="1">Administrative</option>
-                <option value="2">Lost and Found</option>
-                <option value="3">Call for Partners</option>
-                <option value="4">Others</option>
+                <option value="{{lab}}" *ngFor="let lab of labels">{{lab}}</option>
               </select>
             </fieldset>
 
-          <fieldset class="form-group">
-            <input class="form-control form-control-lg"
-                   placeholder="Location"
-                   formControlName="location" #inputAutoComplete
-                               (change)="onAddressTextChange()" (keyup)="onKeyUp($event)"
-                               [matAutocomplete]='auto'/>
-                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)='getAddressSelected($event.option.value)'>
-                          <mat-option *ngFor="let option of addressOptions" [value]="option.text">
-                            {{option.text}}
-                          </mat-option>
-                        </mat-autocomplete>
-                        <mat-error *ngIf="postForm.controls['location'].hasError('required')">
-                          Location is <strong>required</strong>
-                        </mat-error>
+          <fieldset class="form-group" [disabled]="postForm.controls['ifNewLoc'].value">
+            <select class="form-control custom-select-lg"
+                    id="location" name="location" formControlName="location">
+              <option value="" disabled selected hidden>--Location--</option>
+              <option value="{{loc.Location_ID}}" *ngFor="let loc of location_list">{{loc.Name}}</option>
+            </select>
           </fieldset>
+
+          <fieldset class="form-group">
+            <label for="check" class="checkbox-inline">
+              <input type="checkbox" id="check" class="checkbox-inline"
+                     (change)="checkBoxLoc($event.target)" formControlName="ifNewLoc">
+              Pick A New Location
+            </label>
+          </fieldset>
+
+          <div class="card-block" [hidden]="!postForm.controls['ifNewLoc'].value">
+            <fieldset class="form-group">
+              <input class="form-control form-control"
+                     formControlName="new_location"
+                     placeholder="Define the location name"
+                     type="text" tabindex="1">
+            </fieldset>
+
+            <fieldset class="form-group">
+              <input class="form-control form-control"
+                     placeholder="Address"
+                     formControlName="new_location_address" #inputAutoComplete
+                     (change)="onAddressTextChange()" (keyup)="onKeyUp($event)"
+                     [matAutocomplete]='auto'/>
+              <mat-autocomplete #auto="matAutocomplete" (optionSelected)='getAddressSelected($event.option.value)'>
+                <mat-option *ngFor="let option of addressOptions" [value]="option.text">
+                  {{option.text}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error *ngIf="postForm.controls['location'].hasError('required')">
+                Location is <strong>required</strong>
+              </mat-error>
+            </fieldset>
+          </div>
 
             <fieldset class="form-group">
               <textarea class="form-control"

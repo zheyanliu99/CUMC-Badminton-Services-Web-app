@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
+import {Component,OnInit, Input, SimpleChanges, OnChanges, EventEmitter, ChangeDetectorRef} from '@angular/core';
 
 import { postInput } from '../../../post-details/postInput';
-import { ArticleListConfig } from './article-list-config.model';
+import { ArticleListConfig, config2resp } from './article-list-config.model';
 import {Observable} from "rxjs";
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {MatDialog} from "@angular/material/dialog";
+// import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-article-list',
@@ -13,17 +13,17 @@ import {MatDialog} from "@angular/material/dialog";
   templateUrl: './article-list.component.html'
 })
 
-export class ArticleListComponent {
+export class ArticleListComponent implements OnChanges{
   posts: Array<postInput> = [];
   userId: string;
-  labels: Array<string>;
   query: ArticleListConfig;
   loading = false;
   currentPage = 1;
   totalPages: Array<number> = [1];
 
-  constructor ( private http:HttpClient,
-                public dialog: MatDialog) {
+  constructor ( //public dialog: MatDialog,
+                private cd: ChangeDetectorRef,
+                private http:HttpClient ) {
     this.userId = sessionStorage.getItem('userId')
   }
 
@@ -31,11 +31,17 @@ export class ArticleListComponent {
   @Input()
   set config(config: ArticleListConfig) {
     if (config) {
+      console.log("get config",config)
       this.query = config;
       // this.currentPage = 1
       this.currentPage = this.query.page
+      // this.cd.markForCheck();
       this.load_page();
     }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes)
   }
 
   setPageTo(pageNumber) {
@@ -54,38 +60,25 @@ export class ArticleListComponent {
       this.query.page = this.currentPage
     }
 
-    this.runQuery(this.query.label).subscribe(results => {
+    this.runQuery().subscribe(results => {
       console.log('res',results)
       this.loading = false;
-      if (results.post){
-        results = results.post
-      }
       if(results.success){
         console.log("update data")
         this.posts = results.data
-        this.labels = results.labels
-        this.totalPages = Array.from(new Array(Math.ceil(results.articlesCount / this.limit)), (val, index) => index + 1);
+        this.totalPages = Array.from(new Array(Math.ceil(results.count / this.limit)), (val, index) => index + 1);
         console.log("posts", this.posts)
       }
       else{
-        alert("Selection Failed")
+        alert("Get posts Failed")
       }
     })
   }
 
-  runQuery(cat: string): Observable<any>{
-    // !! need to be updated
-    if (cat == "All Posts") {
-      console.log('all posts interact with db')
-      return this.http.get<any>(`${environment.ms3Url}/api/forum/user_id/${this.userId}`);
-    } else if (cat == "My Posts") {
-      console.log('my posts interact with db')
-      return this.http.get<any>(`${environment.ms3Url}/api/forum/myposts/user_id/${this.userId}`);
-    } else {
-      console.log('cat interact with db')
-      const label_dict = {'Administrative': '1', 'Lost and Found': '2', 'Call for Partners': '3', 'Others': '4'}
-      return this.http.get<any>(`${environment.ms3Url}/api/forum/cat/${label_dict[cat]}/user_id/${this.userId}`)
-    }
+  runQuery(): Observable<any>{
+    const resp = config2resp(this.query)
+    console.log('Getting posts from db',resp)
+    return this.http.post<any>(`${environment.ms3Url}/api/forum/user_id/${this.userId}`, resp);
   }
 
 }

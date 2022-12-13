@@ -27,13 +27,14 @@ export class ForumComponent implements OnInit, OnChanges {
     mypost: false,
     limit: 3,
     page: 1,
-    sort: "all"
+    sort: "recent"
   };
 
   @Input() mypost: boolean;
 
   constructor(private http:HttpClient,
               public dialog: MatDialog
+              // private changeDetectorRef: ChangeDetectorRef
               // private router: Router,private route: ActivatedRoute
               ) {
     this.userId = sessionStorage.getItem('userId')
@@ -45,7 +46,7 @@ export class ForumComponent implements OnInit, OnChanges {
       this.listConfig.mypost = this.mypost
     }
     this.label = "All Posts"
-    this.sort = "all"
+    this.sort = "recent"
     // this.route.queryParams.subscribe(params => {
     //   if (params['label']) {
     //     this.setListTo(params['label'])
@@ -64,7 +65,7 @@ export class ForumComponent implements OnInit, OnChanges {
         alert("Labels Not Found")
       }
     })
-    this.setLabelTo(this.label);
+    // this.setLabelTo(this.label);
     // this.load_page()
   }
 
@@ -74,19 +75,32 @@ export class ForumComponent implements OnInit, OnChanges {
 
   setLabelTo(label: string = '') {
     // set the list object
+    const newconfig = Object.create(this.listConfig);
     this.label = label
-    this.listConfig.label = label
+    newconfig.label = label
+    this.listConfig = newconfig
+    console.log("change",this.listConfig)
+    // this.listConfig.label = label
+    // this.changeDetectorRef.detectChanges()
   }
 
-  setSortTo(method: string = 'all') {
+  update($event: any){
+    // this.setLabelTo(this.label)
+    alert("update successful")
+  }
+
+  setSortTo(method: string = 'recent') {
+    const newconfig = Object.create(this.listConfig);
     this.sort = method
-    this.listConfig.sort = method
+    newconfig.sort = method
+    this.listConfig = newconfig
+    console.log("change",this.listConfig)
   }
 
   // add a simpler api path
   getLabels(): Observable<any>{
     console.log('renew')
-    return this.http.get<any>(`${environment.ms3Url}/api/forum/user_id/${this.userId}`);
+    return this.http.get<any>(`${environment.ms3Url}/api/forum/labels`);
   }
 
 

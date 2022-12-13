@@ -1,10 +1,11 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, NgModule} from '@angular/core';
 import {Observable} from "rxjs";
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {postInput} from "../post-details/postInput";
+import {locationInput} from "./locationInput";
 import * as SmartyStreetsSDK from 'smartystreets-javascript-sdk';
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { UsStreetVerificationHelper } from './Util/UsStreetVerificationHelper';
@@ -22,7 +23,8 @@ export class AddPostDialogComponent implements OnInit {
   postForm: FormGroup;
   method: string;
   oldPost: Array<postInput>;
-  label_dict: object;
+  labels: Array<string>;
+  location_list: Array<locationInput>;
   hasUnitNumber = false;
   addressOptions = <any>[];
   addressDict = {
@@ -32,68 +34,6 @@ export class AddPostDialogComponent implements OnInit {
   };
 
   @ViewChild(MatAutocompleteTrigger, {read: MatAutocompleteTrigger}) inputAutoComplete: MatAutocompleteTrigger;
-
-  states = [
-    {name: 'Alabama', abbreviation: 'AL'},
-    {name: 'Alaska', abbreviation: 'AK'},
-    {name: 'American Samoa', abbreviation: 'AS'},
-    {name: 'Arizona', abbreviation: 'AZ'},
-    {name: 'Arkansas', abbreviation: 'AR'},
-    {name: 'California', abbreviation: 'CA'},
-    {name: 'Colorado', abbreviation: 'CO'},
-    {name: 'Connecticut', abbreviation: 'CT'},
-    {name: 'Delaware', abbreviation: 'DE'},
-    {name: 'District Of Columbia', abbreviation: 'DC'},
-    {name: 'Federated States Of Micronesia', abbreviation: 'FM'},
-    {name: 'Florida', abbreviation: 'FL'},
-    {name: 'Georgia', abbreviation: 'GA'},
-    {name: 'Guam', abbreviation: 'GU'},
-    {name: 'Hawaii', abbreviation: 'HI'},
-    {name: 'Idaho', abbreviation: 'ID'},
-    {name: 'Illinois', abbreviation: 'IL'},
-    {name: 'Indiana', abbreviation: 'IN'},
-    {name: 'Iowa', abbreviation: 'IA'},
-    {name: 'Kansas', abbreviation: 'KS'},
-    {name: 'Kentucky', abbreviation: 'KY'},
-    {name: 'Louisiana', abbreviation: 'LA'},
-    {name: 'Maine', abbreviation: 'ME'},
-    {name: 'Marshall Islands', abbreviation: 'MH'},
-    {name: 'Maryland', abbreviation: 'MD'},
-    {name: 'Massachusetts', abbreviation: 'MA'},
-    {name: 'Michigan', abbreviation: 'MI'},
-    {name: 'Minnesota', abbreviation: 'MN'},
-    {name: 'Mississippi', abbreviation: 'MS'},
-    {name: 'Missouri', abbreviation: 'MO'},
-    {name: 'Montana', abbreviation: 'MT'},
-    {name: 'Nebraska', abbreviation: 'NE'},
-    {name: 'Nevada', abbreviation: 'NV'},
-    {name: 'New Hampshire', abbreviation: 'NH'},
-    {name: 'New Jersey', abbreviation: 'NJ'},
-    {name: 'New Mexico', abbreviation: 'NM'},
-    {name: 'New York', abbreviation: 'NY'},
-    {name: 'North Carolina', abbreviation: 'NC'},
-    {name: 'North Dakota', abbreviation: 'ND'},
-    {name: 'Northern Mariana Islands', abbreviation: 'MP'},
-    {name: 'Ohio', abbreviation: 'OH'},
-    {name: 'Oklahoma', abbreviation: 'OK'},
-    {name: 'Oregon', abbreviation: 'OR'},
-    {name: 'Palau', abbreviation: 'PW'},
-    {name: 'Pennsylvania', abbreviation: 'PA'},
-    {name: 'Puerto Rico', abbreviation: 'PR'},
-    {name: 'Rhode Island', abbreviation: 'RI'},
-    {name: 'South Carolina', abbreviation: 'SC'},
-    {name: 'South Dakota', abbreviation: 'SD'},
-    {name: 'Tennessee', abbreviation: 'TN'},
-    {name: 'Texas', abbreviation: 'TX'},
-    {name: 'Utah', abbreviation: 'UT'},
-    {name: 'Vermont', abbreviation: 'VT'},
-    {name: 'Virgin Islands', abbreviation: 'VI'},
-    {name: 'Virginia', abbreviation: 'VA'},
-    {name: 'Washington', abbreviation: 'WA'},
-    {name: 'West Virginia', abbreviation: 'WV'},
-    {name: 'Wisconsin', abbreviation: 'WI'},
-    {name: 'Wyoming', abbreviation: 'WY'}
-  ];
 
   constructor(private http:HttpClient,
               private formBuilder: FormBuilder,
@@ -109,15 +49,41 @@ export class AddPostDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.label_dict = {'Administrative': '1', 'Lost and Found': '2', 'Call for Partners': '3', 'Others': '4'}
+    // this.label_dict = {'Administrative': '1', 'Lost and Found': '2', 'Call for Partners': '3', 'Others': '4'}
+
+    this.get_labels().subscribe(results => {
+      if (results.success) {
+        console.log("labels updated")
+        this.labels = results.labels
+        console.log(this.labels)
+      } else {
+        alert("Failed in getting labels")
+        console.log(results)
+      }
+    })
+
+    this.get_locations().subscribe(results => {
+      if (results.success) {
+        console.log("locations updated")
+        this.location_list = results.locations
+      } else {
+        alert("Failed in getting lcoations")
+        console.log(results)
+      }
+    })
 
     if (this.method == "edit"){
-      console.log(this.label_dict[this.oldPost[0].Label])
       this.postForm = this.formBuilder.group({
         user_id: this.userId,
         title: new FormControl(this.oldPost[0].Title, [Validators.required, Validators.maxLength(30)]),
-        label: new FormControl(this.label_dict[this.oldPost[0].Label], [Validators.required]),
+        label: new FormControl(this.oldPost[0].Label, [Validators.required]),
         location: this.oldPost[0].Location_ID,
+        ifNewLoc: false,
+        new_location: ``,
+        new_location_address: ``,
+        street: ``,
+        city: ``,
+        state: ``,
         content: new FormControl(this.oldPost[0].Content, [Validators.required, Validators.maxLength(300)]),
       });
     }
@@ -126,6 +92,12 @@ export class AddPostDialogComponent implements OnInit {
         title: new FormControl(``, [Validators.required, Validators.maxLength(30)]),
         label: new FormControl(``, [Validators.required]),
         location: ``,
+        ifNewLoc: false,
+        new_location: ``,
+        new_location_address: ``,
+        street: ``,
+        city: ``,
+        state: ``,
         content: new FormControl(``, [Validators.required, Validators.maxLength(300)]),
       });
     }
@@ -143,7 +115,9 @@ export class AddPostDialogComponent implements OnInit {
 
     if(this.postForm.valid) {
       console.log('Start updating post')
-      const input = Object.assign(this.postForm.value, this.addressDict)
+      const input =  this.postForm.value //Object.assign(this.postForm.value, this.addressDict)
+      input['new location'] = input['new_location']
+      delete input['new_location']
       console.log(input)
 
       if (this.method == "add") {
@@ -177,6 +151,16 @@ export class AddPostDialogComponent implements OnInit {
     }
   }
 
+  get_locations(): Observable<any> {
+    console.log("Access Location with DB")
+    return this.http.get<any>(`${environment.ms3Url}/api/forum/locations`)
+  }
+
+  get_labels(): Observable<any> {
+    console.log("Access Labels with DB")
+    return this.http.get<any>(`${environment.ms3Url}/api/forum/labels`)
+  }
+
   add_new_post(input: object): Observable<any> {
     console.log("post adding with DB")
     return this.http.post<any>(`${environment.ms3Url}/api/forum/newpost/user_id/${this.userId}`, input)
@@ -193,8 +177,8 @@ export class AddPostDialogComponent implements OnInit {
   }
 
   onKeyUp(evt){
-    if((this.postForm.get('location').value as string).length > 5){
-      this.AutocompleteAddress(this.postForm.get('location').value).then(data => {
+    if((this.postForm.get('new_location_address').value as string).length > 5){
+      this.AutocompleteAddress(this.postForm.get('new_location_address').value).then(data => {
         this.addressOptions = data.result as any[];
       }).catch();
       evt.stopPropagation();
@@ -202,6 +186,15 @@ export class AddPostDialogComponent implements OnInit {
     }
     else{
       this.addressOptions = [];
+    }
+  }
+
+  checkBoxLoc(target: EventTarget ) {
+    const input = target as HTMLInputElement;
+    if (input.checked){
+      this.postForm.get('ifNewLoc').setValue(true)
+    } else {
+      this.postForm.get('ifNewLoc').setValue(false)
     }
   }
 
@@ -220,7 +213,7 @@ export class AddPostDialogComponent implements OnInit {
   }
 
   onAddressTextChange():void{
-    if(this.postForm.get('location').value == ''){
+    if(this.postForm.get('new_location_address').value == ''){
       this.addressOptions = [];
     }
   }
@@ -230,13 +223,12 @@ export class AddPostDialogComponent implements OnInit {
     let selectedAddress = selectedVal;
     this.addressOptions.forEach(element => {
       if(element.text == selectedVal){
-        this.postForm.get('location').setValue(element.text)
+        this.postForm.get('new_location_address').setValue(element.text)
         // this.addressForm.get('address').setValue(element.streetLine);
-        this.addressDict.street = element.streetLine
-        this.addressDict.city =  element.city
-        this.addressDict.state = element.state
+        this.postForm.get('street').setValue(element.streetLine)
+        this.postForm.get('city').setValue(element.city)
+        this.postForm.get('state').setValue(element.state)
         console.log('result',element);
-        console.log('dict',this.addressDict)
       }
     });
   }

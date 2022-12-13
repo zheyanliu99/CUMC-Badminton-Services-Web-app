@@ -3,6 +3,7 @@ export class forumInput {
     Title: string;
     User_ID: string;
     Time: string;
+    Location_ID: number;
     Location: string;
     Map_URL: string;
     Label: string;
