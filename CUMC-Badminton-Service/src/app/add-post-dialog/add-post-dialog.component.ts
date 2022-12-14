@@ -40,7 +40,8 @@ export class AddPostDialogComponent implements OnInit {
               private dialogRef: MatDialogRef<AddPostDialogComponent>,
               // private usVerify:UsStreetVerificationHelper,
               @Inject(MAT_DIALOG_DATA) data) {
-    this.userId = sessionStorage.getItem('userId')
+    // this.userId = sessionStorage.getItem('userId')
+    this.userId = "8"
     this.method = data.method
     if (this.method == "edit"){
       this.oldPost = data.old
@@ -163,6 +164,7 @@ export class AddPostDialogComponent implements OnInit {
 
   add_new_post(input: object): Observable<any> {
     console.log("post adding with DB")
+    console.log(input)
     return this.http.post<any>(`${environment.ms3Url}/api/forum/newpost/user_id/${this.userId}`, input)
   }
 
