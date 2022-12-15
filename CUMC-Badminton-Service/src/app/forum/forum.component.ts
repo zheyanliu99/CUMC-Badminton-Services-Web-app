@@ -38,6 +38,7 @@ export class ForumComponent implements OnInit, OnChanges {
               // private router: Router,private route: ActivatedRoute
               ) {
     this.userId = sessionStorage.getItem('userId')
+    // this.userId = 8
   }
 
   ngOnInit(): void {

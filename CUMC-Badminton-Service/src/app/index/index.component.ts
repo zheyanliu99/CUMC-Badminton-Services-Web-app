@@ -21,7 +21,9 @@ export class IndexComponent implements OnInit {
     //   sessionStorage.setItem('userId', this.currentUser['userid']);
     //   sessionStorage.setItem('currentUser', JSON.stringify(this.currentUser));
     // })
-    
+
+    // remember del
+    sessionStorage.setItem('userId', "8");
     console.log(sessionStorage.getItem('userId'));
     console.log(sessionStorage.getItem('currentUser'));
   }
