@@ -23,7 +23,7 @@ export class IndexComponent implements OnInit {
     // })
 
     // remember del
-    sessionStorage.setItem('userId', "8");
+    // sessionStorage.setItem('userId', "8");
     console.log(sessionStorage.getItem('userId'));
     console.log(sessionStorage.getItem('currentUser'));
   }
