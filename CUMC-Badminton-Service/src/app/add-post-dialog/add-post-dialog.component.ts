@@ -40,8 +40,8 @@ export class AddPostDialogComponent implements OnInit {
               private dialogRef: MatDialogRef<AddPostDialogComponent>,
               // private usVerify:UsStreetVerificationHelper,
               @Inject(MAT_DIALOG_DATA) data) {
-    // this.userId = sessionStorage.getItem('userId')
-    this.userId = "8"
+    this.userId = sessionStorage.getItem('userId')
+    // this.userId = "8"
     this.method = data.method
     if (this.method == "edit"){
       this.oldPost = data.old
