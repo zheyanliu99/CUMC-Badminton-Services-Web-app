@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { sessionInput } from './sessionEditInput';
+import { sessionInput, approvedSessionInput } from './sessionEditInput';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 export class SessionsEditComponent implements OnInit {
 
   sessions: Array<sessionInput>;
+  approved_sessions: Array<approvedSessionInput>;
   userId: string;
 
   constructor(private http:HttpClient) {
@@ -19,6 +20,18 @@ export class SessionsEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.get_approved_sessions_by_user().subscribe(results => {
+      console.log(results.data)
+      if(results.success){
+        console.log("update data")
+        this.approved_sessions = results.data
+        console.log(this.approved_sessions)
+        }
+      else{
+        alert("Error")
+      }
+    })
+
     this.get_sessions_by_user().subscribe(results => {
       console.log(results.data)
       if(results.success){
@@ -27,7 +40,7 @@ export class SessionsEditComponent implements OnInit {
         console.log(this.sessions)
         }
       else{
-        alert("Results Not Found")
+        alert("Error")
       }
     })
   }
@@ -55,8 +68,12 @@ export class SessionsEditComponent implements OnInit {
   }
 
   get_sessions_by_user():Observable<any>{
-    console.log('renew')
     return this.http.get<any>(`${environment.ms2Url}/api/session/user/${this.userId}`);
+  }
+
+  get_approved_sessions_by_user():Observable<any>{
+    console.log('renew')
+    return this.http.get<any>(`${environment.ms2Url}/api/session/approved/user/${this.userId}`);
   }
 
   delete_from_waitlist(sessionid:number):Observable<any>{

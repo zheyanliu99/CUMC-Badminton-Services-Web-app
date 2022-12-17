@@ -16,6 +16,7 @@ export class SessionsComponent implements OnInit, OnChanges {
   sessions: Array<sessionInput>;
   userId: string;
   register_type: number;
+  if_admin: boolean;
 
   constructor(private http:HttpClient) {
     this.userId = sessionStorage.getItem('userId');
@@ -25,6 +26,12 @@ export class SessionsComponent implements OnInit, OnChanges {
     this.formGroup = new FormGroup({
       register_type: new FormControl()
    }); 
+
+    if(JSON.parse(sessionStorage.getItem('currentUser')).role == 'Admin'){
+      this.if_admin = true;
+    }else{
+      this.if_admin = false;
+    }
 
     this.get_available_sessions().subscribe(results => {
       if(results.success){
@@ -68,8 +75,32 @@ export class SessionsComponent implements OnInit, OnChanges {
 
   }
 
+  approve(sessionid:number): void{
+    this.approve_to_session(sessionid).subscribe(results => {
+      if(results.success){
+        alert(results.message)}
+      else{
+        alert(results.message)
+      }
+    this.get_available_sessions().subscribe(results => {
+      if(results.success){
+        this.sessions = results.data}
+      else{
+        alert("Results Not Found")
+      }
+    });
+    })
+
+  }
+
+
   add_to_waitlist(sessionid:number):Observable<any>{
     return this.http.post<any>(`${environment.ms2Url}/api/session/${sessionid}/enroll/${this.userId}`, this.register_type)
   }
+
+  approve_to_session(sessionid:number):Observable<any>{
+    return this.http.post<any>(`${environment.ms2Url}/api/admin/session/approve/${sessionid}`, this.userId)
+  }
+
 
 }
