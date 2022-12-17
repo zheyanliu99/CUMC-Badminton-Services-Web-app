@@ -9,21 +9,106 @@
         rel="stylesheet">
 </head>
 
-<p>userID: {{userId}}</p>
 
 <button mat-raised-button (click)="editDialog()" >Edit my profile</button>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<ng-container *ngFor="let profile of profile2">
-<div class="card">
-  <h1>Name: {{profile.username}}</h1>
-  <p>Birthday: {{profile.birthday}}</p>
-  <p>Sex: {{profile.sex}}</p>
-  <p>Email: {{profile.email}}</p>
-  <p>Preference: {{profile.preference}}</p>
-  <p>Credits: {{profile.credits}}</p>
+<!-- <ng-container *ngFor="let profile of profile2"> -->
+<!-- <div class="card">
+  <h1>Name: {{profile2.user_info.username}}</h1>
+  <p>Birthday: {{profile2.birthday}}</p>
+  <p>Sex: {{profile2.sex}}</p>
+  <p>Email: {{profile2.email}}</p>
+  <p>Preference: {{profile2.preference}}</p>
+  <p>Credits: {{profile2.credits}}</p>
 
-  <p><button>Contact</button></p>
-</div>
-</ng-container>
+</div> -->
+
+
+<div class="page-content page-container" id="page-content">
+  <div class="padding">
+      <div class="row container d-flex justify-content-center">
+<div class="col-xl-6 col-md-12">
+  <div class="card user-card-full">
+      <div class="row m-l-0 m-r-0">
+          <div class="col-sm-55 bg-c-lite-green user-profile">
+              <div class="card-block text-center text-white">
+                  <div class="m-b-25">
+                      <img src={{profile2.user_info.profile_pic}} class="img-radius" alt="User-Profile-Image">
+                  </div>
+                  <h6 class="f-w-600">{{profile2.user_info.username}}</h6>
+                
+                  <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+              </div>
+          </div>
+          <div class="col-sm-8">
+              <div class="card-block">
+                  <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                  <div class="row">
+                      <div class="col-sm-6">
+                          <p class="m-b-10 f-w-600">Email</p>
+                          <h6 class="text-muted f-w-400">{{profile2.user_info.email}}</h6>
+                      </div>
+                      <div class="col-sm-6">
+                          <p class="m-b-10 f-w-600">Birthday</p>
+                          <h6 class="text-muted f-w-400">{{profile2.user_info.birthday}}</h6>
+                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                        <p class="m-b-10 f-w-600">Sex</p>
+                        <h6 class="text-muted f-w-400">{{profile2.user_info.sex}}</h6>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="m-b-10 f-w-600">Preference</p>
+                        <h6 class="text-muted f-w-400">{{profile2.user_info.preference}} <br></h6>
+                    </div>
+
+                      <div class="col-sm-6">
+                          <p class="m-b-10 f-w-600">Credits</p>
+                          <h6 class="text-muted f-w-400">{{profile2.user_info.credits}}</h6>
+                      </div>
+                      <div class="col-sm-6">
+                          <p class="m-b-10 f-w-600">Total posts</p>
+                          <h6 class="text-muted f-w-400">
+                            <ng-container *ngIf="(profile2.post_info | json) !='{}'">
+                              {{profile2.post_info.count}}
+                          </ng-container>
+                          </h6>
+                      </div>
+                  </div>
+
+                  <ng-container *ngIf="(profile2.partner_info | json) !='{}'">
+                  <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Partner Information</h6>
+                  <div class="row">
+                      <div class="col-sm-6">
+                          <p class="m-b-10 f-w-600">Username</p>
+                          <h6 class="text-muted f-w-400">{{profile2.partner_info.username}}</h6>
+                      </div>
+                      <div class="col-sm-6">
+                          <p class="m-b-10 f-w-600">Email</p>
+                          <h6 class="text-muted f-w-400">{{profile2.partner_info.email}}
+                          </h6>
+                      </div>
+                      <div class="col-sm-6">
+                        <p class="m-b-10 f-w-600">Preference</p>
+                        <h6 class="text-muted f-w-400">{{profile2.partner_info.preference}} <br></h6>
+                    </div>
+
+                      <div class="col-sm-6">
+                          <p class="m-b-10 f-w-600">Credits</p>
+                          <h6 class="text-muted f-w-400">{{profile2.partner_info.credits}}</h6>
+                      </div>
+                  </div>
+                </ng-container>
+
+
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
 

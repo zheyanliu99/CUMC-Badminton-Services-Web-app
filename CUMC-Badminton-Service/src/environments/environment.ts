@@ -9,6 +9,7 @@ export const environment = {
   // ms2Url: "https://r450v9soc3.execute-api.us-east-1.amazonaws.com/stage1",
   ms3Url: "http://localhost:5012/",
   // ms3Url: "https://r450v9soc3.execute-api.us-east-1.amazonaws.com/stage1",
+  cs1Url: "http://localhost:5013/",
   SMARTY_WEBSITE_KEY: '143512218916840455'
 };
 
