@@ -38,13 +38,13 @@
       <div class="chat-container">
         <ng-container *ngFor="let chat of chats">
           <div *ngIf="chat.userid_from.toString() == userId; else othercase">
-          <div class="chat-item-container chat-item-left">
+          <div class="chat-item-container chat-item-right">
             <div class="chat-item">Message from {{chat.userid_from}} to {{chat.userid_to}}</div>
             <div class="chat-item"> <p>{{chat.Content}}</p><p>{{chat.Time}}</p></div>
           </div>
           </div>
           <ng-template #othercase>
-          <div class="chat-item-container chat-item-right">
+          <div class="chat-item-container chat-item-left">
             <div class="chat-item">Message from {{chat.userid_from}} to {{chat.userid_to}}</div>
             <div class="chat-item"><p>{{chat.Content}}</p><p>{{chat.Time}}</p></div>
           </div>

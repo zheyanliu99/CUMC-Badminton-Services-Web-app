@@ -11,15 +11,14 @@
 
 <p>My userID: {{userId}}</p>
 
-<div *ngIf="partner == null">
-  <br>
-  You don't have any partner yet
-  <br>
-</div>
-
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="card">
 <h1>View invitations</h1>
-
+  <div *ngIf="partner == null">
+    <br>
+    You don't have any partner yet
+    <br>
+  </div>
 
 <ng-container *ngIf="partner == null">
   <button mat-raised-button color="basic" cdkFocusInitial class="col-md-3" type="submit"
@@ -73,6 +72,9 @@
     </tbody>
   </table>
 </div>
+</div>
+
+
 
 
 <div *ngFor="let part of partner">
@@ -104,7 +106,8 @@
   </ng-container>
 </td>
 
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="card">
 <br>
 <h1>Search Profile</h1>
 <br>
@@ -120,7 +123,7 @@
   </div>
 
   <mat-dialog-actions>
-    <button class="mat-raised-button mat-primary"(click)="profilesearchSubmit()">check profile</button>
+    <button class="col-md-3" (click)="profilesearchSubmit()">check profile</button>
   </mat-dialog-actions>
 
   <div *ngIf="otherprofile == null">
@@ -163,3 +166,4 @@
     </table>
   </div>
 </mat-dialog-content>
+</div>
