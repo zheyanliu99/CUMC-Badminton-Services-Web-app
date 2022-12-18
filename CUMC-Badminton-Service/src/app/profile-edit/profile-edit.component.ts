@@ -13,7 +13,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 })
 export class AddprofileDialogComponent implements OnInit {
 
-  profile2: Array<profileEditInput>;
+  profile2: any;
   userId: string;
   method: string;
   newprofileForm: FormGroup;
@@ -26,6 +26,8 @@ export class AddprofileDialogComponent implements OnInit {
     this.method = data.method
     if (this.method == "edit"){
       this.profile2 = data.old
+      console.log('Console editssss')
+      console.log(this.profile2)
 
     }
   }
@@ -36,10 +38,10 @@ export class AddprofileDialogComponent implements OnInit {
       // @ts-ignore
       this.newprofileForm = this.formBuilder.group({
         user_id: this.userId,
-        username: new FormControl(this.profile2[0].username, [Validators.required, Validators.maxLength(30)]),
-        birthday: new FormControl(this.profile2[0].birthday, [Validators.required, Validators.pattern('YYYY-MM-DD')]),
-        sex: new FormControl(this.profile2[0].sex, [Validators.required]),
-        preference: new FormControl(this.profile2[0].preference, [Validators.required]),
+        username: new FormControl(this.profile2.user_info.username, [Validators.required, Validators.maxLength(30)]),
+        birthday: new FormControl(this.profile2.user_info.birthday, [Validators.required]),
+        sex: new FormControl(this.profile2.user_info.sex, [Validators.required]),
+        preference: new FormControl(this.profile2.user_info.preference, [Validators.required]),
       });
     }
   }
