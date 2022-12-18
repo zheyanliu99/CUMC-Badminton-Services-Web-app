@@ -2,6 +2,8 @@ export class postInput {
     Post_ID: number;
     Title: string;
     User_ID: string;
+    username: string;
+    profile_pic: string;
     Time: string;
     Location_ID: number;
     Label: string;

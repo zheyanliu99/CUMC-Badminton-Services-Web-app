@@ -171,7 +171,9 @@ export class PostDetailsComponent implements OnInit, OnChanges {
 
   delete_resp(resp_id: number): Observable<any>{
     console.log('delete response interact with DB')
-    return this.http.get<any>(`${environment.ms3Url}/api/forum/resp/delete/${resp_id}/`);
+    const input = {"response": resp_id};
+    return this.http.post<any>(`${environment.ms3Url}/api/forum/deleteresponse`, input);
+    // return this.http.get<any>(`${environment.ms3Url}/api/forum/resp/delete/${resp_id}/`);
   }
 
   showEdit(resp_id: number, content: string): void{
@@ -234,7 +236,8 @@ export class PostDetailsComponent implements OnInit, OnChanges {
 
   delete_post(post_id: number): Observable<any>{
     console.log('delete interact with DB')
-    return this.http.get<any>(`${environment.ms3Url}/api/forum/post/delete/${post_id}/`);
+    const input = {"post": post_id};
+    return this.http.post<any>(`${environment.ms3Url}/api/forum/post/deletepost/`, input);
   }
 
 }

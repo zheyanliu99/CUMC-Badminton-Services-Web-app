@@ -6,4 +6,6 @@ export class responseInput {
     Content: string;
     Thumbs: number;
     is_Thumbed: number;
+    username: string;
+    profile_pic: string;
   }
