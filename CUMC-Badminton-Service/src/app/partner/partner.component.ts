@@ -80,6 +80,7 @@ export class partnerComponent implements OnInit {
         this.partner = results.data
         this.status = results.success
         console.log(this.userId, this.partner)
+        location.reload()
         }
       else {
         alert("Results Not Found")
