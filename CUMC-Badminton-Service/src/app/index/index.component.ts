@@ -11,7 +11,8 @@ import { environment } from 'src/environments/environment';
 })
 export class IndexComponent implements OnInit {
   userId = sessionStorage.getItem('userId');
-  currentUser: Array<currentUser>;
+  currentUser: any;
+  isLoggedIn: boolean;
 
   constructor(private http:HttpClient) { }
 
@@ -26,6 +27,14 @@ export class IndexComponent implements OnInit {
     // sessionStorage.setItem('userId', "8");
     console.log(sessionStorage.getItem('userId'));
     console.log(sessionStorage.getItem('currentUser'));
+    if(sessionStorage.getItem('currentUser')){
+      this.isLoggedIn = true;
+    }else{
+      this.isLoggedIn = false;
+    }
+    
+    this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    console.log(currentUser['username'])
   }
 
   most_recent_login():Observable<any>{

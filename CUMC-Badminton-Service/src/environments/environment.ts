@@ -5,11 +5,11 @@
 export const environment = {
   production: false,
   ms1Url: "http://localhost:5010",
-  // ms2Url: "http://127.0.0.1:5011",
-  ms2Url: "https://r450v9soc3.execute-api.us-east-1.amazonaws.com/stage1",
-  // ms3Url: "http://localhost:5012/",
-  // ms3Url: "http://E6156ms3-env.eba-jjys9bmm.us-east-1.elasticbeanstalk.com",
-  ms3Url: "https://r450v9soc3.execute-api.us-east-1.amazonaws.com/stage1",
+  ms2Url: "http://127.0.0.1:5011",
+  // ms2Url: "https://r450v9soc3.execute-api.us-east-1.amazonaws.com/stage1",
+  ms3Url: "http://localhost:5012/",
+  // ms3Url: "https://r450v9soc3.execute-api.us-east-1.amazonaws.com/stage1",
+  cs1Url: "http://localhost:5013/",
   SMARTY_WEBSITE_KEY: '143512218916840455'
 };
 

@@ -3,7 +3,6 @@ export class currentUser {
     email: string;
     username: string;
     sex: string;
-    birthday: string;
     preference: string;
     credits: number;
     profile_pic: string;

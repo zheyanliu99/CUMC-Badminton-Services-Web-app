@@ -1,13 +1,19 @@
 <h1>Available Sessions</h1> 
 
-<p>userID: {{userId}}</p>
 
 <form [formGroup]="formGroup">
+
+    <p>Choose how you want to join the waitlist</p>
 <mat-radio-group aria-label="Select an option" formControlName="register_type">
     <mat-radio-button value="0" name="register_type" [checked]='true'>Register for myself</mat-radio-button>
     <br>
     <mat-radio-button value="1" name="register_type">Register as partners</mat-radio-button>
   </mat-radio-group>
+
+
+<ng-container *ngIf="if_admin==true">
+    <p><b>Hi admin, you can approve people from waitlist to session. </b></p>
+</ng-container>
 
  <table class="content-table">
     <thead>
@@ -15,9 +21,12 @@
         <th>Begintime</th>
         <th>Endtime</th>
         <th>Capacity</th>
-        <th>Enrolled</th>
+        <th>Waitlist size</th>
         <th>Notes</th>
         <th>Register</th>
+        <ng-container *ngIf="if_admin==true">
+            <th>Approve</th>
+        </ng-container>
         </tr>
     </thead>
     <tbody >
@@ -26,9 +35,10 @@
             <td>{{session.begintime}}</td>
             <td>{{session.endtime}}</td>
             <td>{{session.capacity}}</td>
-            <td>{{session.enrolled}}</td>
+            <td>{{session.enrolled-1}}</td>
             <td>{{session.notes}}</td>
             <!-- <td>{{session.is_registered}}</td> -->
+
             <td> 
                 <ng-container *ngIf="session.is_registered==0">
                     <button mat-raised-button color="basic" cdkFocusInitial class="col-md-3" type="submit"
@@ -39,6 +49,14 @@
                         [disabled]=true (click)="register(session.sessionid)">Register</button>
                 </ng-container>
             </td>
+
+            <td>
+            <ng-container *ngIf="if_admin==true">
+                <button mat-raised-button color="basic" cdkFocusInitial class="col-md-3" type="submit"
+                [disabled]=false (click)="approve(session.sessionid)">Approve</button>
+            </ng-container>
+            </td>
+
             </tr>
         </ng-container>
     </tbody>

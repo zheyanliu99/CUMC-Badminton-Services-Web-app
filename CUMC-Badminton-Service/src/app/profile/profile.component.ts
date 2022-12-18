@@ -13,7 +13,7 @@ import {AddprofileDialogComponent} from "../profile-edit/profile-edit.component"
 })
 export class profileComponent implements OnInit {
 
-  profile2: Array<profileInput>;
+  profile2: any;
   userId: string;
 
   constructor(private http:HttpClient,
@@ -24,6 +24,7 @@ export class profileComponent implements OnInit {
   ngOnInit(): void {
     console.log("init")
     this.get_allprofile().subscribe(results => {
+      console.log(results.data.user_info)
       if(results.success){
         console.log("data showing")
         this.profile2 = results.data
@@ -37,7 +38,7 @@ export class profileComponent implements OnInit {
 
   get_allprofile():Observable<any>{
     // @ts-ignore
-    return this.http.get<any>(`${environment.ms1Url}/api/userprofile/${this.userId}`);
+    return this.http.get<any>(`${environment.cs1Url}/api/composite/user_profile_all/${this.userId}`);
   }
 
 
