@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  ms1Url: "http://localhost:5010",
+  ms1Url: "http://127.0.0.1:5010",
   ms2Url: "http://127.0.0.1:5011",
   // ms2Url: "https://r450v9soc3.execute-api.us-east-1.amazonaws.com/stage1",
   ms3Url: "http://localhost:5012/",
