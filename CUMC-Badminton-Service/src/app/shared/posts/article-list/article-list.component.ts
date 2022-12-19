@@ -41,7 +41,8 @@ export class ArticleListComponent implements OnChanges{
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes)
+    // console.log(changes)
+    this.currentPage = 1
   }
 
   setPageTo(pageNumber) {
@@ -70,7 +71,7 @@ export class ArticleListComponent implements OnChanges{
         console.log("posts", this.posts)
       }
       else{
-        alert("Get posts Failed")
+        console.log("Get posts Failed")
       }
     })
   }

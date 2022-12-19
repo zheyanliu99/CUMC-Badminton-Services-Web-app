@@ -237,7 +237,7 @@ export class PostDetailsComponent implements OnInit, OnChanges {
   delete_post(post_id: number): Observable<any>{
     console.log('delete interact with DB')
     const input = {"post": post_id};
-    return this.http.post<any>(`${environment.ms3Url}/api/forum/post/deletepost/`, input);
+    return this.http.post<any>(`${environment.ms3Url}/api/forum/deletepost/`, input);
     // return this.http.get(`${environment.ms3Url}/api/forum/post/delete/${post_id}`);
   }
 

@@ -76,7 +76,7 @@ export class AddPostDialogComponent implements OnInit {
     if (this.method == "edit"){
       this.postForm = this.formBuilder.group({
         user_id: this.userId,
-        title: new FormControl(this.oldPost[0].Title, [Validators.required, Validators.maxLength(30)]),
+        title: new FormControl(this.oldPost[0].Title, [Validators.required, Validators.maxLength(100)]),
         label: new FormControl(this.oldPost[0].Label, [Validators.required]),
         location: this.oldPost[0].Location_ID,
         ifNewLoc: false,
@@ -85,12 +85,12 @@ export class AddPostDialogComponent implements OnInit {
         street: ``,
         city: ``,
         state: ``,
-        content: new FormControl(this.oldPost[0].Content, [Validators.required, Validators.maxLength(300)]),
+        content: new FormControl(this.oldPost[0].Content, [Validators.required, Validators.maxLength(1000)]),
       });
     }
     else if (this.method == "add"){
       this.postForm = this.formBuilder.group({
-        title: new FormControl(``, [Validators.required, Validators.maxLength(30)]),
+        title: new FormControl(``, [Validators.required, Validators.maxLength(100)]),
         label: new FormControl(``, [Validators.required]),
         location: ``,
         ifNewLoc: false,
@@ -99,7 +99,7 @@ export class AddPostDialogComponent implements OnInit {
         street: ``,
         city: ``,
         state: ``,
-        content: new FormControl(``, [Validators.required, Validators.maxLength(300)]),
+        content: new FormControl(``, [Validators.required, Validators.maxLength(1000)]),
       });
     }
 
