@@ -47,6 +47,9 @@ export class LoginComponent implements OnInit {
         console.log(this.google_profile)
         this.process_login(this.google_profile).subscribe(results => {
           if (results.success) {
+            console.log(results.message.split(",",2)[1])
+            if(results.message.split(",",2)[1]== ' you have registered and logged in')
+            {alert('Check your email to allow us sending emails')}
             alert(results.message)
             console.log(results.data)
 
