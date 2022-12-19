@@ -1,11 +1,11 @@
 <div class="article-meta">
-  <a href="#">
+  <a href="">
     <img src="/assets/badminton.png" *ngIf="post.profile_pic == null"/>
     <img src="{{post.profile_pic}}" *ngIf="post.profile_pic != null">
   </a>
 
   <div class="info">
-    <a class="author" href="#">{{ post.username }}</a>
+    <a class="author" href="">{{ post.username }}</a>
     <span class="date">
       {{ post.Time | date: 'longDate' }}
     </span>
