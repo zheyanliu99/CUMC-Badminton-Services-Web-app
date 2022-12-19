@@ -29,6 +29,7 @@ export class sendinviteDialogComponent implements OnInit {
     this.method = data.method
     if (this.method == "add"){
       this.userid_from = data.userid_from
+      console.log(this.userid_from)
       console.log('Start sending invitaion')
 
     }
@@ -36,6 +37,7 @@ export class sendinviteDialogComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.method == "add"){
+      console.log(this.userid_from)
       // @ts-ignore
       // @ts-ignore
       this.invitionForm = this.formBuilder.group({

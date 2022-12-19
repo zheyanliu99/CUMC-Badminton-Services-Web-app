@@ -9,13 +9,17 @@
         rel="stylesheet">
 </head>
 
-<p>userID: {{userId}}</p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="card">
+<p>UserID:&nbsp;&nbsp;{{userId}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
 
 <mat-dialog-content [formGroup]="newchatForm" (ngSubmit)="postSubmit()">
   <div>
-    <label for="userid_to">userid_to:</label>
+    <label for="userid_to">Userid_to:&nbsp;&nbsp;</label>
     <input id="userid_to" type="number" formControlName="userid_to">
   </div>
+
+  <br>
 
   <mat-dialog-actions>
     <button class="mat-raised-button mat-primary"(click)="postSubmit()">Find chat history</button>
@@ -26,7 +30,7 @@
   <br>
   You don't have any chat history
 </div>
-
+</div>
 
 <div *ngIf="chats != null">
 
@@ -39,13 +43,13 @@
         <ng-container *ngFor="let chat of chats">
           <div *ngIf="chat.userid_from.toString() == userId; else othercase">
           <div class="chat-item-container chat-item-right">
-            <div class="chat-item">Message from {{chat.userid_from}} to {{chat.userid_to}}</div>
-            <div class="chat-item"> <p>{{chat.Content}}</p><p>{{chat.Time}}</p></div>
+            <div class="chat-item">Message from {{chat.its_username}} to {{chat.my_username}}</div>
+            <div class="chat-item"  > <p>{{chat.Content}}</p><p>{{chat.Time}}</p></div>
           </div>
           </div>
           <ng-template #othercase>
           <div class="chat-item-container chat-item-left">
-            <div class="chat-item">Message from {{chat.userid_from}} to {{chat.userid_to}}</div>
+            <div class="chat-item" >Message from {{chat.its_username}} to {{chat.its_username}}</div>
             <div class="chat-item"><p>{{chat.Content}}</p><p>{{chat.Time}}</p></div>
           </div>
           </ng-template>
@@ -56,15 +60,16 @@
   </div>
 
   <br>
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <div class="card">
   <mat-dialog-content [formGroup]="chatForm" (ngSubmit)="sendingchat()">
     <div>
-      <label for="userid_to">Send chat to(id number):</label>
+      <label for="userid_to">Input(ID number)&nbsp;:&nbsp;</label>
       <input id="userid_to" type="number" formControlName="userid_to">
     </div>
     <br>
     <div>
-      <label for="content">Chat:</label>
+      <label for="content">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Chat&nbsp;:&nbsp;</label>
       <textarea id="content" type="string" formControlName="content"></textarea>
     </div>
 
@@ -74,6 +79,8 @@
     </mat-dialog-actions>
 
   </mat-dialog-content>
+  </div>
+
 
   </body>
 

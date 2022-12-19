@@ -7,6 +7,7 @@ import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {searchchatDialogComponent} from "../chat-search-dialog/chat-search-dialog.component";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AddpartnerDialogComponent} from "../partner-add/partner-add.component";
+import {chatsearchdialogInput} from "../chat-search-dialog/chatsearchdialogInput";
 
 @Component({
   selector: 'app-chat',
@@ -57,7 +58,7 @@ export class chatComponent implements OnInit {
 
   get_allchat(userid_to: number): Observable<any> {
     console.log("search with DB")
-    console.log(userid_to)
+    console.log(this.chats)
     return this.http.post<any>(`${environment.ms1Url}/api/user/${this.userId}/chatting/history`, userid_to)
 
   }
@@ -89,19 +90,6 @@ export class chatComponent implements OnInit {
     }
   }
 
-  AddchatDialog() {
-    let dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      method: 'add',
-      userid_from: this.userId
-    }
-
-    let dialogRef = this.dialog.open(searchchatDialogComponent, dialogConfig)
-    dialogRef.afterClosed().subscribe(results => {
-      console.log(results)
-      alert("Succeed!")
-    })
-  }
 
   sendchat(input: object): Observable<any> {
     console.log("search with DB")

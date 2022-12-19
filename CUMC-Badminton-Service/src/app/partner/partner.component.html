@@ -11,20 +11,51 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="card">
-<h1>View invitations</h1>
-  <div *ngIf="partner == null">
+<h1>View my partner</h1>
+  <div *ngIf="partners == null">
     <br>
     You don't have any partner yet
     <br>
   </div>
 
-  <button mat-raised-button color="basic" cdkFocusInitial class="col-md-3" type="submit"
-          [disabled]=false (click)="sendinviteDialog()">send invite</button>
+  <div *ngFor="let part of partners">
+    <table class="content-table">
+      <thead>
+      <tr>
+        <th>My PartnerID:</th>
+      </tr>
+      </thead>
+      <tbody >
+      <ng-container *ngFor="let part of partners">
+        <tr>
+          <td>{{part.userid_to}}</td>
+        <tr>
+          <td>{{part.userid_from}}</td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <td>
+    <ng-container *ngFor="let part of partners">
+      <ng-container *ngIf="part.userid_from == null">
+        <button (click)="onDelete(part.userid_to)" >Delete</button>
+      </ng-container>
+      <ng-container *ngIf="part.userid_to == null">
+        <button (click)="onDelete1(part.userid_from)" >Delete</button>
+      </ng-container>
+    </ng-container>
+  </td>
 
 </div>
 
+<Br>
+
+<Br>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="card">
+  <h1>View invitations</h1>
 <div *ngIf="invitation == null">
   <br>
   No Invitation to you
@@ -36,36 +67,32 @@
   <table class="content-table">
     <thead>
     <tr>
-      <th>Invitation_ID:</th>
-      <th>userid_from:</th>
-      <th>userid_to:</th>
+      <th>Userid from:</th>
+      <th>Username:</th>
+      <th>Email:</th>
       <th>Content:</th>
-      <th>response:</th>
-      <th>add partner:</th>
-      <th>reject partner:</th>
+      <th> </th>
+      <th>Add/Reject:</th>
+
 
     </tr>
     </thead>
     <tbody >
     <ng-container *ngFor="let invite of invitation">
       <tr>
-        <td>{{invite.Invitation_ID}}</td>
         <td>{{invite.userid_from}}</td>
-        <td>{{invite.userid_to}}</td>
-        <td>{{invite.Content}}</td>
+        <td>{{invite.username}}</td>
+        <td>{{invite.email}}</td>
+        <td>{{invite.content}}</td>
         <td>{{invite.response}}</td>
-        <td>
-        <ng-container *ngIf="partner == null">
-          <button mat-raised-button color="basic" cdkFocusInitial class="col-md-3" type="submit"
-                  [disabled]=false (click)="Addpartner({userid_to: invite.userid_from})">add partner</button>
+        <ng-container *ngIf="invitation != null">
+          <button mat-raised-button color="primary" cdkFocusInitial class="col-md-3" type="submit"
+                  [disabled]=false (click)="Addpartner({userid_to: invite.userid_from})">Add</button>
         </ng-container>
-        </td>
-        <td>
-          <ng-container *ngIf="invitation != null">
-            <button mat-raised-button color="basic" cdkFocusInitial class="col-md-3" type="submit"
-                    [disabled]=false (click)="rejectpartner({userid_from: invite.userid_from.toString()})">reject partner</button>
-          </ng-container>
-        </td>
+        <ng-container *ngIf="invitation != null">
+            <button mat-raised-button color="warn" cdkFocusInitial class="col-md-3" type="submit"
+                    [disabled]=false (click)="rejectpartner({userid_from: invite.userid_from.toString()})">Reject</button>
+        </ng-container>
 
       </tr>
     </ng-container>
@@ -78,34 +105,6 @@
   <br>
 
 
-<div *ngFor="let part of partner">
-<table class="content-table">
-  <thead>
-  <tr>
-    <th>My PartnerID:</th>
-  </tr>
-  </thead>
-  <tbody >
-  <ng-container *ngFor="let part of partner">
-    <tr>
-      <td>{{part.userid_to}}</td>
-    <tr>
-      <td>{{part.userid_from}}</td>
-    </tr>
-  </ng-container>
-  </tbody>
-</table>
-</div>
-<td>
-  <ng-container *ngFor="let part of partner">
-    <ng-container *ngIf="part.userid_from == null">
-    <button (click)="onDelete(part.userid_to)" >Delete</button>
-    </ng-container>
-    <ng-container *ngIf="part.userid_to == null">
-    <button (click)="onDelete1(part.userid_from)" >Delete</button>
-    </ng-container>
-  </ng-container>
-</td>
 </div>
 
 <br>
@@ -120,11 +119,11 @@
 
 <mat-dialog-content [formGroup]="profilesearchform" (ngSubmit)="profilesearchSubmit()">
   <div>
-    <label for="email">email:</label>
+    <label for="email">Email(any part of email): &nbsp;    </label>
     <input id="email" type="string" formControlName="email">
   </div>
   <div>
-    <label for="number">number:</label>
+    <label for="number">Search number:    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </label>
     <input id="number" type="number" formControlName="number">
   </div>
 
@@ -151,6 +150,10 @@
         <th>Credits</th>
         <th>Birthday</th>
         <th>Partner number</th>
+        <th>Send Invition</th>
+
+
+
 
       </tr>
       </thead>
@@ -165,6 +168,12 @@
           <td>{{profile.credits}}</td>
           <td>{{profile.birthday}}</td>
           <td>{{profile.partner}}</td>
+          <ng-container *ngIf="profile.partner == null">
+            <ng-container *ngIf="partners == null">
+            <button mat-raised-button color="basic" cdkFocusInitial class="col-md-3" type="submit"
+                    [disabled]=false (click)="sendinviteDialog()">Invite</button>
+            </ng-container>
+          </ng-container>
 
         </tr>
       </ng-container>

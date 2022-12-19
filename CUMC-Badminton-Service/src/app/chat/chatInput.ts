@@ -4,4 +4,6 @@ export class chatInput {
     userid_to: number;
     Content: string;
     Time: string;
+    my_username: string;
+    its_username: string;
   }

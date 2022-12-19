@@ -1,6 +1,6 @@
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 500px;
+  max-width: 1000px;
   margin: auto;
   text-align: center;
 }
@@ -38,12 +38,13 @@ button:hover, a:hover {
 
 .content-table {
   border-collapse: collapse;
-  margin: 25px 0;
   font-size: 0.9em;
   min-width: 400px;
   border-radius: 5px 5px 0 0;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  margin: auto;
 }
 
 .content-table thead tr {

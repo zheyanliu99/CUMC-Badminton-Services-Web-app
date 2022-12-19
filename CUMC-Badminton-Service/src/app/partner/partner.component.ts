@@ -18,7 +18,7 @@ import {otherprofileInput} from "./otherprofileInput";
 export class partnerComponent implements OnInit {
 
   userId: string;
-  partner: Array<partnerInput>;
+  partners: Array<partnerInput>;
   invitation: Array<invitationInput>;
   status: boolean;
   message: string;
@@ -43,18 +43,20 @@ export class partnerComponent implements OnInit {
         console.log(this.invitation)
         }
       else{
-        alert("Results Not Found")
+        alert("no invitation to you")
       }
     })
     this.get_allpartner().subscribe(results => {
       if(results.data){
         console.log(results)
+        console.log(this.http.get<any>(`${environment.ms1Url}/api/user/${this.userId}/partner`))
         console.log("data showing")
-        this.partner = results.data
-        console.log(this.partner)
+        this.partners = results.data
+        console.log(this.partners)
         }
       else{
-        alert("Results Not Found")
+        console.log("try")
+        alert("Partner Not Found")
       }
     })
     this.profilesearchform = new FormGroup({
@@ -77,9 +79,7 @@ export class partnerComponent implements OnInit {
     this.get_allpartner().subscribe(results => {
       if(results.success){
         console.log("data showing")
-        this.partner = results.data
-        this.status = results.success
-        console.log(this.userId, this.partner)
+        this.partners = results.data
         location.reload()
         }
       else {
@@ -89,22 +89,6 @@ export class partnerComponent implements OnInit {
   }
 
 
-  AddpartnerDialog() {
-    let dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      method: 'add',
-      old: this.partner,
-      addpartnerstatus: this.status,
-      userid_from: this.userId
-    }
-
-    let dialogRef = this.dialog.open(AddpartnerDialogComponent, dialogConfig)
-    dialogRef.afterClosed().subscribe(results => {
-      console.log(results)
-      alert("Succeed!")
-      this.load_page()
-    })
-  }
 
   Addpartner(input) {
     if (input){
@@ -218,7 +202,7 @@ export class partnerComponent implements OnInit {
   rejectpartner(input:object): void{
     console.log('delete invition')
     this.rejection_invition(input).subscribe(results => {
-      if (!results.success) {
+      if (results.success) {
         alert("delete successfully")
         console.log(results)
       }

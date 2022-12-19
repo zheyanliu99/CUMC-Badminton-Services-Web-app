@@ -3,6 +3,8 @@ export class partnerInput {
     userid: number;
     message: string;
     userid_from: number;
+    email: string;
+    username: string;
 
 
   }
