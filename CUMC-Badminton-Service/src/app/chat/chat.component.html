@@ -40,18 +40,18 @@
     <div class="scroll">
 
       <div class="chat-container">
-        <ng-container *ngFor="let chat of chats">
-          <div *ngIf="chat.userid_from.toString() == userId; else othercase">
-          <div class="chat-item-container chat-item-right">
-            <div class="chat-item">Message from {{chat.its_username}} to {{chat.my_username}}</div>
-            <div class="chat-item"  > <p>{{chat.Content}}</p><p>{{chat.Time}}</p></div>
-          </div>
-          </div>
-          <ng-template #othercase>
-          <div class="chat-item-container chat-item-left">
-            <div class="chat-item" >Message from {{chat.its_username}} to {{chat.its_username}}</div>
-            <div class="chat-item"><p>{{chat.Content}}</p><p>{{chat.Time}}</p></div>
-          </div>
+        <ng-container *ngFor="let chat of chats " >
+          <ng-template [ngIf]="chat.userid_from.toString() == userId">
+            <div class="chat-item-container chat-item-right">
+              <div class="chat-item">Message from {{chat.its_username}} to {{chat.my_username}}</div>
+              <div class="chat-item"  > <p>{{chat.Content}}</p><p>{{chat.Time}}</p></div>
+            </div>
+          </ng-template>
+          <ng-template [ngIf]="chat.userid_from.toString() != userId">
+            <div class="chat-item-container chat-item-left">
+              <div class="chat-item" >Message from {{chat.its_username}} to {{chat.its_username}}</div>
+              <div class="chat-item"><p>{{chat.Content}}</p><p>{{chat.Time}}</p></div>
+            </div>
           </ng-template>
         </ng-container>
       </div>

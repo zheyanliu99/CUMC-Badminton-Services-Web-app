@@ -168,13 +168,8 @@
           <td>{{profile.credits}}</td>
           <td>{{profile.birthday}}</td>
           <td>{{profile.partner}}</td>
-          <ng-container *ngIf="profile.partner == null">
-            <ng-container *ngIf="partners == null">
-            <button mat-raised-button color="basic" cdkFocusInitial class="col-md-3" type="submit"
+          <button mat-raised-button color="basic" cdkFocusInitial class="col-md-3" type="submit"
                     [disabled]=false (click)="sendinviteDialog()">Invite</button>
-            </ng-container>
-          </ng-container>
-
         </tr>
       </ng-container>
       </tbody>
