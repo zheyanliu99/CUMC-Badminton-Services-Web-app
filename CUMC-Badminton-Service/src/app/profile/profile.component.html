@@ -78,7 +78,7 @@
                       </div>
                   </div>
 
-                  <ng-container *ngIf="(profile2.partner_info | json) !='{}'">
+                  <ng-container *ngIf="(profile2.partner_info | json) != ({} | json)">
                   <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Partner Information</h6>
                   <div class="row">
                       <div class="col-sm-6">

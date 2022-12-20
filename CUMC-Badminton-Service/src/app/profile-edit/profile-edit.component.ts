@@ -33,9 +33,12 @@ export class AddprofileDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('ininint')
+    console.log(this.profile2)
     if (this.method == "edit"){
       // @ts-ignore
       // @ts-ignore
+      console.log(this.profile2.user_info.username)
       this.newprofileForm = this.formBuilder.group({
         user_id: this.userId,
         username: new FormControl(this.profile2.user_info.username, [Validators.required, Validators.maxLength(30)]),
